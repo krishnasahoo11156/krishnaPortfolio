@@ -198,21 +198,6 @@
             gap: 0.5rem;
         }
 
-        /* Blinking cursor */
-        .hero-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1.1em;
-            background: #e8473f;
-            margin-left: 2px;
-            animation: blink-caret 0.75s step-end infinite;
-            vertical-align: middle;
-        }
-
-        @keyframes blink-caret {
-            0%, 100% { opacity: 1; }
-            50%       { opacity: 0; }
-        }
 
         /* CTA buttons row */
         .hero-buttons {
@@ -644,7 +629,7 @@
 
             <!-- Typing subtitle -->
             <div class="hero-subtitle">
-                <span id="hero-typing"></span><span class="hero-cursor" aria-hidden="true"></span>
+                <span id="hero-typing"></span>
             </div>
 
             <!-- CTA Buttons -->
