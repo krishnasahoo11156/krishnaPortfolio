@@ -1,0 +1,120 @@
+/* projects-modal.css — full-screen project detail modal */
+
+/* BACKDROP */
+.proj-modal-backdrop {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.88);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.proj-modal-backdrop.open {
+    opacity: 1; pointer-events: all;
+}
+
+/* MODAL BOX */
+.proj-modal {
+    background: #0d0d0d;
+    border: 1px solid #2a2a2a;
+    border-top: 3px solid var(--accent-color);
+    width: 100%; max-width: 760px;
+    max-height: 88vh; overflow-y: auto;
+    padding: 2rem 2.25rem 2.25rem;
+    position: relative;
+    transform: translateY(24px);
+    transition: transform 0.3s ease;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) #1a1a1a;
+}
+.proj-modal-backdrop.open .proj-modal {
+    transform: translateY(0);
+}
+
+/* CLOSE BUTTON */
+.modal-close {
+    position: absolute; top: 1.1rem; right: 1.1rem;
+    background: none; border: 1px solid #333;
+    color: #666; width: 30px; height: 30px;
+    cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+    line-height: 1;
+}
+.modal-close:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+/* MODAL HEADER */
+.modal-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.modal-title {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 4vw, 50px);
+    color: #fff; letter-spacing: 2px;
+    margin-bottom: 0.9rem; line-height: 1.05;
+}
+
+/* DESCRIPTION */
+.modal-desc {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.85; margin-bottom: 1.5rem;
+    border-left: 2px solid var(--accent-color);
+    padding-left: 1rem;
+}
+
+/* FEATURES LIST */
+.modal-section-title {
+    font-family: var(--font-heading); font-size: 13px;
+    letter-spacing: 3px; color: var(--accent-color);
+    margin-bottom: 0.7rem; text-transform: uppercase;
+}
+.modal-features { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+.modal-features li {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.7; padding: 0.5rem 0;
+    border-bottom: 1px solid #161616;
+    display: flex; align-items: baseline; gap: 0.6rem;
+}
+.modal-features li .feat-num {
+    font-family: var(--font-heading); font-size: 16px;
+    color: var(--accent-color); flex-shrink: 0; min-width: 20px;
+}
+
+/* TECH GRID */
+.modal-tech-grid {
+    display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;
+}
+.modal-tech-item {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 4px;
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-secondary); width: 50px;
+}
+.modal-tech-item img { width: 26px; height: 26px; object-fit: contain; }
+.modal-tech-badge {
+    width: 26px; height: 26px;
+    background: var(--accent-color);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-heading); font-size: 10px;
+    color: #fff; letter-spacing: 1px; flex-shrink: 0;
+}
+
+/* TIMELINE */
+.modal-timeline-bar {
+    height: 4px; background: #1a1a1a; border-radius: 2px;
+    margin-bottom: 0.4rem; overflow: hidden;
+}
+.modal-timeline-fill {
+    height: 100%; background: var(--accent-color); border-radius: 2px;
+    transition: width 0.8s ease;
+}
+.modal-timeline-label {
+    font-size: 11px; color: var(--text-secondary);
+    letter-spacing: 1px; font-family: 'Courier New', monospace;
+    margin-bottom: 1.5rem;
+}
+
+/* MODAL ACTIONS */
+.modal-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
