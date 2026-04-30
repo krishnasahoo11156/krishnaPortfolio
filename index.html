@@ -467,48 +467,7 @@
             line-height: 1.3;
         }
 
-        /* ================================================================
-           MARQUEE STRIP
-           ================================================================ */
-        .marquee-strip {
-            background: transparent;
-            overflow: hidden;
-            white-space: nowrap;
-            padding: 14px 0;
-            position: relative;
-            user-select: none;
-        }
 
-        .marquee-track {
-            display: inline-flex;
-            gap: 0;
-            animation: marquee-scroll 28s linear infinite;
-        }
-
-        .marquee-strip:hover .marquee-track {
-            animation-play-state: paused;
-        }
-
-        .marquee-item {
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            padding: 0 2.5rem;
-            flex-shrink: 0;
-        }
-
-        .marquee-dot {
-            color: var(--border-color);
-            padding: 0;
-        }
-
-        @keyframes marquee-scroll {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
 
         /* ---- Project preview placeholder ---- */
         .project-preview {
@@ -756,26 +715,6 @@
         </div>
     </section>
 
-    <!-- Marquee Strip -->
-    <div class="marquee-strip" aria-hidden="true">
-        <div class="marquee-track">
-            <!-- Duplicated for seamless loop -->
-            <span class="marquee-item">Open Source Lover</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Night Owl Coder</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">160+ Commits</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Problem Solver</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Badlapur, India</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Software Developer</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Always Learning</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Open Source Lover</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Night Owl Coder</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">160+ Commits</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Problem Solver</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Badlapur, India</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Software Developer</span><span class="marquee-item marquee-dot">·</span>
-            <span class="marquee-item">Always Learning</span><span class="marquee-item marquee-dot">·</span>
-        </div>
-    </div>
 
     <!-- Skills Section -->
     <section id="skills" class="container">
