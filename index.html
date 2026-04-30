@@ -19,49 +19,329 @@
     <link rel="stylesheet" href="css/components.css">
 
     <style>
-        /* ---- Hero ---- */
+        /* ================================================================
+           HERO — Glitch + Parallax + Atmosphere
+           ================================================================ */
+
+        /* ---- Base shell ---- */
         .hero {
             height: 100vh;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            background: linear-gradient(rgba(10,10,10,0.75), rgba(10,10,10,0.93)),
-                        url('image.png') center/cover no-repeat;
-            position: relative;
+            background: #000;
+        }
+
+        /* ---- SCANLINE OVERLAY ---- */
+        .hero-scanlines {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.04) 2px,
+                rgba(0,0,0,0.04) 4px
+            );
+        }
+
+        /* ---- VIGNETTE ---- */
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            z-index: 9;
+            pointer-events: none;
+            background: radial-gradient(
+                ellipse 80% 80% at 50% 50%,
+                transparent 40%,
+                rgba(0,0,0,0.65) 80%,
+                rgba(0,0,0,0.92) 100%
+            );
+        }
+
+        /* ---- GRAIN / NOISE LAYER ---- */
+        .hero-grain {
+            position: absolute;
+            inset: -50%;
+            z-index: 8;
+            pointer-events: none;
+            width: 200%;
+            height: 200%;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            animation: grain-drift 0.15s steps(1) infinite;
+        }
+
+        @keyframes grain-drift {
+            0%   { transform: translate(0,   0);    }
+            10%  { transform: translate(-3%, -4%);  }
+            20%  { transform: translate(4%,  2%);   }
+            30%  { transform: translate(-2%, 5%);   }
+            40%  { transform: translate(3%,  -3%);  }
+            50%  { transform: translate(-4%, 1%);   }
+            60%  { transform: translate(2%,  4%);   }
+            70%  { transform: translate(-1%, -2%);  }
+            80%  { transform: translate(4%,  3%);   }
+            90%  { transform: translate(-3%, -1%);  }
+            100% { transform: translate(1%,  -4%);  }
+        }
+
+        /* ================================================================
+           PARALLAX LAYERS
+           ================================================================ */
+
+        /* Layer 1 — Background photo */
+        .hero-layer-bg {
+            position: absolute;
+            inset: -8%;   /* extra room so parallax shift doesn't show edges */
+            z-index: 1;
+            will-change: transform;
+        }
+
+        /* Glitch channel container */
+        #hero-glitch-wrap {
+            position: absolute;
+            inset: 0;
             overflow: hidden;
         }
 
-        /* Subtle animated gradient orb */
-        .hero::after {
+        .hero-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Base image — dark overlay via background on parent */
+        #hero-img-bg {
+            filter: brightness(0.45) saturate(0.8);
+            z-index: 1;
+        }
+
+        /* Red channel clone */
+        #hero-img-r {
+            z-index: 2;
+            mix-blend-mode: screen;
+            filter: brightness(0.4) saturate(0) sepia(1) hue-rotate(-30deg) brightness(2);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Green channel clone */
+        #hero-img-g {
+            z-index: 3;
+            mix-blend-mode: screen;
+            filter: brightness(0.4) saturate(0) sepia(1) hue-rotate(90deg) brightness(2);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Blue channel clone */
+        #hero-img-b {
+            z-index: 4;
+            mix-blend-mode: screen;
+            filter: brightness(0.4) saturate(0) sepia(1) hue-rotate(200deg) brightness(2);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Show channel clones only during glitch */
+        #hero-glitch-wrap.glitch-active #hero-img-r,
+        #hero-glitch-wrap.glitch-active #hero-img-g,
+        #hero-glitch-wrap.glitch-active #hero-img-b {
+            opacity: 0.85;
+        }
+
+        /* Dark overlay on bg layer */
+        .hero-layer-bg::after {
             content: '';
             position: absolute;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(232,71,63,0.08) 0%, transparent 70%);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse-orb 6s ease-in-out infinite;
+            inset: 0;
+            z-index: 5;
+            background:
+                radial-gradient(ellipse 60% 70% at 50% 50%, rgba(232,71,63,0.1) 0%, transparent 70%),
+                linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
             pointer-events: none;
         }
 
-        @keyframes pulse-orb {
-            0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 0.6; }
-            50%       { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+        /* Layer 2 — Grain / noise (mid parallax, no image) */
+        .hero-layer-mid {
+            position: absolute;
+            inset: -8%;
+            z-index: 2;
+            will-change: transform;
+            pointer-events: none;
         }
 
-        .hero-content {
-            z-index: 1;
+        /* Layer 3 — Foreground text */
+        .hero-layer-fg {
             position: relative;
+            z-index: 6;
+            text-align: center;
+            will-change: transform;
+            padding: 0 1rem;
         }
 
+        /* ================================================================
+           TYPOGRAPHY
+           ================================================================ */
+
+        .hero-name {
+            font-family: var(--font-heading);
+            line-height: 0.9;
+            display: block;
+            letter-spacing: 2px;
+            cursor: default;
+            user-select: none;
+        }
+
+        /* First word — white, filled */
+        #hero-name-krishna {
+            font-size: clamp(72px, 15vw, 200px);
+            color: #ffffff;
+            display: block;
+        }
+
+        /* Second word — outlined only, accent color */
+        #hero-name-sahoo {
+            font-size: clamp(72px, 15vw, 200px);
+            color: transparent;
+            -webkit-text-stroke: 2px #e8473f;
+            text-stroke: 2px #e8473f;
+            display: block;
+        }
+
+        /* Divider line */
+        .hero-divider {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e8473f, transparent);
+            margin: 1rem 0;
+            opacity: 0.8;
+        }
+
+        /* Subtitle / typing row */
+        .hero-subtitle {
+            font-family: var(--font-body);
+            font-size: clamp(14px, 2vw, 20px);
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            min-height: 1.6em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Blinking cursor */
+        .hero-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background: #e8473f;
+            margin-left: 2px;
+            animation: blink-caret 0.75s step-end infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink-caret {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+        }
+
+        /* CTA buttons row */
         .hero-buttons {
             display: flex;
             gap: 1rem;
             justify-content: center;
-            margin-top: 2rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* ================================================================
+           GLITCH EFFECTS
+           ================================================================ */
+
+        /* Name glitch burst on hover */
+        @keyframes glitch-burst-clip-1 {
+            0%   { clip-path: polygon(0 15%, 100% 15%, 100% 30%, 0 30%); transform: translate(-6px, 0); color: #ff0040; }
+            25%  { clip-path: polygon(0 55%, 100% 55%, 100% 65%, 0 65%); transform: translate(6px, 0);  color: #00ffff; }
+            50%  { clip-path: polygon(0 80%, 100% 80%, 100% 95%, 0 95%); transform: translate(-4px, 0); color: #ff0040; }
+            75%  { clip-path: polygon(0 5%,  100% 5%,  100% 20%, 0 20%); transform: translate(4px, 0);  }
+            100% { clip-path: polygon(0 0,   100% 0,   100% 0,   0 0);   transform: translate(0, 0);    }
+        }
+
+        @keyframes glitch-burst-clip-2 {
+            0%   { clip-path: polygon(0 70%, 100% 70%, 100% 85%, 0 85%); transform: translate(5px, 0);  color: #00ffff; }
+            25%  { clip-path: polygon(0 30%, 100% 30%, 100% 45%, 0 45%); transform: translate(-5px, 0); color: #ff0040; }
+            50%  { clip-path: polygon(0 5%,  100% 5%,  100% 15%, 0 15%); transform: translate(3px, 0);  color: #00ffff; }
+            75%  { clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%); transform: translate(-3px, 0); }
+            100% { clip-path: polygon(0 0,   100% 0,   100% 0,   0 0);   transform: translate(0, 0);    }
+        }
+
+        /* Hero name — uses pseudo-elements for glitch burst */
+        #hero-name-krishna,
+        #hero-name-sahoo {
+            position: relative;
+        }
+
+        /* Glitch burst via class on parent */
+        .hero-name.glitch-burst #hero-name-krishna::before,
+        .hero-name.glitch-burst #hero-name-sahoo::before {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            animation: glitch-burst-clip-1 0.35s steps(1) forwards;
+            z-index: 10;
+        }
+        .hero-name.glitch-burst #hero-name-krishna::after,
+        .hero-name.glitch-burst #hero-name-sahoo::after {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            animation: glitch-burst-clip-2 0.35s steps(1) forwards;
+            z-index: 10;
+        }
+
+        /* Button glitch flicker on hover */
+        @keyframes btn-glitch {
+            0%   { clip-path: polygon(0 20%, 100% 20%, 100% 30%, 0 30%); transform: translateX(-4px); }
+            25%  { clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%); transform: translateX(4px);  }
+            50%  { clip-path: polygon(0 5%,  100% 5%,  100% 15%, 0 15%); transform: translateX(-2px); }
+            75%  { clip-path: polygon(0 85%, 100% 85%, 100% 95%, 0 95%); transform: translateX(2px);  }
+            100% { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);         transform: translateX(0);    }
+        }
+
+        .btn.btn-glitch::after {
+            animation: btn-glitch 0.35s steps(1) forwards !important;
+        }
+
+        /* Scramble char styles */
+        .char {
+            display: inline-block;
+            transition: color 0.1s;
+        }
+        .char.locked {
+            color: inherit;
+        }
+
+        /* ================================================================
+           MOBILE OVERRIDES — lighter effects
+           ================================================================ */
+        @media (max-width: 768px) {
+            .hero-grain { opacity: 0.025; animation: none; }
+            #hero-name-krishna,
+            #hero-name-sahoo { font-size: clamp(56px, 18vw, 120px); }
+            .hero-subtitle { font-size: 13px; letter-spacing: 2px; }
         }
 
         /* ---- About stat blocks ---- */
@@ -262,15 +542,50 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-content reveal" data-delay="100">
-            <h1 class="hero-title">KRISHNA SAHOO</h1>
-            <p class="subtitle">Software Developer</p>
-            <p class="tagline mt-4">I engineer what others only imagine.</p>
 
-            <div class="hero-buttons">
-                <a href="#projects" class="btn btn-primary">View My Work</a>
-                <a href="#" class="btn btn-outline">Download CV</a>
+        <!-- Layer 1: Background photo (slowest parallax) -->
+        <div class="hero-layer-bg" id="hero-layer-bg">
+            <div id="hero-glitch-wrap">
+                <!-- Base image -->
+                <img src="image.png" alt="" class="hero-img" id="hero-img-bg" aria-hidden="true">
+                <!-- RGB channel clones for glitch -->
+                <img src="image.png" alt="" class="hero-img" id="hero-img-r" aria-hidden="true">
+                <img src="image.png" alt="" class="hero-img" id="hero-img-g" aria-hidden="true">
+                <img src="image.png" alt="" class="hero-img" id="hero-img-b" aria-hidden="true">
             </div>
+        </div>
+
+        <!-- Layer 2: Grain / depth mid layer (medium parallax) -->
+        <div class="hero-layer-mid" id="hero-layer-mid" aria-hidden="true"></div>
+
+        <!-- Atmosphere overlays -->
+        <div class="hero-vignette"  aria-hidden="true"></div>
+        <div class="hero-scanlines" aria-hidden="true"></div>
+        <div class="hero-grain"     aria-hidden="true"></div>
+
+        <!-- Layer 3: Foreground text (fastest parallax) -->
+        <div class="hero-layer-fg" id="hero-layer-fg">
+
+            <!-- Name with dual typography -->
+            <h1 class="hero-name" id="hero-name">
+                <span id="hero-name-krishna" data-text="KRISHNA">KRISHNA</span>
+                <span id="hero-name-sahoo"   data-text="SAHOO">SAHOO</span>
+            </h1>
+
+            <!-- Red separator line -->
+            <div class="hero-divider" aria-hidden="true"></div>
+
+            <!-- Typing subtitle -->
+            <div class="hero-subtitle">
+                <span id="hero-typing"></span><span class="hero-cursor" aria-hidden="true"></span>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary" id="hero-btn-work">View My Work</a>
+                <a href="#"         class="btn btn-outline" id="hero-btn-cv">Download Resume</a>
+            </div>
+
         </div>
     </section>
 
@@ -448,7 +763,8 @@
         <p class="tagline">© 2026 Krishna Sahoo. All rights reserved.</p>
     </footer>
 
-    <!-- Script Import -->
+    <!-- Script Imports -->
+    <script src="js/hero.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
