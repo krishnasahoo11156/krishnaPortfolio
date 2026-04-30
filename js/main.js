@@ -82,13 +82,18 @@ document.addEventListener('DOMContentLoaded', () => {
     /* =============================================
        PROGRESS BARS — animate width on scroll
        ============================================= */
-    const progressFills = document.querySelectorAll('.progress-fill');
+    const progressFills = document.querySelectorAll('.progress-fill, .sk-progress-fill');
 
     const progressObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const fill = entry.target;
-                const target = fill.dataset.width || fill.style.getPropertyValue('--target-width') || '0%';
+                // Support both old and new bar logic
+                const target = fill.dataset.width || 
+                               fill.style.getPropertyValue('--target-width') || 
+                               fill.style.getPropertyValue('--bar-width') || 
+                               '0%';
+                
                 // Small delay so the section reveal fires first
                 setTimeout(() => {
                     fill.style.width = target;
@@ -96,12 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 progressObserver.unobserve(fill);
             }
         });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.1 });
 
     progressFills.forEach(fill => {
-        // Move the inline width to a data attribute so we can animate it
-        const targetWidth = fill.style.width;
-        fill.dataset.width = targetWidth;
+        // Prepare bars for animation by setting width to 0
+        const targetWidth = fill.style.getPropertyValue('--bar-width') || fill.style.width;
+        if (targetWidth) fill.dataset.width = targetWidth;
+        
         fill.style.width = '0';
         progressObserver.observe(fill);
     });

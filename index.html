@@ -454,6 +454,145 @@
 
 
 
+        /* ================================================================
+           SKILLS — redesign
+           ================================================================ */
+
+        /* Section heading split */
+        .skills-heading {
+            margin: 0 0 0.5rem;
+            line-height: 0.92;
+        }
+        .skills-heading .sh-technical {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: clamp(48px, 6vw, 84px);
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+        .skills-heading .sh-arsenal {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: clamp(48px, 6vw, 84px);
+            color: #e8473f;
+            letter-spacing: 2px;
+            text-decoration: line-through;
+            text-decoration-color: #e8473f;
+            text-decoration-thickness: 3px;
+        }
+        .skills-subtext {
+            font-family: var(--font-body);
+            font-size: 13px;
+            color: var(--text-secondary);
+            letter-spacing: 1.5px;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        /* 3-column grid override for skill cards */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        @media (max-width: 900px) {
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Skill card */
+        .skill-card {
+            background: #111111;
+            border: 1px solid #222;
+            border-top: 3px solid #e8473f;
+            padding: 1.75rem;
+            position: relative;
+            transition:
+                transform 0.28s ease,
+                box-shadow 0.28s ease,
+                border-color 0.28s ease;
+        }
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 32px 4px rgba(232,71,63,0.18);
+            border-color: #e8473f;
+        }
+
+        /* Corner icon */
+        .skill-card-icon {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            font-size: 1.25rem;
+            opacity: 0.55;
+            user-select: none;
+            line-height: 1;
+        }
+
+        /* Card title */
+        .skill-card-title {
+            font-family: var(--font-heading);
+            font-size: clamp(18px, 2vw, 22px);
+            color: #ffffff;
+            letter-spacing: 1.5px;
+            margin: 0 0 1.25rem;
+            padding-right: 2rem; /* avoid overlap with icon */
+        }
+
+        /* Chip tags */
+        .skill-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-bottom: 1.5rem;
+        }
+        .skill-chip {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            border: 1px solid #333;
+            padding: 4px 10px;
+            transition:
+                border-color 0.2s ease,
+                color 0.2s ease,
+                background 0.2s ease;
+        }
+        .skill-chip:hover {
+            border-color: #e8473f;
+            color: #e8473f;
+            background: rgba(232,71,63,0.06);
+        }
+
+        /* Progress bars inside skill cards */
+        .sk-progress {
+            margin-bottom: 0.85rem;
+        }
+        .sk-progress:last-child { margin-bottom: 0; }
+        .sk-progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-body);
+            font-size: 11px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .sk-progress-track {
+            width: 100%;
+            height: 3px;
+            background: #222;
+            overflow: hidden;
+        }
+        .sk-progress-fill {
+            height: 100%;
+            width: 0;
+            background: #e8473f;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         /* ---- Project preview placeholder ---- */
         .project-preview {
             height: 200px;
@@ -703,57 +842,116 @@
 
     <!-- Skills Section -->
     <section id="skills" class="container">
+
         <span class="label reveal" data-delay="0">SKILLS</span>
-        <h2 class="section-title mb-4 reveal" data-delay="80">TECHNICAL ARSENAL.</h2>
 
-        <div class="grid-2">
-            <div class="card">
-                <h3 class="mb-4">Frontend Development</h3>
-                <div class="progress-container">
-                    <div class="progress-header"><span>Flutter</span><span>90%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+        <h2 class="skills-heading reveal" data-delay="60">
+            <span class="sh-technical">TECHNICAL</span>
+            <span class="sh-arsenal">ARSENAL</span>
+        </h2>
+
+        <p class="skills-subtext reveal" data-delay="130">
+            &ldquo;A honest breakdown of what I actually know and use.&rdquo;
+        </p>
+
+        <div class="skills-grid">
+
+            <!-- Card 1: Core Foundation -->
+            <div class="skill-card reveal" data-delay="0">
+                <span class="skill-card-icon" aria-hidden="true">&#9674;</span>
+                <h3 class="skill-card-title">CORE FOUNDATION</h3>
+
+                <div class="skill-chips">
+                    <span class="skill-chip">HTML5</span>
+                    <span class="skill-chip">CSS3</span>
+                    <span class="skill-chip">JavaScript ES6+</span>
+                    <span class="skill-chip">DOM Manipulation</span>
+                    <span class="skill-chip">Event Handling</span>
+                    <span class="skill-chip">Async Programming</span>
+                    <span class="skill-chip">API Integration</span>
                 </div>
-                <div class="progress-container">
-                    <div class="progress-header"><span>React</span><span>75%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width: 75%;"></div></div>
+
+                <div class="sk-progress">
+                    <div class="sk-progress-header">
+                        <span>JavaScript</span><span>85%</span>
+                    </div>
+                    <div class="sk-progress-track">
+                        <div class="sk-progress-fill" style="--bar-width: 85%;"></div>
+                    </div>
+                </div>
+                <div class="sk-progress">
+                    <div class="sk-progress-header">
+                        <span>HTML + CSS</span><span>90%</span>
+                    </div>
+                    <div class="sk-progress-track">
+                        <div class="sk-progress-fill" style="--bar-width: 90%;"></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h3 class="mb-4">Backend Development</h3>
-                <div class="progress-container">
-                    <div class="progress-header"><span>Node.js</span><span>80%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+            <!-- Card 2: Frontend & Frameworks -->
+            <div class="skill-card reveal" data-delay="100">
+                <span class="skill-card-icon" aria-hidden="true">&#9670;</span>
+                <h3 class="skill-card-title">FRONTEND &amp; FRAMEWORKS</h3>
+
+                <div class="skill-chips">
+                    <span class="skill-chip">React.js</span>
+                    <span class="skill-chip">Component Architecture</span>
+                    <span class="skill-chip">Responsive Design</span>
+                    <span class="skill-chip">UI Development</span>
                 </div>
-                <div class="progress-container">
-                    <div class="progress-header"><span>Python</span><span>80%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+
+                <div class="sk-progress">
+                    <div class="sk-progress-header">
+                        <span>React.js</span><span>80%</span>
+                    </div>
+                    <div class="sk-progress-track">
+                        <div class="sk-progress-fill" style="--bar-width: 80%;"></div>
+                    </div>
+                </div>
+                <div class="sk-progress">
+                    <div class="sk-progress-header">
+                        <span>API Integration</span><span>75%</span>
+                    </div>
+                    <div class="sk-progress-track">
+                        <div class="sk-progress-fill" style="--bar-width: 75%;"></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h3 class="mb-4">Cloud &amp; DevOps</h3>
-                <div class="progress-container">
-                    <div class="progress-header"><span>Firebase</span><span>85%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width: 85%;"></div></div>
+            <!-- Card 3: Backend & Tools -->
+            <div class="skill-card reveal" data-delay="200">
+                <span class="skill-card-icon" aria-hidden="true">&#9632;</span>
+                <h3 class="skill-card-title">BACKEND &amp; TOOLS</h3>
+
+                <div class="skill-chips">
+                    <span class="skill-chip">Node.js</span>
+                    <span class="skill-chip">Express</span>
+                    <span class="skill-chip">Firebase</span>
+                    <span class="skill-chip">Auth Systems</span>
+                    <span class="skill-chip">Git</span>
+                    <span class="skill-chip">GitHub</span>
+                    <span class="skill-chip">App Deployment</span>
                 </div>
-                <div class="progress-container">
-                    <div class="progress-header"><span>Google Cloud</span><span>75%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width: 75%;"></div></div>
+
+                <div class="sk-progress">
+                    <div class="sk-progress-header">
+                        <span>Node.js</span><span>70%</span>
+                    </div>
+                    <div class="sk-progress-track">
+                        <div class="sk-progress-fill" style="--bar-width: 70%;"></div>
+                    </div>
+                </div>
+                <div class="sk-progress">
+                    <div class="sk-progress-header">
+                        <span>Firebase</span><span>65%</span>
+                    </div>
+                    <div class="sk-progress-track">
+                        <div class="sk-progress-fill" style="--bar-width: 65%;"></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h3 class="mb-4">Tools &amp; Platforms</h3>
-                <div class="progress-container">
-                    <div class="progress-header"><span>Git</span><span>90%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
-                </div>
-                <div class="progress-container">
-                    <div class="progress-header"><span>Docker</span><span>70%</span></div>
-                    <div class="progress-track"><div class="progress-fill" style="width: 70%;"></div></div>
-                </div>
-            </div>
         </div>
     </section>
 
