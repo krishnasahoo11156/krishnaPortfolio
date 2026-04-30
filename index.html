@@ -235,44 +235,32 @@
             .hero-subtitle { font-size: 13px; letter-spacing: 2px; }
         }
 
-        /* ---- About stat blocks ---- */
-        .stat-blocks {
+        /* ================================================================
+           ABOUT — full redesign
+           ================================================================ */
+
+        /* Image column wrapper */
+        .about-col-image {
+            position: relative;
+            align-self: stretch;
             display: flex;
-            gap: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 2rem;
+            flex-direction: column;
+            gap: 1rem;
         }
 
-        .stat-block .number {
-            font-size: 3rem;
-            font-family: var(--font-heading);
-            color: white;
-            line-height: 1;
-            transition: color var(--transition-base);
-        }
-
-        .stat-block:hover .number {
-            color: var(--accent-color);
-        }
-
-        .stat-block .label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
-
-        /* ---- About image ---- */
+        /* Image frame with bracket decorations */
         .about-image {
             min-height: 420px;
-            height: 100%;
-            align-self: stretch;
-            border-left: 3px solid var(--accent-color);
+            flex: 1;
             position: relative;
             overflow: hidden;
-            transition: border-color var(--transition-base), transform var(--transition-slow);
+            border: 1px solid #222;
+            transition: box-shadow var(--transition-base), transform var(--transition-slow);
+        }
+
+        /* Red glow on hover */
+        .about-image:hover {
+            box-shadow: 0 0 40px 6px rgba(232,71,63,0.35);
         }
 
         .about-image img {
@@ -290,17 +278,236 @@
             transform: scale(1.04);
         }
 
+        /* Red overlay on hover */
         .about-image::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(232,71,63,0.08), transparent 60%);
+            background: linear-gradient(135deg, rgba(232,71,63,0.12), transparent 60%);
             transition: opacity var(--transition-base);
             opacity: 0;
+            z-index: 1;
+        }
+        .about-image:hover::after { opacity: 1; }
+
+        /* CSS bracket — top-left */
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px;
+            width: 28px; height: 28px;
+            border-top: 3px solid #e8473f;
+            border-left: 3px solid #e8473f;
+            z-index: 2;
+            pointer-events: none;
         }
 
-        .about-image:hover::after {
-            opacity: 1;
+        /* CSS bracket — bottom-right via a pseudo on the wrapper */
+        .about-col-image::after {
+            content: '';
+            position: absolute;
+            bottom: 58px; right: -2px; /* above the badge */
+            width: 28px; height: 28px;
+            border-bottom: 3px solid #e8473f;
+            border-right: 3px solid #e8473f;
+            pointer-events: none;
+        }
+
+        /* Availability badge */
+        .avail-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #0d0d0d;
+            border: 1.5px solid #22c55e;
+            padding: 6px 14px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #22c55e;
+            text-transform: uppercase;
+            align-self: flex-start;
+        }
+
+        .avail-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            animation: pulse-green 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.7); }
+            50%       { box-shadow: 0 0 0 6px rgba(34,197,94,0);  }
+        }
+
+        /* Content column */
+        .about-col-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0;
+        }
+
+        /* Split heading */
+        .about-heading {
+            margin: 0 0 1.25rem;
+            line-height: 0.92;
+        }
+
+        .about-heading .line-the {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: clamp(52px, 6vw, 88px);
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+
+        .about-heading .line-journey {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: clamp(52px, 6vw, 88px);
+            color: #e8473f;
+            letter-spacing: 2px;
+        }
+
+        /* Red horizontal rule */
+        .about-rule {
+            width: 100%;
+            height: 2px;
+            background: #e8473f;
+            margin-bottom: 1.5rem;
+            opacity: 0.85;
+        }
+
+        /* Bio text */
+        .about-bio {
+            font-family: var(--font-body);
+            font-size: clamp(14px, 1.4vw, 16px);
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Location / status pill tags */
+        .about-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+        }
+
+        .about-tag {
+            display: inline-block;
+            border: 1.5px solid #e8473f;
+            color: #e8473f;
+            background: transparent;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            transition: background var(--transition-fast), color var(--transition-fast);
+        }
+
+        .about-tag:hover {
+            background: rgba(232,71,63,0.1);
+        }
+
+        /* Stat counter row */
+        .about-counters {
+            display: flex;
+            align-items: stretch;
+            border-top: 1px solid #222;
+            padding-top: 1.75rem;
+            margin-top: auto;
+        }
+
+        .about-counter {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 0 0.5rem;
+        }
+
+        /* Thin vertical red divider between counters */
+        .about-counter + .about-counter::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 10%; bottom: 10%;
+            width: 1px;
+            background: #e8473f;
+            opacity: 0.4;
+        }
+
+        .about-counter .cnt-num {
+            font-family: var(--font-heading);
+            font-size: clamp(32px, 4vw, 52px);
+            color: #ffffff;
+            line-height: 1;
+            letter-spacing: 1px;
+            transition: color var(--transition-base);
+        }
+
+        .about-counter:hover .cnt-num { color: #e8473f; }
+
+        .about-counter .cnt-label {
+            font-family: var(--font-body);
+            font-size: 10px;
+            color: var(--text-secondary);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-top: 5px;
+            line-height: 1.3;
+        }
+
+        /* ================================================================
+           MARQUEE STRIP
+           ================================================================ */
+        .marquee-strip {
+            background: #e8473f;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 14px 0;
+            position: relative;
+            user-select: none;
+        }
+
+        .marquee-track {
+            display: inline-flex;
+            gap: 0;
+            animation: marquee-scroll 28s linear infinite;
+        }
+
+        .marquee-strip:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        .marquee-item {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            padding: 0 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .marquee-dot {
+            color: rgba(255,255,255,0.5);
+            padding: 0;
+        }
+
+        @keyframes marquee-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         /* ---- Project preview placeholder ---- */
@@ -492,32 +699,83 @@
 
     <!-- About Section -->
     <section id="about" class="container">
-        <div class="grid-2">
-            <div class="about-image reveal-left" data-delay="0">
-                <img src="image_journey.jpeg" alt="Krishna Sahoo — My Journey">
-            </div>
-            <div class="about-content reveal" data-delay="150">
-                <span class="label">ABOUT</span>
-                <h2 class="section-title">THE JOURNEY.</h2>
-                <p class="mb-4">From writing my first line of code to building full-scale applications, my journey has been driven by curiosity and an obsession with craft. I believe in building software that doesn't just work — it resonates.</p>
+        <div class="grid-2" style="align-items:stretch;">
 
-                <div class="stat-blocks">
-                    <div class="stat-block">
-                        <div class="number">3+</div>
-                        <div class="label">Years Experience</div>
+            <!-- LEFT: image + availability badge -->
+            <div class="about-col-image reveal-left" data-delay="0">
+                <div class="about-image">
+                    <img src="image_journey.jpeg" alt="Krishna Sahoo — My Journey">
+                </div>
+                <div class="avail-badge">
+                    <span class="avail-dot" aria-hidden="true"></span>
+                    Available For Work
+                </div>
+            </div>
+
+            <!-- RIGHT: heading, rule, bio, tags, counters -->
+            <div class="about-col-content reveal" data-delay="150">
+
+                <span class="label" style="margin-bottom:0.75rem;display:block;">ABOUT</span>
+
+                <h2 class="about-heading">
+                    <span class="line-the">THE</span>
+                    <span class="line-journey">JOURNEY.</span>
+                </h2>
+
+                <div class="about-rule" aria-hidden="true"></div>
+
+                <p class="about-bio">I'm a builder at heart, turning ideas into clean, functional digital experiences. I enjoy crafting solutions that are both efficient and meaningful. What drives me is the constant pursuit of better code and smarter systems.</p>
+
+                <!-- Location / status tags -->
+                <div class="about-tags">
+                    <span class="about-tag">📍 Based in Mumbai, India</span>
+                    <span class="about-tag">🌐 Open to Remote</span>
+                </div>
+
+                <!-- Animated stat counters -->
+                <div class="about-counters">
+                    <div class="about-counter">
+                        <span class="cnt-num" data-target="20" data-suffix="+">0</span>
+                        <span class="cnt-label">Projects Built</span>
                     </div>
-                    <div class="stat-block">
-                        <div class="number">10+</div>
-                        <div class="label">Projects Completed</div>
+                    <div class="about-counter">
+                        <span class="cnt-num" data-target="7" data-suffix="+">0</span>
+                        <span class="cnt-label">Technologies</span>
                     </div>
-                    <div class="stat-block">
-                        <div class="number">5+</div>
-                        <div class="label">Technologies Mastered</div>
+                    <div class="about-counter">
+                        <span class="cnt-num" data-target="160" data-suffix="+">0</span>
+                        <span class="cnt-label">GitHub Commits</span>
+                    </div>
+                    <div class="about-counter">
+                        <span class="cnt-num" data-target="120" data-suffix="+">0</span>
+                        <span class="cnt-label">Cups of Coffee</span>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
+
+    <!-- Marquee Strip -->
+    <div class="marquee-strip" aria-hidden="true">
+        <div class="marquee-track">
+            <!-- Duplicated for seamless loop -->
+            <span class="marquee-item">Open Source Lover</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Night Owl Coder</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">160+ Commits</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Problem Solver</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Badlapur, India</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Software Developer</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Always Learning</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Open Source Lover</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Night Owl Coder</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">160+ Commits</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Problem Solver</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Badlapur, India</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Software Developer</span><span class="marquee-item marquee-dot">·</span>
+            <span class="marquee-item">Always Learning</span><span class="marquee-item marquee-dot">·</span>
+        </div>
+    </div>
 
     <!-- Skills Section -->
     <section id="skills" class="container">

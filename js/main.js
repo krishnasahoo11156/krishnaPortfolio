@@ -118,4 +118,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+
+    /* =============================================
+       ANIMATED COUNTERS — count up on scroll
+       ============================================= */
+    const counters = document.querySelectorAll('.cnt-num[data-target]');
+
+    const animateCounter = (el) => {
+        const target  = parseInt(el.dataset.target, 10);
+        const suffix  = el.dataset.suffix || '';
+        const duration = 1600; // ms
+        const start   = performance.now();
+
+        const tick = (now) => {
+            const elapsed  = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease-out cubic
+            const eased    = 1 - Math.pow(1 - progress, 3);
+            const current  = Math.floor(eased * target);
+            el.textContent = current + (progress >= 1 ? suffix : '');
+            if (progress < 1) requestAnimationFrame(tick);
+        };
+
+        requestAnimationFrame(tick);
+    };
+
+    const counterObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    counters.forEach(c => counterObserver.observe(c));
+
 });
