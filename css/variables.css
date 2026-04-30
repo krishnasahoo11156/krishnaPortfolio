@@ -1,0 +1,17 @@
+:root {
+  --bg-color: #0a0a0a;
+  --surface-color: #111111;
+  --surface-elevated: #1a1a1a;
+  --accent-color: #e8473f;
+  --accent-hover: #ff5a52;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-tertiary: #555555;
+  --border-color: #222222;
+  
+  --font-heading: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  
+  --spacing-unit: 8px;
+  --section-padding: 160px 0;
+}

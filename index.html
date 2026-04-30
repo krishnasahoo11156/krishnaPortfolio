@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishna Sahoo | Software Developer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    
+    <style>
+        /* Specific section styles that don't need their own file */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(10,10,10,0.8), rgba(10,10,10,0.9)), url('image.png') center/cover;
+        }
+        
+        .hero-content {
+            z-index: 1;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .stat-blocks {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+        }
+        
+        .stat-block .number {
+            font-size: 3rem;
+            font-family: var(--font-heading);
+            color: white;
+            line-height: 1;
+        }
+        
+        .stat-block .label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Animation classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">KS</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Let's Talk</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content reveal">
+            <h1 class="hero-title">KRISHNA SAHOO</h1>
+            <p class="subtitle">Software Developer</p>
+            <p class="tagline mt-4">I engineer what others only imagine.</p>
+            
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#" class="btn btn-outline">Download CV</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container">
+        <div class="grid-2 reveal">
+            <div class="about-image" style="background: url('image.png') center/cover; min-height: 400px; border-left: 4px solid var(--accent-color);">
+            </div>
+            <div class="about-content">
+                <span class="label">ABOUT</span>
+                <h2 class="section-title">THE JOURNEY.</h2>
+                <p class="mb-4">From writing my first line of code to building full-scale applications, my journey has been driven by curiosity and an obsession with craft. I believe in building software that doesn't just work — it resonates.</p>
+                
+                <div class="stat-blocks">
+                    <div class="stat-block">
+                        <div class="number">3+</div>
+                        <div class="label">Years Experience</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="number">10+</div>
+                        <div class="label">Projects Completed</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="number">5+</div>
+                        <div class="label">Technologies Mastered</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="container reveal">
+        <span class="label">SKILLS</span>
+        <h2 class="section-title mb-4">TECHNICAL ARSENAL.</h2>
+        
+        <div class="grid-2">
+            <div class="card">
+                <h3 class="mb-4">Frontend Development</h3>
+                <div class="progress-container">
+                    <div class="progress-header"><span>Flutter</span><span>90%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header"><span>React</span><span>75%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width: 75%;"></div></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="mb-4">Backend Development</h3>
+                <div class="progress-container">
+                    <div class="progress-header"><span>Node.js</span><span>80%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header"><span>Python</span><span>80%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="mb-4">Cloud & DevOps</h3>
+                <div class="progress-container">
+                    <div class="progress-header"><span>Firebase</span><span>85%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width: 85%;"></div></div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header"><span>Google Cloud</span><span>75%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width: 75%;"></div></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="mb-4">Tools & Platforms</h3>
+                <div class="progress-container">
+                    <div class="progress-header"><span>Git</span><span>90%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header"><span>Docker</span><span>70%</span></div>
+                    <div class="progress-track"><div class="progress-fill" style="width: 70%;"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="container reveal">
+        <span class="label">PORTFOLIO</span>
+        <h2 class="section-title mb-4">SELECTED WORK.</h2>
+        
+        <div class="grid-3">
+            <div class="card">
+                <div style="height: 200px; background: #1a1a1a; margin-bottom: 1rem;"></div>
+                <h3 class="mb-2">CrisisSync</h3>
+                <p class="tagline mb-4">Real-time crisis coordination platform built with Flutter & Firebase</p>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <span style="background: #1a1a1a; padding: 4px 8px; font-size: 12px; color: var(--accent-color);">FLUTTER</span>
+                    <span style="background: #1a1a1a; padding: 4px 8px; font-size: 12px; color: var(--accent-color);">FIREBASE</span>
+                </div>
+                <a href="#" style="color: var(--accent-color); font-weight: bold; text-transform: uppercase; font-size: 14px;">View Project →</a>
+            </div>
+            
+            <div class="card">
+                <div style="height: 200px; background: #1a1a1a; margin-bottom: 1rem;"></div>
+                <h3 class="mb-2">StudySync</h3>
+                <p class="tagline mb-4">AI-powered study companion for students</p>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <span style="background: #1a1a1a; padding: 4px 8px; font-size: 12px; color: var(--accent-color);">REACT</span>
+                    <span style="background: #1a1a1a; padding: 4px 8px; font-size: 12px; color: var(--accent-color);">NODE.JS</span>
+                </div>
+                <a href="#" style="color: var(--accent-color); font-weight: bold; text-transform: uppercase; font-size: 14px;">View Project →</a>
+            </div>
+            
+            <div class="card">
+                <div style="height: 200px; background: #1a1a1a; margin-bottom: 1rem;"></div>
+                <h3 class="mb-2">Portfolio v2</h3>
+                <p class="tagline mb-4">Brutalist developer portfolio with cinematic design</p>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <span style="background: #1a1a1a; padding: 4px 8px; font-size: 12px; color: var(--accent-color);">HTML/CSS</span>
+                    <span style="background: #1a1a1a; padding: 4px 8px; font-size: 12px; color: var(--accent-color);">JS</span>
+                </div>
+                <a href="#" style="color: var(--accent-color); font-weight: bold; text-transform: uppercase; font-size: 14px;">View Project →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container reveal">
+        <div class="grid-2">
+            <div>
+                <span class="label">CONTACT</span>
+                <h2 class="section-title">Get in Touch.</h2>
+                <p class="mb-4">Have a project in mind? Let's build something extraordinary together.</p>
+                
+                <div class="mt-4">
+                    <p class="mb-2">Email: hello@krishnasahoo.com</p>
+                    <p>Location: Earth</p>
+                </div>
+            </div>
+            
+            <div>
+                <form>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                        <input type="text" class="form-control" placeholder="Name" style="flex: 1;">
+                        <input type="email" class="form-control" placeholder="Email" style="flex: 1;">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control">
+                            <option value="">Select Project Type</option>
+                            <option value="web">Web App</option>
+                            <option value="mobile">Mobile App</option>
+                            <option value="fullstack">Full Stack</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Your Message"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer container">
+        <h2 style="font-family: var(--font-heading); margin-bottom: 0.5rem;">KRISHNA SAHOO</h2>
+        <p class="tagline mb-4">Software Developer</p>
+        <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+            <a href="#" style="width: 40px; height: 40px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; transition: border-color 0.3s;" onmouseover="this.style.borderColor='var(--accent-color)'" onmouseout="this.style.borderColor='var(--border-color)'">GH</a>
+            <a href="#" style="width: 40px; height: 40px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; transition: border-color 0.3s;" onmouseover="this.style.borderColor='var(--accent-color)'" onmouseout="this.style.borderColor='var(--border-color)'">IN</a>
+            <a href="#" style="width: 40px; height: 40px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; transition: border-color 0.3s;" onmouseover="this.style.borderColor='var(--accent-color)'" onmouseout="this.style.borderColor='var(--border-color)'">TW</a>
+        </div>
+        <p class="tagline">© 2026 Krishna Sahoo. All rights reserved.</p>
+    </footer>
+
+    <!-- Script Import -->
+    <script src="js/main.js"></script>
+</body>
+</html>
