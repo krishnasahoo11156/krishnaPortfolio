@@ -1,20 +1,21 @@
 /* ============================================================
    detail.css — shared styles for skill detail pages
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --accent: #E05C3A;
-  --bg: #0d0d0d;
+  --accent: #e8473f;
+  --bg: #0a0a0a;
   --surface: #111111;
-  --text: #f0f0f0;
+  --surface-elevated: #1a1a1a;
+  --text: #ffffff;
   --dim: #888888;
   --border: #222222;
 }
 
-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; line-height: 1.6; }
 a { text-decoration: none; color: inherit; }
 img { display: block; }
 
@@ -55,7 +56,7 @@ img { display: block; }
 .detail-hero::before {
   content: '';
   position: absolute; inset: 0; z-index: 0;
-  background-image: radial-gradient(circle, rgba(224,92,58,0.22) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(232,71,63,0.22) 1px, transparent 1px);
   background-size: 32px 32px;
   animation: dot-pulse 3s ease infinite alternate;
 }
@@ -148,7 +149,7 @@ img { display: block; }
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.detail-card:hover { box-shadow: 0 0 0 1.5px #E05C3A, 0 0 24px rgba(224,92,58,0.2); transform: translateY(-3px); }
+.detail-card:hover { box-shadow: 0 0 0 1.5px #E05C3A, 0 0 24px rgba(232,71,63,0.2); transform: translateY(-3px); }
 
 @media (prefers-reduced-motion: no-preference) {
   .detail-card:hover .skill-logo { animation: spin360 0.6s ease forwards; }
@@ -209,7 +210,7 @@ img { display: block; }
   transition: transform 0.3s ease, border-left-color 0.3s ease, box-shadow 0.3s ease;
   opacity: 0; animation: card-in 0.4s ease forwards;
 }
-.scenario-card:hover { transform: translateY(-4px); border-left-color: var(--accent); box-shadow: 0 8px 24px rgba(224,92,58,0.1); }
+.scenario-card:hover { transform: translateY(-4px); border-left-color: var(--accent); box-shadow: 0 8px 24px rgba(232,71,63,0.1); }
 .scenario-icon { font-size: 2rem; margin-bottom: 0.75rem; }
 .scenario-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #fff; letter-spacing: 1px; margin-bottom: 0.5rem; }
 .scenario-desc { font-size: 13px; line-height: 1.75; color: var(--dim); }
