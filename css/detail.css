@@ -1,0 +1,224 @@
+/* ============================================================
+   detail.css — shared styles for skill detail pages
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --accent: #E05C3A;
+  --bg: #0d0d0d;
+  --surface: #111111;
+  --text: #f0f0f0;
+  --dim: #888888;
+  --border: #222222;
+}
+
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+img { display: block; }
+
+/* ===== NAVBAR ===== */
+.detail-nav {
+  position: fixed; top: 0; left: 0; width: 100%;
+  padding: 1rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(13,13,13,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+}
+.back-link {
+  font-size: 12px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--accent);
+  display: flex; align-items: center; gap: 0.4rem;
+  transition: letter-spacing 0.2s ease;
+}
+.back-link:hover { letter-spacing: 4px; }
+.nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: #fff; }
+.nav-right { display: flex; gap: 1.5rem; }
+.nav-right a {
+  font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--dim); transition: color 0.2s ease;
+}
+.nav-right a:hover { color: #fff; }
+
+/* ===== HERO ===== */
+.detail-hero {
+  min-height: 55vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 9rem 2rem 5rem;
+  position: relative; overflow: hidden;
+  background: var(--bg);
+}
+.detail-hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background-image: radial-gradient(circle, rgba(224,92,58,0.22) 1px, transparent 1px);
+  background-size: 32px 32px;
+  animation: dot-pulse 3s ease infinite alternate;
+}
+@keyframes dot-pulse { from { opacity: 0.25; } to { opacity: 0.65; } }
+
+.hero-inner { position: relative; z-index: 1; }
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 10vw, 120px);
+  letter-spacing: 4px; color: #fff; line-height: 1;
+}
+.hero-accent-line {
+  height: 4px; width: 80px;
+  background: var(--accent);
+  margin: 0.85rem auto 0.75rem;
+  border-radius: 2px;
+}
+.hero-subtitle {
+  font-size: 14px; color: var(--dim);
+  letter-spacing: 1px; font-style: italic;
+}
+
+/* ===== LAYOUT ===== */
+.section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+.section-label {
+  display: block;
+  font-size: 11px; letter-spacing: 3px; color: var(--accent);
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 5vw, 60px);
+  color: #fff; letter-spacing: 2px; margin-bottom: 2rem;
+}
+
+/* ===== TERMINAL ===== */
+#terminal {
+  background: #080808;
+  border: 1px solid #2a2a2a;
+  padding: 1.5rem 1.75rem;
+  max-height: 260px;
+  overflow: hidden;
+  transition: opacity 0.4s ease, max-height 0.4s ease;
+}
+.term-header { display: flex; gap: 6px; margin-bottom: 1rem; }
+.term-dot { width: 10px; height: 10px; border-radius: 50%; }
+.term-dot:nth-child(1) { background: #ff5f57; }
+.term-dot:nth-child(2) { background: #febc2e; }
+.term-dot:nth-child(3) { background: #28c840; }
+.term-body { min-height: 90px; }
+.term-line {
+  font-family: 'Courier New', monospace;
+  font-size: 13px; color: #00e676;
+  line-height: 1.9; opacity: 0;
+  animation: term-in 0.15s ease forwards;
+}
+@keyframes term-in { to { opacity: 1; } }
+.term-cursor { animation: blink 0.75s step-end infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ===== INTRO TEXT ===== */
+#intro-text {
+  display: none;
+  font-size: 16px; line-height: 1.9; color: var(--dim);
+  max-width: 800px;
+}
+#intro-text .word {
+  display: inline-block;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#intro-text .word.vis { opacity: 1; transform: translateY(0); }
+
+/* ===== SKILL CARDS ===== */
+.skills-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.detail-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.75rem;
+  position: relative; overflow: hidden;
+  animation: card-in 0.5s ease both;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.detail-card:hover { box-shadow: 0 0 0 1.5px #E05C3A, 0 0 24px rgba(224,92,58,0.2); transform: translateY(-3px); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .detail-card:hover .skill-logo { animation: spin360 0.6s ease forwards; }
+  @keyframes spin360 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+}
+
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.logo-wrap { width: 44px; height: 44px; }
+.skill-logo { width: 100%; height: 100%; object-fit: contain; }
+.skill-logo-fallback {
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--accent);
+  border: 1px solid var(--accent); border-radius: 6px;
+}
+.why-badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  background: var(--accent); color: #fff;
+  padding: 3px 10px; border-radius: 2px; text-transform: uppercase;
+}
+.skill-name { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #fff; letter-spacing: 1px; margin-bottom: 1rem; }
+.prof-bar-wrap { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+.prof-bar-track { flex: 1; height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
+.prof-bar-fill {
+  height: 100%; width: 0; background: var(--accent);
+  transition: width 1s cubic-bezier(0.4,0,0.2,1); border-radius: 2px;
+}
+.prof-num { font-size: 11px; color: var(--accent); font-weight: 600; min-width: 32px; }
+.skill-blurb { font-size: 13px; line-height: 1.75; color: var(--dim); min-height: 72px; }
+
+/* ===== FLOWCHART ===== */
+#flowchart { display: flex; justify-content: center; }
+.end-node-rect { animation: node-glow 2s ease infinite; }
+@keyframes node-glow {
+  0%,100% { filter: drop-shadow(0 0 2px var(--accent)); }
+  50%      { filter: drop-shadow(0 0 12px var(--accent)); }
+}
+#flow-tooltip {
+  position: fixed; pointer-events: none;
+  background: #1a1a1a; border: 1px solid var(--accent);
+  color: var(--text); padding: 6px 12px;
+  font-size: 12px; border-radius: 4px;
+  opacity: 0; transition: opacity 0.2s ease; z-index: 9999;
+}
+
+/* ===== REAL WORLD ===== */
+.scenarios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.skeleton-card {
+  background: #1a1a1a; border-radius: 8px; height: 160px;
+  animation: skel-pulse 1.2s ease infinite;
+}
+@keyframes skel-pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+.scenario-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid transparent;
+  border-radius: 8px; padding: 1.75rem;
+  transition: transform 0.3s ease, border-left-color 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0; animation: card-in 0.4s ease forwards;
+}
+.scenario-card:hover { transform: translateY(-4px); border-left-color: var(--accent); box-shadow: 0 8px 24px rgba(224,92,58,0.1); }
+.scenario-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+.scenario-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #fff; letter-spacing: 1px; margin-bottom: 0.5rem; }
+.scenario-desc { font-size: 13px; line-height: 1.75; color: var(--dim); }
+
+/* ===== FOOTER ===== */
+.detail-footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); color: var(--dim); font-size: 13px; }
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  #intro-text .word { opacity: 1; transform: none; }
+}

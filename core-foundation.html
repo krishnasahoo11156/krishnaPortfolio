@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Core Foundation — Krishna Sahoo</title>
+  <meta name="description" content="A deep dive into Krishna Sahoo's core web foundation skills: HTML5, CSS3, and JavaScript ES6+.">
+  <link rel="stylesheet" href="css/detail.css">
+</head>
+<body>
+
+  <!-- TOOLTIP (used by flowchart engine) -->
+  <div id="flow-tooltip"></div>
+
+  <!-- NAVBAR -->
+  <nav class="detail-nav">
+    <a href="index.html" class="back-link">← Back</a>
+    <span class="nav-logo">KS</span>
+    <div class="nav-right">
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="detail-hero">
+    <div class="hero-inner">
+      <h1 class="hero-title">CORE FOUNDATION</h1>
+      <div class="hero-accent-line"></div>
+      <p class="hero-subtitle" id="hero-subtitle"></p>
+    </div>
+  </header>
+
+  <!-- INTRO -->
+  <section class="section">
+    <span class="section-label">About This Skill Set</span>
+    <h2 class="section-title">THE ORIGIN STORY.</h2>
+
+    <!-- Terminal boot -->
+    <div id="terminal">
+      <div class="term-header">
+        <span class="term-dot"></span>
+        <span class="term-dot"></span>
+        <span class="term-dot"></span>
+      </div>
+      <div class="term-body"></div>
+    </div>
+
+    <!-- Intro text (hidden until terminal fades) -->
+    <p id="intro-text"></p>
+  </section>
+
+  <!-- SKILLS GRID -->
+  <section class="section">
+    <span class="section-label">Technologies</span>
+    <h2 class="section-title">THE TOOLKIT.</h2>
+    <div class="skills-detail-grid" id="skills-grid"></div>
+  </section>
+
+  <!-- FLOWCHART -->
+  <section class="section">
+    <span class="section-label">Mental Model</span>
+    <h2 class="section-title">THE MENTAL MODEL.</h2>
+    <p style="color:var(--dim);font-size:13px;margin-bottom:2rem;">How these skills connect and build on each other.</p>
+    <div id="flowchart"></div>
+  </section>
+
+  <!-- REAL WORLD -->
+  <section class="section">
+    <span class="section-label">Real World</span>
+    <h2 class="section-title">REAL WORLD USAGE.</h2>
+    <div class="scenarios-grid" id="scenarios-grid">
+      <!-- Skeleton placeholders -->
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="detail-footer">
+    <p>© 2026 Krishna Sahoo · <a href="index.html" style="color:var(--accent);">Back to Portfolio</a></p>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>const PAGE_KEY = 'coreFoundation'; const PAGE_TITLE = 'CORE FOUNDATION';</script>
+  <script src="krishna-content.js"></script>
+  <script src="js/page-engine.js"></script>
+
+  <!-- Page entry animation -->
+  <script>
+  window.addEventListener('load', function() {
+    var o = document.createElement('div');
+    o.style.cssText = 'position:fixed;inset:0;background:#0d0d0d;opacity:1;z-index:9999;transition:opacity 0.4s ease;pointer-events:none';
+    document.body.appendChild(o);
+    requestAnimationFrame(function() { requestAnimationFrame(function() { o.style.opacity = '0'; }); });
+    setTimeout(function() { o.remove(); }, 500);
+  });
+  </script>
+</body>
+</html>

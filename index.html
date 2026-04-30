@@ -537,6 +537,28 @@
             background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
         }
 
+        /* Clickable card */
+        .skill-card[onclick] { cursor: pointer; }
+
+        /* EXPLORE label */
+        .explore-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #E05C3A;
+            text-align: center;
+            padding-top: 10px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        .skill-card:hover .explore-label {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Corner icon */
         .skill-card-icon {
             position: absolute;
@@ -876,7 +898,7 @@
         <div class="skills-grid">
 
             <!-- Card 1: Core Foundation -->
-            <div class="skill-card reveal" data-delay="0">
+            <div class="skill-card reveal" data-delay="0" onclick="navigateTo('core-foundation.html')">
                 <span class="skill-card-icon" aria-hidden="true">&#9674;</span>
                 <h3 class="skill-card-title">CORE FOUNDATION</h3>
 
@@ -906,10 +928,11 @@
                         <div class="sk-progress-fill" style="--bar-width: 90%;"></div>
                     </div>
                 </div>
+                <span class="explore-label">EXPLORE &rarr;</span>
             </div>
 
             <!-- Card 2: Frontend & Frameworks -->
-            <div class="skill-card reveal" data-delay="100">
+            <div class="skill-card reveal" data-delay="100" onclick="navigateTo('frontend-frameworks.html')">
                 <span class="skill-card-icon" aria-hidden="true">&#9670;</span>
                 <h3 class="skill-card-title">FRONTEND &amp; FRAMEWORKS</h3>
 
@@ -936,10 +959,11 @@
                         <div class="sk-progress-fill" style="--bar-width: 75%;"></div>
                     </div>
                 </div>
+                <span class="explore-label">EXPLORE &rarr;</span>
             </div>
 
             <!-- Card 3: Backend & Tools -->
-            <div class="skill-card reveal" data-delay="200">
+            <div class="skill-card reveal" data-delay="200" onclick="navigateTo('backend-tools.html')">
                 <span class="skill-card-icon" aria-hidden="true">&#9632;</span>
                 <h3 class="skill-card-title">BACKEND &amp; TOOLS</h3>
 
@@ -969,6 +993,7 @@
                         <div class="sk-progress-fill" style="--bar-width: 65%;"></div>
                     </div>
                 </div>
+                <span class="explore-label">EXPLORE &rarr;</span>
             </div>
 
         </div>
@@ -1068,5 +1093,16 @@
     <!-- Script Imports -->
     <script src="js/hero.js"></script>
     <script src="js/main.js"></script>
+
+    <!-- Page transition -->
+    <script>
+    function navigateTo(url) {
+        var overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;inset:0;background:#0d0d0d;opacity:0;z-index:9999;transition:opacity 0.3s ease;pointer-events:none';
+        document.body.appendChild(overlay);
+        requestAnimationFrame(function() { overlay.style.opacity = '1'; });
+        setTimeout(function() { window.location.href = url; }, 320);
+    }
+    </script>
 </body>
 </html>
