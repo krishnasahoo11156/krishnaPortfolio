@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* =============================================
        SCROLL REVEAL — staggered children
        ============================================= */
-    const revealElements = document.querySelectorAll('.reveal');
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left');
 
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {

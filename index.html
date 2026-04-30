@@ -266,12 +266,28 @@
 
         /* ---- About image ---- */
         .about-image {
-            background: url('image.png') center/cover;
             min-height: 420px;
+            height: 100%;
+            align-self: stretch;
             border-left: 3px solid var(--accent-color);
             position: relative;
             overflow: hidden;
             transition: border-color var(--transition-base), transform var(--transition-slow);
+        }
+
+        .about-image img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+            transition: transform var(--transition-slow);
+        }
+
+        .about-image:hover img {
+            transform: scale(1.04);
         }
 
         .about-image::after {
@@ -477,7 +493,9 @@
     <!-- About Section -->
     <section id="about" class="container">
         <div class="grid-2">
-            <div class="about-image reveal-left" data-delay="0"></div>
+            <div class="about-image reveal-left" data-delay="0">
+                <img src="image_journey.jpeg" alt="Krishna Sahoo — My Journey">
+            </div>
             <div class="about-content reveal" data-delay="150">
                 <span class="label">ABOUT</span>
                 <h2 class="section-title">THE JOURNEY.</h2>
