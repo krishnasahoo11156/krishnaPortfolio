@@ -10,6 +10,31 @@ section {
   position: relative;
 }
 
+/* ---- Section spacing & visual divider ---- */
+/* Extra breathing room between non-hero sections */
+section:not(.hero) + section:not(.hero) {
+  margin-top: var(--section-gap);
+}
+
+/* Thin accent-tinted rule between non-hero sections */
+section:not(.hero) + section:not(.hero)::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--section-gap) * -0.5 + 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+  opacity: 0.35;
+}
+
+/* Footer gets a clean top separator */
+footer {
+  margin-top: var(--section-gap);
+}
+
+/* ---- Grids ---- */
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr;
