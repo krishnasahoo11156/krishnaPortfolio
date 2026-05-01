@@ -632,3 +632,93 @@
     }
     #contact { padding-top: 80px; }
 }
+
+/* ================================================================
+   SOCIAL ICON ROW — Horizontal icon buttons
+   ================================================================ */
+.contact-socials {
+    margin-top: 1.6rem;
+}
+
+.contact-socials-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--text-tertiary);
+    margin-bottom: 0.9rem;
+}
+
+/* Horizontal flex row */
+.cs-icon-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Individual icon button */
+.cs-icon-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #222222;
+    background: transparent;
+    color: #888888;
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    flex-shrink: 0;
+}
+
+.cs-icon-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    transition: fill 0.25s ease;
+    display: block;
+}
+
+/* Hover: lift + accent glow */
+.cs-icon-btn:hover {
+    color: #e8473f;
+    border-color: #e8473f;
+    background: rgba(232, 71, 63, 0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(232, 71, 63, 0.22);
+}
+
+/* Tooltip via data-tooltip attribute */
+.cs-icon-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #1a1a1a;
+    color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    padding: 4px 8px;
+    border: 1px solid #333;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+.cs-icon-btn:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
