@@ -1,0 +1,459 @@
+/* ================================================================
+   TIMELINE — "THE ROAD SO FAR"
+   Brutalist dark theme, red-coral accents
+   ================================================================ */
+
+/* ---------- Section wrapper ---------- */
+#timeline {
+    position: relative;
+}
+
+/* ---------- Section heading ---------- */
+.tl-heading {
+    margin: 0 0 0.5rem;
+    line-height: 0.92;
+}
+.tl-heading .th-road {
+    font-family: var(--font-heading);
+    font-size: clamp(48px, 6vw, 84px);
+    color: #ffffff;
+    letter-spacing: 2px;
+}
+.tl-heading .th-sofar {
+    font-family: var(--font-heading);
+    font-size: clamp(48px, 6vw, 84px);
+    color: #e8473f;
+    letter-spacing: 2px;
+}
+.tl-subtext {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-secondary);
+    letter-spacing: 1.5px;
+    margin-bottom: 4rem;
+    font-style: italic;
+}
+
+/* ---------- Outer container ---------- */
+.timeline-wrap {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
+}
+
+/* ---------- Center line ---------- */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 0;            /* animated via JS */
+    background: linear-gradient(to bottom, #e8473f, rgba(232,71,63,0.3));
+    border-radius: 2px;
+    transition: height 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
+.timeline-line.drawn {
+    height: 100%;
+}
+
+/* ---------- Single timeline item ---------- */
+.tl-item {
+    display: flex;
+    justify-content: flex-end;  /* default: card on LEFT */
+    padding: 0 calc(50% + 40px) 0 0;
+    margin-bottom: 3.5rem;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.tl-item.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Every even item: card on RIGHT */
+.tl-item:nth-child(even) {
+    justify-content: flex-start;
+    padding: 0 0 0 calc(50% + 40px);
+    transform: translateX(40px);
+}
+.tl-item:nth-child(even).active {
+    transform: translateX(0);
+}
+
+/* ---------- Connector dot on center line ---------- */
+.tl-item::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 22px;
+    transform: translate(-50%, 0);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #e8473f;
+    border: 3px solid #0a0a0a;
+    box-shadow: 0 0 10px rgba(232,71,63,0.7);
+    z-index: 3;
+}
+
+/* Pulsing green dot for current node */
+.tl-item.current::before {
+    background: #22c55e;
+    box-shadow: 0 0 0 0 rgba(34,197,94,0.7);
+    animation: pulse-green-dot 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse-green-dot {
+    0%   { box-shadow: 0 0 0 0 rgba(34,197,94,0.7); }
+    70%  { box-shadow: 0 0 0 10px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+
+/* ---------- Card ---------- */
+.tl-card {
+    background: #111111;
+    border: 1px solid #222;
+    border-left: 3px solid #e8473f;
+    padding: 1.5rem 1.75rem;
+    max-width: 420px;
+    width: 100%;
+    position: relative;
+    transition:
+        transform 0.28s ease,
+        box-shadow 0.28s ease,
+        background-color 0.28s ease;
+}
+.tl-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 40px rgba(232,71,63,0.25);
+    background-color: #161616;
+}
+
+/* Gold/amber accent variant */
+.tl-card.accent-gold {
+    border-left-color: #f59e0b;
+}
+.tl-card.accent-gold:hover {
+    box-shadow: 0 8px 40px rgba(245,158,11,0.2);
+}
+
+/* ---------- Year label ---------- */
+.tl-year {
+    font-family: var(--font-heading);
+    font-size: clamp(28px, 3.5vw, 40px);
+    color: #e8473f;
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+}
+.tl-card.accent-gold .tl-year { color: #f59e0b; }
+
+/* ---------- Institution name ---------- */
+.tl-school {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.6vw, 17px);
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+}
+
+/* ---------- Level / grade sub-label ---------- */
+.tl-grade {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-bottom: 0.85rem;
+}
+
+/* ---------- Highlight badge row ---------- */
+.tl-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+}
+.tl-badge {
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1.5px solid #e8473f;
+    color: #e8473f;
+    background: transparent;
+}
+.tl-badge.green {
+    border-color: #22c55e;
+    color: #22c55e;
+}
+.tl-badge.gold {
+    border-color: #f59e0b;
+    color: #f59e0b;
+}
+
+/* ---------- Conductor logo ---------- */
+.tl-conductor {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.65rem;
+}
+.tl-conductor-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #1a1a1a;
+    border: 2px solid #2a2a2a;
+    flex-shrink: 0;
+}
+.tl-conductor-name {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+/* ---------- Event type pill badge ---------- */
+.tl-type-badge {
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border: 1.5px solid #333;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+/* ---------- Special note ---------- */
+.tl-note {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: #f59e0b;
+    letter-spacing: 0.8px;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.7rem;
+    border-left: 2px solid #f59e0b;
+    background: rgba(245,158,11,0.06);
+}
+.tl-note.coral {
+    color: #e8473f;
+    border-left-color: #e8473f;
+    background: rgba(232,71,63,0.06);
+}
+
+/* ---------- "VIEW ALL ACHIEVEMENTS →" toggle ---------- */
+.tl-achievements-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: transparent;
+    border: 1.5px solid #e8473f;
+    color: #e8473f;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-top: 1.2rem;
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.2s ease;
+}
+.tl-achievements-toggle:hover {
+    background: rgba(232,71,63,0.1);
+    transform: translateX(3px);
+}
+.tl-achievements-toggle .toggle-arrow {
+    transition: transform 0.35s ease;
+    display: inline-block;
+}
+.tl-achievements-toggle.open .toggle-arrow {
+    transform: rotate(90deg);
+}
+
+/* ---------- Sub-timeline (achievements) ---------- */
+.tl-sub-wrap {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tl-sub-wrap.open {
+    max-height: 3000px;
+}
+
+.tl-sub-list {
+    position: relative;
+    margin: 1.5rem 0 0.5rem 20px;
+    padding-left: 2rem;
+    border-left: 2px solid #333;
+}
+.tl-sub-item {
+    margin-bottom: 1.5rem;
+    position: relative;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.tl-sub-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.tl-sub-item::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 14px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e8473f;
+    border: 2px solid #0a0a0a;
+    box-shadow: 0 0 6px rgba(232,71,63,0.5);
+}
+.tl-sub-item.gold-item::before {
+    background: #f59e0b;
+    box-shadow: 0 0 6px rgba(245,158,11,0.5);
+}
+
+.tl-sub-card {
+    background: #0e0e0e;
+    border: 1px solid #1e1e1e;
+    border-left: 2px solid #e8473f;
+    padding: 1rem 1.25rem;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.tl-sub-card:hover {
+    background: #141414;
+    box-shadow: 0 4px 20px rgba(232,71,63,0.12);
+}
+.tl-sub-card.gold-card {
+    border-left-color: #f59e0b;
+}
+.tl-sub-card.gold-card:hover {
+    box-shadow: 0 4px 20px rgba(245,158,11,0.12);
+}
+
+.tl-sub-date {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    color: #e8473f;
+    letter-spacing: 1px;
+    margin-bottom: 0.15rem;
+}
+.tl-sub-card.gold-card .tl-sub-date { color: #f59e0b; }
+
+.tl-sub-title {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+}
+
+/* ---------- Achievement counter strip ---------- */
+.tl-counters {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 4rem;
+    border: 1px solid #222;
+}
+
+.tl-counter-item {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-right: 1px solid #222;
+    position: relative;
+    transition: background 0.25s ease;
+}
+.tl-counter-item:last-child { border-right: none; }
+.tl-counter-item:hover { background: #111; }
+
+.tl-cnt-num {
+    font-family: var(--font-heading);
+    font-size: clamp(36px, 4.5vw, 56px);
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: 2px;
+    display: block;
+    transition: color 0.3s ease;
+}
+.tl-counter-item:hover .tl-cnt-num { color: #e8473f; }
+
+.tl-cnt-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+    line-height: 1.4;
+    display: block;
+}
+
+.tl-counter-item .win-note {
+    font-family: 'Courier New', monospace;
+    font-size: 8px;
+    color: #f59e0b;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 3px;
+}
+
+/* ================================================================
+   MOBILE — single column
+   ================================================================ */
+@media (max-width: 768px) {
+    .timeline-line {
+        left: 20px;
+    }
+
+    .tl-item,
+    .tl-item:nth-child(even) {
+        justify-content: flex-start;
+        padding: 0 0 0 60px;
+        transform: translateX(-20px);
+    }
+    .tl-item.active,
+    .tl-item:nth-child(even).active {
+        transform: translateX(0);
+    }
+
+    .tl-item::before {
+        left: 20px;
+    }
+
+    .tl-card {
+        max-width: 100%;
+    }
+
+    .tl-counters {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .tl-counter-item:nth-child(2) { border-right: none; }
+    .tl-counter-item:nth-child(3) { border-top: 1px solid #222; }
+    .tl-counter-item:nth-child(4) { border-top: 1px solid #222; border-right: none; }
+}
+
+@media (max-width: 480px) {
+    .tl-counters {
+        grid-template-columns: 1fr;
+    }
+    .tl-counter-item { border-right: none; border-bottom: 1px solid #222; }
+    .tl-counter-item:last-child { border-bottom: none; }
+}
