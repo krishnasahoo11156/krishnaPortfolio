@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krishna Sahoo — Software Developer</title>
-    <meta name="description" content="Software Developer from Badlapur, India. Building full-stack web apps, AI systems, and open source projects.">
+    <meta name="description"
+        content="Software Developer from Badlapur, India. Building full-stack web apps, AI systems, and open source projects.">
     <meta name="author" content="Krishna Sahoo">
     <link rel="canonical" href="https://krishnasahoo.dev/">
 
@@ -13,23 +14,27 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://krishnasahoo.dev/">
     <meta property="og:title" content="Krishna Sahoo — Software Developer">
-    <meta property="og:description" content="Software Developer from Badlapur, India. Building full-stack web apps, AI systems, and open source projects.">
+    <meta property="og:description"
+        content="Software Developer from Badlapur, India. Building full-stack web apps, AI systems, and open source projects.">
     <meta property="og:image" content="image.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@Krishna11156">
     <meta name="twitter:title" content="Krishna Sahoo — Software Developer">
-    <meta name="twitter:description" content="Software Developer from Badlapur, India. Building full-stack web apps, AI systems, and open source projects.">
+    <meta name="twitter:description"
+        content="Software Developer from Badlapur, India. Building full-stack web apps, AI systems, and open source projects.">
     <meta name="twitter:image" content="image.png">
 
     <!-- Favicon (inline SVG data URI) -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23e8473f'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='14' fill='white'%3EKS%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23e8473f'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='14' fill='white'%3EKS%3C/text%3E%3C/svg%3E">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap&font-display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap&font-display=swap"
         rel="stylesheet">
 
     <!-- CSS Imports -->
@@ -875,7 +880,11 @@
 
     <!-- Page Loader -->
     <div id="page-loader" role="status" aria-label="Loading">
-        <div class="loader-inner" data-text="KS">KS</div>
+        <div class="loader-content">
+            <div class="loader-ks" id="loader-ks">KS</div>
+            <div class="loader-line" id="loader-line" aria-hidden="true"></div>
+            <div class="loader-role" id="loader-role" aria-hidden="true"></div>
+        </div>
     </div>
 
     <!-- Custom Cursor (desktop) -->
@@ -884,11 +893,14 @@
 
     <!-- Back To Top -->
     <button id="back-to-top" aria-label="Back to top">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 4l-8 8h5v8h6v-8h5z" />
+        </svg>
     </button>
 
     <!-- Mobile Overlay Menu -->
-    <div id="nav-mobile-overlay" class="nav-mobile-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div id="nav-mobile-overlay" class="nav-mobile-overlay" role="dialog" aria-modal="true"
+        aria-label="Navigation menu">
         <button id="nav-mobile-close" class="nav-mobile-close-btn" aria-label="Close menu">✕</button>
         <a href="#home">Home</a>
         <a href="#about">About</a>
@@ -909,10 +921,12 @@
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
         </div>
-        <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" aria-label="Navigate to contact section">
+        <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})"
+            aria-label="Navigate to contact section">
             Let's Talk
         </button>
-        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-mobile-overlay">
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false"
+            aria-controls="nav-mobile-overlay">
             <span></span>
             <span></span>
             <span></span>

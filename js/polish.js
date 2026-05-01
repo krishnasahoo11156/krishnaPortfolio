@@ -5,22 +5,127 @@
 (function () {
     'use strict';
 
-    /* ── 1. PAGE LOAD SEQUENCE ── */
+    /* ── 1. PAGE LOAD SEQUENCE — 4-Phase Cinematic Loader ── */
     function initLoader() {
-        var loader = document.getElementById('page-loader');
-        var navbar = document.querySelector('.navbar');
+        var loader  = document.getElementById('page-loader');
+        var ksEl    = document.getElementById('loader-ks');
+        var lineEl  = document.getElementById('loader-line');
+        var roleEl  = document.getElementById('loader-role');
+        var navbar  = document.querySelector('.navbar');
+        var heroFg  = document.querySelector('.hero-layer-fg') ||
+                      document.querySelector('#home');
+
+        // Check sessionStorage — skip if already shown this session
+        // Override with ?loader=true in URL
+        var forceShow = window.location.search.indexOf('loader=true') !== -1;
+        var alreadySeen = sessionStorage.getItem('ks_loader_done');
+
         if (!loader) return;
 
-        // After brief glitch (300ms) → fade out loader → reveal navbar
-        setTimeout(function () {
-            loader.classList.add('hidden');
+        if (alreadySeen && !forceShow) {
+            // Skip loader: instantly reveal everything
+            loader.style.display = 'none';
+            document.body.classList.remove('loading');
             if (navbar) navbar.classList.add('nav-visible');
+            if (heroFg) heroFg.closest('#home') && heroFg.closest('#home').classList.add('hero-content-visible');
+            return;
+        }
 
-            // Remove from DOM after transition ends
+        // Mark body as loading to hide content
+        document.body.classList.add('loading');
+
+        var ROLE_TEXT = 'SOFTWARE DEVELOPER';
+        var roleIndex = 0;
+        var typeInterval;
+
+        function typeRole() {
+            if (roleIndex <= ROLE_TEXT.length) {
+                roleEl.textContent = ROLE_TEXT.slice(0, roleIndex);
+                roleIndex++;
+            } else {
+                clearInterval(typeInterval);
+            }
+        }
+
+        function exitLoader() {
+            // Phase 4a: collapse line
+            lineEl.classList.remove('expand');
+            lineEl.classList.add('collapse');
+
+            // Phase 4b: fade role text
             setTimeout(function () {
-                if (loader.parentNode) loader.parentNode.removeChild(loader);
-            }, 600);
-        }, 350);
+                roleEl.classList.add('fade-out');
+            }, 110);
+
+            // Phase 4c: fade KS
+            setTimeout(function () {
+                ksEl.classList.add('fade-out');
+            }, 220);
+
+            // Phase 4d: curtain slides UP
+            setTimeout(function () {
+                loader.classList.add('exiting');
+
+                // Reveal content
+                document.body.classList.remove('loading');
+
+                // Navbar slides down
+                if (navbar) navbar.classList.add('nav-visible');
+
+                // Hero content rises in
+                var heroSection = document.getElementById('home');
+                if (heroSection) heroSection.classList.add('hero-content-visible');
+
+                // Remove loader from DOM after exit transition
+                setTimeout(function () {
+                    if (loader.parentNode) loader.parentNode.removeChild(loader);
+                    sessionStorage.setItem('ks_loader_done', '1');
+                }, 750);
+
+            }, 350);
+        }
+
+        // ── PHASE 1 (0ms → 400ms): KS fades in, letter-spacing tightens ──
+        setTimeout(function () {
+            ksEl.classList.add('visible');
+        }, 60); // small delay so transition fires
+
+        // ── PHASE 2 (400ms → 900ms): Line grows + role types ──
+        setTimeout(function () {
+            lineEl.classList.add('expand');
+            roleIndex = 0;
+            typeInterval = setInterval(typeRole, 40);
+        }, 400);
+
+        // ── PHASE 3 (900ms → 1400ms): Hold + gentle KS pulse ──
+        setTimeout(function () {
+            clearInterval(typeInterval);
+            roleEl.textContent = ROLE_TEXT; // ensure complete
+            ksEl.classList.add('pulse');
+            ksEl.addEventListener('animationend', function () {
+                ksEl.classList.remove('pulse');
+            }, { once: true });
+        }, 900);
+
+        // ── PHASE 4 (1400ms → 2200ms): Exit ──
+        // Wait for DOMContentLoaded if page hasn't loaded yet
+        if (document.readyState === 'complete') {
+            setTimeout(exitLoader, 1400);
+        } else {
+            var exitScheduled = false;
+            var exitAt = Date.now() + 1400;
+
+            window.addEventListener('load', function () {
+                var remaining = exitAt - Date.now();
+                setTimeout(exitLoader, Math.max(remaining, 0));
+                exitScheduled = true;
+            });
+
+            // Fallback: if 2.5s passes and still loading, force exit
+            setTimeout(function () {
+                if (!exitScheduled) exitLoader();
+            }, 2500);
+        }
     }
 
     /* ── 2. SCROLL PROGRESS BAR ── */
