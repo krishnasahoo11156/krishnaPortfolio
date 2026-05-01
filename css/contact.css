@@ -328,7 +328,11 @@
 }
 .cf-input,
 .cf-textarea {
-    background: transparent;
+    background-color: transparent;
+    background-image: linear-gradient(#e8473f, #e8473f);
+    background-size: 0% 2px;
+    background-position: bottom left;
+    background-repeat: no-repeat;
     border: none;
     border-bottom: 1px solid #333;
     outline: none;
@@ -338,8 +342,12 @@
     font-size: 14px;
     border-radius: 0;
     width: 100%;
-    transition: border-color 0.3s ease;
+    transition: background-size 0.5s ease;
     caret-color: #e8473f;
+}
+.cf-input:focus-visible,
+.cf-textarea:focus-visible {
+    outline: none !important;
 }
 .cf-input::placeholder,
 .cf-textarea::placeholder {
@@ -348,7 +356,7 @@
 }
 .cf-input:focus,
 .cf-textarea:focus {
-    border-bottom-color: #e8473f;
+    background-size: 100% 2px;
 }
 .cf-textarea {
     resize: vertical;
