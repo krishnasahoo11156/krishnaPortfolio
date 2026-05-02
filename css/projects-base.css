@@ -88,21 +88,65 @@
 
 /* THUMBNAIL */
 .proj-thumb {
-    height: 180px; position: relative; overflow: hidden;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
     background: #0d0d0d;
-    display: flex; align-items: center; justify-content: center;
 }
-.proj-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.proj-thumb img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                filter 0.4s ease;
+    transform-origin: center top;
+    z-index: 1;
+}
+.proj-card:hover .proj-thumb img {
+    transform: scale(1.06);
+    filter: brightness(0.5);
+}
 .proj-thumb-ph {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
     font-family: var(--font-heading);
     font-size: clamp(24px, 3.5vw, 40px);
     color: rgba(255,255,255,0.05); letter-spacing: 4px;
     text-align: center; padding: 1rem; pointer-events: none;
+    z-index: 1;
 }
+/* Hover overlay — always on top of the image */
+.proj-thumb-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    background: linear-gradient(160deg, rgba(232,71,63,0.28) 0%, rgba(0,0,0,0.58) 100%);
+    transition: opacity 0.35s ease;
+    z-index: 3;
+}
+.proj-thumb-overlay span {
+    font-family: var(--font-heading);
+    font-size: 14px; letter-spacing: 4px; text-transform: uppercase;
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.65);
+    padding: 8px 22px;
+    transform: translateY(10px);
+    transition: transform 0.35s ease;
+    backdrop-filter: blur(2px);
+}
+.proj-card:hover .proj-thumb-overlay { opacity: 1; }
+.proj-card:hover .proj-thumb-overlay span { transform: translateY(0); }
 .proj-thumb-icon {
     position: absolute; bottom: 10px; right: 12px;
-    font-size: 1.5rem; opacity: 0.3;
+    font-size: 1.5rem; opacity: 0.35; z-index: 2;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
+.proj-card:hover .proj-thumb-icon { opacity: 0; }
 
 /* CARD BODY */
 .proj-body { padding: 1.2rem 1.3rem 0.8rem; }
