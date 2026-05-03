@@ -16,8 +16,8 @@
 
 /* MODAL BOX */
 .proj-modal {
-    background: #0d0d0d;
-    border: 1px solid #2a2a2a;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
     border-top: 3px solid var(--accent-color);
     width: 100%; max-width: 760px;
     max-height: 88vh; overflow-y: auto;
@@ -26,7 +26,7 @@
     transform: translateY(24px);
     transition: transform 0.3s ease;
     scrollbar-width: thin;
-    scrollbar-color: var(--accent-color) #1a1a1a;
+    scrollbar-color: var(--accent-color) var(--surface-elevated);
 }
 .proj-modal-backdrop.open .proj-modal {
     transform: translateY(0);
@@ -35,8 +35,8 @@
 /* CLOSE BUTTON */
 .modal-close {
     position: absolute; top: 1.1rem; right: 1.1rem;
-    background: none; border: 1px solid #333;
-    color: #666; width: 30px; height: 30px;
+    background: none; border: 1px solid var(--border-color);
+    color: var(--text-tertiary); width: 30px; height: 30px;
     cursor: pointer; font-size: 14px;
     display: flex; align-items: center; justify-content: center;
     transition: border-color 0.2s, color 0.2s;
@@ -74,7 +74,7 @@
 .modal-features li {
     font-size: 13px; color: var(--text-secondary);
     line-height: 1.7; padding: 0.5rem 0;
-    border-bottom: 1px solid #161616;
+    border-bottom: 1px solid var(--border-subtle);
     display: flex; align-items: baseline; gap: 0.6rem;
 }
 .modal-features li .feat-num {
@@ -103,7 +103,7 @@
 
 /* TIMELINE */
 .modal-timeline-bar {
-    height: 4px; background: #1a1a1a; border-radius: 2px;
+    height: 4px; background: var(--surface-elevated); border-radius: 2px;
     margin-bottom: 0.4rem; overflow: hidden;
 }
 .modal-timeline-fill {

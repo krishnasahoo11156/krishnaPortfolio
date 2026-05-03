@@ -96,7 +96,7 @@
     height: 14px;
     border-radius: 50%;
     background: #e8473f;
-    border: 3px solid #0a0a0a;
+    border: 3px solid var(--bg-color);
     box-shadow: 0 0 10px rgba(232,71,63,0.7);
     z-index: 3;
 }
@@ -116,8 +116,8 @@
 
 /* ---------- Card ---------- */
 .tl-card {
-    background: #111111;
-    border: 1px solid #222;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
     border-left: 3px solid #e8473f;
     padding: 1.5rem 1.75rem;
     max-width: 420px;
@@ -131,7 +131,7 @@
 .tl-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 40px rgba(232,71,63,0.25);
-    background-color: #161616;
+    background-color: var(--surface-elevated);
 }
 
 /* Gold/amber accent variant */
@@ -210,8 +210,8 @@
     height: 32px;
     border-radius: 50%;
     object-fit: cover;
-    background: #1a1a1a;
-    border: 2px solid #2a2a2a;
+    background: var(--surface-elevated);
+    border: 2px solid var(--border-color);
     flex-shrink: 0;
 }
 .tl-conductor-name {
@@ -230,7 +230,7 @@
     letter-spacing: 1.5px;
     text-transform: uppercase;
     padding: 3px 9px;
-    border: 1.5px solid #333;
+    border: 1.5px solid var(--border-color);
     color: var(--text-secondary);
     margin-bottom: 0.5rem;
 }
@@ -299,7 +299,7 @@
     position: relative;
     margin: 1.5rem 0 0.5rem 20px;
     padding-left: 2rem;
-    border-left: 2px solid #333;
+    border-left: 2px solid var(--border-color);
 }
 .tl-sub-item {
     margin-bottom: 1.5rem;
@@ -321,7 +321,7 @@
     height: 8px;
     border-radius: 50%;
     background: #e8473f;
-    border: 2px solid #0a0a0a;
+    border: 2px solid var(--bg-color);
     box-shadow: 0 0 6px rgba(232,71,63,0.5);
 }
 .tl-sub-item.gold-item::before {
@@ -330,14 +330,14 @@
 }
 
 .tl-sub-card {
-    background: #0e0e0e;
-    border: 1px solid #1e1e1e;
+    background: #12121a;
+    border: 1px solid var(--border-color);
     border-left: 2px solid #e8473f;
     padding: 1rem 1.25rem;
     transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 .tl-sub-card:hover {
-    background: #141414;
+    background: var(--surface-color);
     box-shadow: 0 4px 20px rgba(232,71,63,0.12);
 }
 .tl-sub-card.gold-card {
@@ -370,18 +370,18 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
     margin-top: 4rem;
-    border: 1px solid #222;
+    border: 1px solid var(--border-color);
 }
 
 .tl-counter-item {
     padding: 2rem 1.5rem;
     text-align: center;
-    border-right: 1px solid #222;
+    border-right: 1px solid var(--border-color);
     position: relative;
     transition: background 0.25s ease;
 }
 .tl-counter-item:last-child { border-right: none; }
-.tl-counter-item:hover { background: #111; }
+.tl-counter-item:hover { background: var(--surface-color); }
 
 .tl-cnt-num {
     font-family: var(--font-heading);

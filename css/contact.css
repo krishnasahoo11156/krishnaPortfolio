@@ -10,7 +10,7 @@
 /* ---- Section wrapper ---- */
 #contact {
     position: relative;
-    background: #0a0a0a;
+    background: var(--bg-color);
     padding: 120px 0 0;
     overflow: hidden;
 }
@@ -283,8 +283,8 @@
 
 /* Form card */
 .contact-card {
-    background: #111111;
-    border: 1px solid #1e1e1e;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
     border-top: 2px solid #e8473f;
     padding: 2.5rem 2.25rem;
     position: relative;
@@ -484,8 +484,8 @@
 .site-footer {
     position: relative;
     z-index: 1;
-    background: #080808;
-    border-top: 1px solid #1a1a1a;
+    background: #0a0a0e;
+    border-top: 1px solid var(--border-color);
     margin-top: 0;
 }
 
@@ -524,11 +524,11 @@
 }
 .footer-marquee-wrap::before {
     left: 0;
-    background: linear-gradient(to right, #080808, transparent);
+    background: linear-gradient(to right, #0a0a0e, transparent);
 }
 .footer-marquee-wrap::after {
     right: 0;
-    background: linear-gradient(to left, #080808, transparent);
+    background: linear-gradient(to left, #0a0a0e, transparent);
 }
 
 .footer-marquee {
@@ -604,7 +604,7 @@
 .footer-micro p {
     font-family: var(--font-body);
     font-size: 10px;
-    color: #2a2a2a;
+    color: var(--text-tertiary);
     letter-spacing: 1px;
     text-transform: uppercase;
 }
@@ -711,15 +711,15 @@
     bottom: calc(100% + 8px);
     left: 50%;
     transform: translateX(-50%) translateY(4px);
-    background: #1a1a1a;
-    color: #ffffff;
+    background: var(--surface-elevated);
+    color: var(--text-primary);
     font-family: 'DM Sans', sans-serif;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.5px;
     white-space: nowrap;
     padding: 4px 8px;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s ease, transform 0.2s ease;

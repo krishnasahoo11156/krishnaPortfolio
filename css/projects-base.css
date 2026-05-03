@@ -24,11 +24,11 @@
 .proj-filter-btn {
     font-family: var(--font-body); font-size: 11px; font-weight: 700;
     letter-spacing: 2px; text-transform: uppercase;
-    padding: 7px 18px; border: 1.5px solid #333;
-    background: transparent; color: var(--text-secondary);
+    padding: 7px 18px; border: 1.5px solid var(--border-color);
+    background: var(--surface-color); color: var(--text-secondary);
     cursor: pointer; transition: all 0.2s ease;
 }
-.proj-filter-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.proj-filter-btn:hover { border-color: var(--accent-color); color: var(--accent-color); background: var(--surface-elevated); }
 .proj-filter-btn.active {
     background: var(--accent-color); border-color: var(--accent-color); color: #fff;
 }
@@ -42,7 +42,7 @@
 
 /* CARD */
 .proj-card {
-    background: #111111; border: 1px solid #222;
+    background: var(--surface-color); border: 1px solid var(--border-color);
     position: relative; cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: proj-in 0.5s ease both;
@@ -91,7 +91,7 @@
     height: 200px;
     position: relative;
     overflow: hidden;
-    background: #0d0d0d;
+    background: #12121a;
 }
 .proj-thumb img {
     position: absolute;
@@ -156,7 +156,7 @@
 .badge-live     { font-size: 9px; font-weight: 800; letter-spacing: 2px; padding: 3px 8px; border: 1px solid #22c55e; color: #22c55e; display:inline-flex; align-items:center; gap:5px; }
 .badge-progress { font-size: 9px; font-weight: 800; letter-spacing: 2px; padding: 3px 8px; border: 1px solid #eab308; color: #eab308; display:inline-flex; align-items:center; gap:5px; }
 .badge-hackathon{ font-size: 9px; font-weight: 800; letter-spacing: 2px; padding: 3px 8px; background: var(--accent-color); color: #fff; display:inline-flex; align-items:center; gap:4px; }
-.badge-cat      { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; padding: 3px 8px; border: 1px solid #2a2a2a; color: var(--text-secondary); }
+.badge-cat      { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; padding: 3px 8px; border: 1px solid var(--border-color); color: var(--text-secondary); }
 
 .badge-dot-g {
     width: 7px; height: 7px; border-radius: 50%; background: #22c55e; flex-shrink: 0;
@@ -183,13 +183,13 @@
 .proj-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.8rem; }
 .proj-tag {
     font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-    background: #1a1a1a; border: 1px solid #2a2a2a;
+    background: var(--surface-elevated); border: 1px solid var(--border-color);
     color: var(--accent-color); padding: 3px 8px;
 }
 
 /* TIMELINE */
 .proj-timeline {
-    font-size: 10px; color: #444; letter-spacing: 1px; text-transform: uppercase;
+    font-size: 10px; color: var(--text-tertiary); letter-spacing: 1px; text-transform: uppercase;
     margin-bottom: 0.9rem; font-family: 'Courier New', monospace;
 }
 
@@ -205,15 +205,15 @@
 .proj-btn:hover { background: var(--accent-color); color: #fff; }
 .proj-btn-ghost {
     font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    padding: 8px 14px; border: 1.5px solid #2a2a2a;
-    color: #333; background: transparent; cursor: not-allowed; display: inline-block;
+    padding: 8px 14px; border: 1.5px solid var(--border-color);
+    color: var(--text-tertiary); background: transparent; cursor: not-allowed; display: inline-block;
 }
 
 /* HOVER HIGHLIGHTS */
 .proj-highlights {
     max-height: 0; overflow: hidden;
     transition: max-height 0.35s ease, padding 0.3s ease;
-    border-top: 1px solid #1e1e1e; padding: 0 1.3rem;
+    border-top: 1px solid var(--border-color); padding: 0 1.3rem;
 }
 .proj-card:hover .proj-highlights { max-height: 150px; padding: 0.8rem 1.3rem; }
 .proj-highlights ul { list-style: none; padding: 0; margin: 0; }
@@ -228,7 +228,7 @@
 
 /* GITHUB STRIP */
 .proj-github-strip {
-    border-top: 1px solid #1e1e1e; border-bottom: 1px solid #1e1e1e;
+    border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
     padding: 2.5rem 0; text-align: center; margin-top: 0.5rem;
 }
 .proj-github-link {
