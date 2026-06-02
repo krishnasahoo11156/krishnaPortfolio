@@ -882,7 +882,7 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            max-width: 1000px;
+            max-width: 100%;
             margin: 0 auto;
             transition: 
                 transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -900,9 +900,9 @@
 
         .teaser-track-line {
             position: absolute;
-            top: 96px;
-            left: 12%;
-            right: 12%;
+            top: 9px; /* perfectly bisects the 18px node dots */
+            left: 10%;
+            right: 10%;
             height: 2px;
             background: linear-gradient(to right, #e8473f, rgba(232, 71, 63, 0.4) 60%, var(--border-color));
             z-index: 1;
@@ -931,7 +931,7 @@
             border-radius: 50%;
             background: var(--border-color);
             border: 4px solid var(--surface-color);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.2rem; /* spacious elegant visual gap */
             position: relative;
             z-index: 3;
             transition: 
@@ -1373,9 +1373,9 @@
 
         <!-- Dynamic horizontal chronology teaser card -->
         <div class="timeline-teaser-card reveal" data-delay="180" onclick="navigateTo('timeline.html')">
-            <div class="teaser-track-line"></div>
             
-            <div class="teaser-nodes">
+            <div class="teaser-nodes" style="position: relative;">
+                <div class="teaser-track-line"></div>
                 <!-- Node 1 -->
                 <div class="teaser-node active">
                     <div class="teaser-node-dot"></div>
