@@ -876,7 +876,7 @@
         .timeline-teaser-card {
             background: var(--surface-color);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 0px;
             padding: 3.5rem 3rem 2.5rem;
             position: relative;
             overflow: hidden;
@@ -906,12 +906,12 @@
             pointer-events: none;
             z-index: 5;
             transition: background-size 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-            border-radius: 12px;
+            border-radius: 0px;
         }
 
         .timeline-teaser-card:hover {
             box-shadow: 0 0 32px 4px rgba(232, 71, 63, 0.15); /* subtle background glow matching skill-card */
-            background-color: var(--surface-elevated);
+            /* background-color: var(--surface-elevated); */
         }
 
         .timeline-teaser-card:hover::before {
