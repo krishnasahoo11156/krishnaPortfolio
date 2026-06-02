@@ -905,7 +905,7 @@
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
-        <a href="#timeline">Timeline</a>
+        <a href="javascript:void(0)" onclick="navigateTo('timeline.html')">Timeline</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
     </div>
@@ -917,7 +917,7 @@
             <a href="#home">Home</a>
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
-            <a href="#timeline">Timeline</a>
+            <a href="javascript:void(0)" onclick="navigateTo('timeline.html')">Timeline</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
         </div>
@@ -1157,7 +1157,7 @@
     </section>
 
     <!-- ================================================================
-         TIMELINE SECTION — "THE ROAD SO FAR"
+         TIMELINE TEASER SECTION — "THE ROAD SO FAR"
          ================================================================ -->
     <section id="timeline" class="container">
 
@@ -1169,257 +1169,44 @@
         <p class="tl-subtext reveal" data-delay="130">&ldquo;Every milestone, every lesson, every late night —
             documented.&rdquo;</p>
 
-        <div class="timeline-wrap">
-            <!-- Animated center line -->
-            <div class="timeline-line" aria-hidden="true"></div>
-
-            <!-- ── NODE 1 ── Jeevan Jyoti English High School ── -->
-            <div class="tl-item">
-                <div class="tl-card">
-                    <div class="tl-year">2012 – 2015</div>
-                    <div class="tl-school">Jeevan Jyoti English High School</div>
-                    <div class="tl-grade">Primary Education &mdash; 1<sup>st</sup> &ndash; 3<sup>rd</sup></div>
-                    <div class="tl-badges">
-                        <span class="tl-badge">Sports &amp; Academic Recognitions</span>
+        <!-- Dynamic horizontal chronology teaser card -->
+        <div class="timeline-teaser-card reveal" data-delay="180" onclick="navigateTo('timeline.html')">
+            <div class="teaser-track-line"></div>
+            
+            <div class="teaser-nodes">
+                <!-- Node 1 -->
+                <div class="teaser-node active">
+                    <div class="teaser-node-dot"></div>
+                    <div class="teaser-node-content">
+                        <span class="teaser-node-year">2016 – 2022</span>
+                        <span class="teaser-node-title">Gurukul School</span>
+                        <span class="teaser-node-badge">SSC Topper</span>
+                    </div>
+                </div>
+                <!-- Node 2 -->
+                <div class="teaser-node active">
+                    <div class="teaser-node-dot"></div>
+                    <div class="teaser-node-content">
+                        <span class="teaser-node-year">2022 – 2024</span>
+                        <span class="teaser-node-title">BA Talreja College</span>
+                        <span class="teaser-node-badge">Merit Performer</span>
+                    </div>
+                </div>
+                <!-- Node 3 -->
+                <div class="teaser-node current">
+                    <div class="teaser-node-dot"></div>
+                    <div class="teaser-node-content">
+                        <span class="teaser-node-year">2025 – 2029</span>
+                        <span class="teaser-node-title">VESIT University</span>
+                        <span class="teaser-node-badge active">&#9679; B.E. AI &amp; DS</span>
                     </div>
                 </div>
             </div>
 
-            <!-- ── NODE 2 ── Gurukul International School ── -->
-            <div class="tl-item">
-                <div class="tl-card">
-                    <div class="tl-year">2016 – 2022</div>
-                    <div class="tl-school">Gurukul International School</div>
-                    <div class="tl-grade">Primary + Secondary &mdash; 4<sup>th</sup> &ndash; 10<sup>th</sup></div>
-                    <div class="tl-badges">
-                        <span class="tl-badge">SSC Topper</span>
-                        <span class="tl-badge">RSP Parade Silver</span>
-                        <span class="tl-badge">Debate Winner</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ── NODE 3 ── BA Talreja College ── -->
-            <div class="tl-item">
-                <div class="tl-card">
-                    <div class="tl-year">2022 – 2024</div>
-                    <div class="tl-school">BA Talreja College</div>
-                    <div class="tl-grade">Higher Secondary &mdash; 11<sup>th</sup> &ndash; 12<sup>th</sup></div>
-                    <div class="tl-badges">
-                        <span class="tl-badge">Merit Performer</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ── NODE 4 ── VESIT (CURRENT) ── -->
-            <div class="tl-item current">
-                <div class="tl-card">
-                    <div class="tl-year">2025 – 2029</div>
-                    <div class="tl-school">Vivekanand Education Society's Institute of Technology</div>
-                    <div class="tl-grade">B.E. — Artificial Intelligence &amp; Data Science</div>
-                    <div class="tl-badges">
-                        <span class="tl-badge green">&#9679; Currently Pursuing</span>
-                    </div>
-
-                    <!-- Achievements toggle -->
-                    <button class="tl-achievements-toggle" id="achievements-toggle" aria-expanded="false"
-                        aria-controls="achievements-sub">
-                        VIEW ALL ACHIEVEMENTS <span class="toggle-arrow">&rarr;</span>
-                    </button>
-
-                    <!-- Sub-timeline accordion -->
-                    <div class="tl-sub-wrap" id="achievements-sub">
-                        <div class="tl-sub-list">
-
-                            <!-- Event 1 -->
-                            <div class="tl-sub-item">
-                                <div class="tl-sub-card">
-                                    <div class="tl-sub-date">Sep 2025 &mdash; Week 1</div>
-                                    <div class="tl-sub-title">Python Workshop</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/ai-colegion.png" alt="AI Colegion" class="tl-conductor-logo"
-                                            loading="lazy">
-                                        <span class="tl-conductor-name">AI Colegion</span>
-                                    </div>
-                                    <span class="tl-type-badge">Workshop</span>
-                                </div>
-                            </div>
-
-                            <!-- Event 2 -->
-                            <div class="tl-sub-item">
-                                <div class="tl-sub-card">
-                                    <div class="tl-sub-date">Sep 2025 &mdash; Last Week</div>
-                                    <div class="tl-sub-title">Success Diaries</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/success-diaries.png.jpeg" alt="AI Colegion"
-                                            class="tl-conductor-logo" loading="lazy">
-                                        <span class="tl-conductor-name">AI Colegion</span>
-                                    </div>
-                                    <span class="tl-type-badge">Event</span>
-                                </div>
-                            </div>
-
-                            <!-- Event 3 — Google Study Jams (GOLD) -->
-                            <div class="tl-sub-item gold-item">
-                                <div class="tl-sub-card gold-card">
-                                    <div class="tl-sub-date">Oct 2025</div>
-                                    <div class="tl-sub-title">Google Study Jams</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/google-dev-group.png" alt="Google Developers Group"
-                                            class="tl-conductor-logo" loading="lazy">
-                                        <span class="tl-conductor-name">Google Developers Group</span>
-                                    </div>
-                                    <span class="tl-type-badge"
-                                        style="border-color:#f59e0b;color:#f59e0b;">Certification</span>
-                                    <div class="tl-note">&#9733; Top 80 of 400+ participants</div>
-                                </div>
-                            </div>
-
-                            <!-- Event 4 -->
-                            <div class="tl-sub-item">
-                                <div class="tl-sub-card">
-                                    <div class="tl-sub-date">Jan 2026</div>
-                                    <div class="tl-sub-title">Prompt to Production</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/ai-colegion.png" alt="VESIT IIC &amp; IQAC"
-                                            class="tl-conductor-logo" loading="lazy">
-                                        <span class="tl-conductor-name">VESIT IIC &amp; IQAC</span>
-                                    </div>
-                                    <span class="tl-type-badge">Workshop</span>
-                                </div>
-                            </div>
-
-                            <!-- Event 5 -->
-                            <div class="tl-sub-item">
-                                <div class="tl-sub-card">
-                                    <div class="tl-sub-date">Jan 2026 &mdash; End</div>
-                                    <div class="tl-sub-title">Hack-AI-Thon</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/ai-colegion.png" alt="AI Colegion" class="tl-conductor-logo"
-                                            loading="lazy">
-                                        <span class="tl-conductor-name">AI Colegion</span>
-                                    </div>
-                                    <span class="tl-type-badge">Hackathon</span>
-                                </div>
-                            </div>
-
-                            <!-- Event 6 -->
-                            <div class="tl-sub-item">
-                                <div class="tl-sub-card">
-                                    <div class="tl-sub-date">Feb 2026 &mdash; Week 1</div>
-                                    <div class="tl-sub-title">Genesis Hackathon</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/questit.png" alt="QuestIT" class="tl-conductor-logo"
-                                            loading="lazy">
-                                        <span class="tl-conductor-name">QuestIT</span>
-                                    </div>
-                                    <span class="tl-type-badge">Hackathon</span>
-                                </div>
-                            </div>
-
-                            <!-- Event 7 -->
-                            <div class="tl-sub-item">
-                                <div class="tl-sub-card">
-                                    <div class="tl-sub-date">Feb 2026 &mdash; Last Week</div>
-                                    <div class="tl-sub-title">Invictus Hackathon</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/iste-vesit.png" alt="ISTE-VESIT" class="tl-conductor-logo"
-                                            loading="lazy">
-                                        <span class="tl-conductor-name">ISTE-VESIT</span>
-                                    </div>
-                                    <span class="tl-type-badge">Hackathon</span>
-                                </div>
-                            </div>
-
-                            <!-- Event 8 — Syrus -->
-                            <div class="tl-sub-item">
-                                <div class="tl-sub-card">
-                                    <div class="tl-sub-date">Mar 2026</div>
-                                    <div class="tl-sub-title">Syrus Hackathon</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/codecell.png" alt="CodeCell++" class="tl-conductor-logo"
-                                            loading="lazy">
-                                        <span class="tl-conductor-name">CodeCell++</span>
-                                    </div>
-                                    <span class="tl-type-badge">Hackathon</span>
-                                    <div class="tl-note coral">&#9733; Built Autonomous Developer Onboarding Agent
-                                        &nbsp;<a href="#projects"
-                                            style="color:#e8473f;font-size:10px;letter-spacing:1px;">VIEW PROJECT
-                                            &rarr;</a></div>
-                                </div>
-                            </div>
-
-                            <!-- Event 9 -->
-                            <div class="tl-sub-item">
-                                <div class="tl-sub-card">
-                                    <div class="tl-sub-date">Mar 2026 &mdash; Last Week</div>
-                                    <div class="tl-sub-title">Machine Minds 2.0 — ML Workshop</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/ieee-vesit.png" alt="IEEE VESIT" class="tl-conductor-logo"
-                                            loading="lazy">
-                                        <span class="tl-conductor-name">IEEE VESIT</span>
-                                    </div>
-                                    <span class="tl-type-badge">Workshop</span>
-                                </div>
-                            </div>
-
-                            <!-- Event 10 -->
-                            <div class="tl-sub-item">
-                                <div class="tl-sub-card">
-                                    <div class="tl-sub-date">Apr 2026</div>
-                                    <div class="tl-sub-title">Unimerge Hackathon</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/parth-builds.png.jpeg" alt="Parth.Builds Community"
-                                            class="tl-conductor-logo" loading="lazy">
-                                        <span class="tl-conductor-name">Parth.Builds Community</span>
-                                    </div>
-                                    <span class="tl-type-badge">Hackathon</span>
-                                    <div class="tl-note coral">&#9733; Winner</div>
-                                </div>
-                            </div>
-
-                            <!-- Event 11 — Google Solution Challenge (GOLD) -->
-                            <div class="tl-sub-item gold-item">
-                                <div class="tl-sub-card gold-card">
-                                    <div class="tl-sub-date">Apr 2026</div>
-                                    <div class="tl-sub-title">Google Solution Challenge 2026</div>
-                                    <div class="tl-conductor">
-                                        <img src="logos/google-solution.png" alt="Google Developers Group"
-                                            class="tl-conductor-logo" loading="lazy">
-                                        <span class="tl-conductor-name">Google Developers Group</span>
-                                    </div>
-                                    <span class="tl-type-badge"
-                                        style="border-color:#f59e0b;color:#f59e0b;">Competition</span>
-                                    <div class="tl-note">&#9733; Prestigious global challenge</div>
-                                </div>
-                            </div>
-
-                        </div><!-- /.tl-sub-list -->
-                    </div><!-- /.tl-sub-wrap -->
-
-                </div><!-- /.tl-card -->
-            </div><!-- /.tl-item.current -->
-
-        </div><!-- /.timeline-wrap -->
-
-        <!-- Achievement Counter Strip -->
-        <div class="tl-counters reveal" data-delay="0">
-            <div class="tl-counter-item">
-                <span class="tl-cnt-num" data-target="4" data-suffix="+">0+</span>
-                <span class="tl-cnt-label">Hackathons</span>
-            </div>
-            <div class="tl-counter-item">
-                <span class="tl-cnt-num" data-target="5" data-suffix="+">0+</span>
-                <span class="tl-cnt-label">Workshops &amp; Events</span>
-            </div>
-            <div class="tl-counter-item">
-                <span class="tl-cnt-num" data-target="3" data-suffix="">0</span>
-                <span class="tl-cnt-label">Projects Shipped</span>
-            </div>
-            <div class="tl-counter-item">
-                <span class="tl-cnt-num" data-target="1" data-suffix="">0</span>
-                <span class="tl-cnt-label">Hackathon Win</span>
-                <span class="win-note">UniMerge 1.0</span>
+            <!-- Overlay call to action banner -->
+            <div class="teaser-overlay-prompt">
+                <span class="teaser-cta-text">UNFOLD FULL CHRONOLOGY &amp; HACKATHONS</span>
+                <span class="teaser-cta-icon">&rarr;</span>
             </div>
         </div>
 
