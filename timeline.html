@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Road So Far — Krishna Sahoo</title>
+    <meta name="description" content="Detailed chronology and timeline of academic milestones, certifications, workshops, and hackathons by Krishna Sahoo.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23e8473f'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='14' fill='white'%3EKS%3C/text%3E%3C/svg%3E">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap&font-display=swap" rel="stylesheet">
+
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/timeline.css">
+    <link rel="stylesheet" href="css/polish.css">
+    <link rel="stylesheet" href="css/detail.css">
+</head>
+<body class="detail-page-body">
+
+    <!-- Custom Cursor (desktop) -->
+    <div id="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-ring" aria-hidden="true"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- Back To Top -->
+    <button id="back-to-top" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 4l-8 8h5v8h6v-8h5z" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <!-- NAVBAR -->
+    <nav class="detail-nav" role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="back-link" onclick="event.preventDefault(); navigateTo('index.html');">← Back to Home</a>
+        <span class="nav-logo">KS</span>
+        <div class="nav-right">
+            <a href="index.html#skills">Skills</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="detail-hero">
+        <div class="hero-inner">
+            <h1 class="hero-title">THE ROAD SO FAR</h1>
+            <div class="hero-accent-line"></div>
+            <p class="hero-subtitle">Every milestone, every lesson, every late night — documented.</p>
+        </div>
+    </header>
+
+    <!-- TIMELINE SECTION -->
+    <section id="timeline" class="container" style="padding-top: 2rem;">
+        <span class="label reveal" data-delay="0">TIMELINE</span>
+
+        <div class="timeline-wrap">
+            <!-- Animated center line -->
+            <div class="timeline-line" aria-hidden="true"></div>
+
+            <!-- ── NODE 1 ── Jeevan Jyoti English High School ── -->
+            <div class="tl-item">
+                <div class="tl-card">
+                    <div class="tl-year">2012 – 2015</div>
+                    <div class="tl-school">Jeevan Jyoti English High School</div>
+                    <div class="tl-grade">Primary Education &mdash; 1<sup>st</sup> &ndash; 3<sup>rd</sup></div>
+                    <div class="tl-badges">
+                        <span class="tl-badge">Sports &amp; Academic Recognitions</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── NODE 2 ── Gurukul International School ── -->
+            <div class="tl-item">
+                <div class="tl-card">
+                    <div class="tl-year">2016 – 2022</div>
+                    <div class="tl-school">Gurukul International School</div>
+                    <div class="tl-grade">Primary + Secondary &mdash; 4<sup>th</sup> &ndash; 10<sup>th</sup></div>
+                    <div class="tl-badges">
+                        <span class="tl-badge">SSC Topper</span>
+                        <span class="tl-badge">RSP Parade Silver</span>
+                        <span class="tl-badge">Debate Winner</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── NODE 3 ── BA Talreja College ── -->
+            <div class="tl-item">
+                <div class="tl-card">
+                    <div class="tl-year">2022 – 2024</div>
+                    <div class="tl-school">BA Talreja College</div>
+                    <div class="tl-grade">Higher Secondary &mdash; 11<sup>th</sup> &ndash; 12<sup>th</sup></div>
+                    <div class="tl-badges">
+                        <span class="tl-badge">Merit Performer</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── NODE 4 ── VESIT (CURRENT) ── -->
+            <div class="tl-item current">
+                <div class="tl-card">
+                    <div class="tl-year">2025 – 2029</div>
+                    <div class="tl-school">Vivekanand Education Society's Institute of Technology</div>
+                    <div class="tl-grade">B.E. — Artificial Intelligence &amp; Data Science</div>
+                    <div class="tl-badges">
+                        <span class="tl-badge green">&#9679; Currently Pursuing</span>
+                    </div>
+
+                    <!-- Achievements toggle -->
+                    <button class="tl-achievements-toggle" id="achievements-toggle" aria-expanded="false"
+                        aria-controls="achievements-sub">
+                        VIEW ALL ACHIEVEMENTS <span class="toggle-arrow">&rarr;</span>
+                    </button>
+
+                    <!-- Sub-timeline accordion -->
+                    <div class="tl-sub-wrap" id="achievements-sub">
+                        <div class="tl-sub-list">
+
+                            <!-- Event 1 -->
+                            <div class="tl-sub-item">
+                                <div class="tl-sub-card">
+                                    <div class="tl-sub-date">Sep 2025 &mdash; Week 1</div>
+                                    <div class="tl-sub-title">Python Workshop</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/ai-colegion.png" alt="AI Colegion" class="tl-conductor-logo"
+                                            loading="lazy">
+                                        <span class="tl-conductor-name">AI Colegion</span>
+                                    </div>
+                                    <span class="tl-type-badge">Workshop</span>
+                                </div>
+                            </div>
+
+                            <!-- Event 2 -->
+                            <div class="tl-sub-item">
+                                <div class="tl-sub-card">
+                                    <div class="tl-sub-date">Sep 2025 &mdash; Last Week</div>
+                                    <div class="tl-sub-title">Success Diaries</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/success-diaries.png.jpeg" alt="AI Colegion"
+                                            class="tl-conductor-logo" loading="lazy">
+                                        <span class="tl-conductor-name">AI Colegion</span>
+                                    </div>
+                                    <span class="tl-type-badge">Event</span>
+                                </div>
+                            </div>
+
+                            <!-- Event 3 — Google Study Jams (GOLD) -->
+                            <div class="tl-sub-item gold-item">
+                                <div class="tl-sub-card gold-card">
+                                    <div class="tl-sub-date">Oct 2025</div>
+                                    <div class="tl-sub-title">Google Study Jams</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/google-dev-group.png" alt="Google Developers Group"
+                                            class="tl-conductor-logo" loading="lazy">
+                                        <span class="tl-conductor-name">Google Developers Group</span>
+                                    </div>
+                                    <span class="tl-type-badge"
+                                        style="border-color:#f59e0b;color:#f59e0b;">Certification</span>
+                                    <div class="tl-note">&#9733; Top 80 of 400+ participants</div>
+                                </div>
+                            </div>
+
+                            <!-- Event 4 -->
+                            <div class="tl-sub-item">
+                                <div class="tl-sub-card">
+                                    <div class="tl-sub-date">Jan 2026</div>
+                                    <div class="tl-sub-title">Prompt to Production</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/ai-colegion.png" alt="VESIT IIC &amp; IQAC"
+                                            class="tl-conductor-logo" loading="lazy">
+                                        <span class="tl-conductor-name">VESIT IIC &amp; IQAC</span>
+                                    </div>
+                                    <span class="tl-type-badge">Workshop</span>
+                                </div>
+                            </div>
+
+                            <!-- Event 5 -->
+                            <div class="tl-sub-item">
+                                <div class="tl-sub-card">
+                                    <div class="tl-sub-date">Jan 2026 &mdash; End</div>
+                                    <div class="tl-sub-title">Hack-AI-Thon</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/ai-colegion.png" alt="AI Colegion" class="tl-conductor-logo"
+                                            loading="lazy">
+                                        <span class="tl-conductor-name">AI Colegion</span>
+                                    </div>
+                                    <span class="tl-type-badge">Hackathon</span>
+                                </div>
+                            </div>
+
+                            <!-- Event 6 -->
+                            <div class="tl-sub-item">
+                                <div class="tl-sub-card">
+                                    <div class="tl-sub-date">Feb 2026 &mdash; Week 1</div>
+                                    <div class="tl-sub-title">Genesis Hackathon</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/questit.png" alt="QuestIT" class="tl-conductor-logo"
+                                            loading="lazy">
+                                        <span class="tl-conductor-name">QuestIT</span>
+                                    </div>
+                                    <span class="tl-type-badge">Hackathon</span>
+                                </div>
+                            </div>
+
+                            <!-- Event 7 -->
+                            <div class="tl-sub-item">
+                                <div class="tl-sub-card">
+                                    <div class="tl-sub-date">Feb 2026 &mdash; Last Week</div>
+                                    <div class="tl-sub-title">Invictus Hackathon</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/iste-vesit.png" alt="ISTE-VESIT" class="tl-conductor-logo"
+                                            loading="lazy">
+                                        <span class="tl-conductor-name">ISTE-VESIT</span>
+                                    </div>
+                                    <span class="tl-type-badge">Hackathon</span>
+                                </div>
+                            </div>
+
+                            <!-- Event 8 — Syrus -->
+                            <div class="tl-sub-item">
+                                <div class="tl-sub-card">
+                                    <div class="tl-sub-date">Mar 2026</div>
+                                    <div class="tl-sub-title">Syrus Hackathon</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/codecell.png" alt="CodeCell++" class="tl-conductor-logo"
+                                            loading="lazy">
+                                        <span class="tl-conductor-name">CodeCell++</span>
+                                    </div>
+                                    <span class="tl-type-badge">Hackathon</span>
+                                    <div class="tl-note coral">&#9733; Built Autonomous Developer Onboarding Agent
+                                        &nbsp;<a href="index.html#projects"
+                                            style="color:#e8473f;font-size:10px;letter-spacing:1px;">VIEW PROJECT
+                                            &rarr;</a></div>
+                                </div>
+                            </div>
+
+                            <!-- Event 9 -->
+                            <div class="tl-sub-item">
+                                <div class="tl-sub-card">
+                                    <div class="tl-sub-date">Mar 2026 &mdash; Last Week</div>
+                                    <div class="tl-sub-title">Machine Minds 2.0 — ML Workshop</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/ieee-vesit.png" alt="IEEE VESIT" class="tl-conductor-logo"
+                                            loading="lazy">
+                                        <span class="tl-conductor-name">IEEE VESIT</span>
+                                    </div>
+                                    <span class="tl-type-badge">Workshop</span>
+                                </div>
+                            </div>
+
+                            <!-- Event 10 -->
+                            <div class="tl-sub-item">
+                                <div class="tl-sub-card">
+                                    <div class="tl-sub-date">Apr 2026</div>
+                                    <div class="tl-sub-title">Unimerge Hackathon</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/parth-builds.png.jpeg" alt="Parth.Builds Community"
+                                            class="tl-conductor-logo" loading="lazy">
+                                        <span class="tl-conductor-name">Parth.Builds Community</span>
+                                    </div>
+                                    <span class="tl-type-badge">Hackathon</span>
+                                    <div class="tl-note coral">&#9733; Winner</div>
+                                </div>
+                            </div>
+
+                            <!-- Event 11 — Google Solution Challenge (GOLD) -->
+                            <div class="tl-sub-item gold-item">
+                                <div class="tl-sub-card gold-card">
+                                    <div class="tl-sub-date">Apr 2026</div>
+                                    <div class="tl-sub-title">Google Solution Challenge 2026</div>
+                                    <div class="tl-conductor">
+                                        <img src="logos/google-solution.png" alt="Google Developers Group"
+                                            class="tl-conductor-logo" loading="lazy">
+                                        <span class="tl-conductor-name">Google Developers Group</span>
+                                    </div>
+                                    <span class="tl-type-badge"
+                                        style="border-color:#f59e0b;color:#f59e0b;">Competition</span>
+                                    <div class="tl-note">&#9733; Prestigious global challenge</div>
+                                </div>
+                            </div>
+
+                        </div><!-- /.tl-sub-list -->
+                    </div><!-- /.tl-sub-wrap -->
+
+                </div><!-- /.tl-card -->
+            </div><!-- /.tl-item.current -->
+
+        </div><!-- /.timeline-wrap -->
+
+        <!-- Achievement Counter Strip -->
+        <div class="tl-counters reveal" data-delay="0">
+            <div class="tl-counter-item">
+                <span class="tl-cnt-num" data-target="4" data-suffix="+">0+</span>
+                <span class="tl-cnt-label">Hackathons</span>
+            </div>
+            <div class="tl-counter-item">
+                <span class="tl-cnt-num" data-target="5" data-suffix="+">0+</span>
+                <span class="tl-cnt-label">Workshops &amp; Events</span>
+            </div>
+            <div class="tl-counter-item">
+                <span class="tl-cnt-num" data-target="3" data-suffix="">0</span>
+                <span class="tl-cnt-label">Projects Shipped</span>
+            </div>
+            <div class="tl-counter-item">
+                <span class="tl-cnt-num" data-target="1" data-suffix="">0</span>
+                <span class="tl-cnt-label">Hackathon Win</span>
+                <span class="win-note">UniMerge 1.0</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="detail-footer">
+        <p>© 2026 Krishna Sahoo · <a href="index.html" onclick="event.preventDefault(); navigateTo('index.html');" style="color:var(--accent);">Back to Home</a></p>
+    </footer>
+
+    <!-- Script Imports -->
+    <script src="js/main.js" defer></script>
+    <script src="js/timeline.js" defer></script>
+    <script src="js/polish.js" defer></script>
+
+    <!-- Page entry & exit transitions -->
+    <script>
+        window.addEventListener('load', function() {
+            var o = document.createElement('div');
+            o.style.cssText = 'position:fixed;inset:0;background:#0d0d0d;opacity:1;z-index:9999;transition:opacity 0.4s ease;pointer-events:none';
+            document.body.appendChild(o);
+            requestAnimationFrame(function() { requestAnimationFrame(function() { o.style.opacity = '0'; }); });
+            setTimeout(function() { o.remove(); }, 500);
+        });
+
+        function navigateTo(url) {
+            var overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed;inset:0;background:#0d0d0d;opacity:0;z-index:9999;transition:opacity 0.3s ease;pointer-events:none';
+            document.body.appendChild(overlay);
+            requestAnimationFrame(function () { overlay.style.opacity = '1'; });
+            setTimeout(function () { window.location.href = url; }, 320);
+        }
+    </script>
+</body>
+</html>
