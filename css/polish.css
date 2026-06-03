@@ -340,7 +340,7 @@ body.loading .hero-layer-fg {
     .tl-item { flex-direction: column; }
 
     /* Projects */
-    .proj-grid { grid-template-columns: 1fr !important; }
+    /* .proj-grid { grid-template-columns: 1fr !important; } */
     .proj-filters { flex-wrap: wrap; gap: 0.5rem; }
 
     /* Contact */
