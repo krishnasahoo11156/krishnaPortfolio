@@ -33,21 +33,51 @@
     background: var(--accent-color); border-color: var(--accent-color); color: #fff;
 }
 
-/* GRID */
-.proj-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-    gap: 1.5rem; margin-bottom: 2rem;
+/* CAROUSEL WRAPPER & VIEWPORT */
+.proj-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    perspective: 1200px;
+    overflow: visible;
+    padding: 2.5rem 0 3.5rem;
 }
 
-/* CARD */
-.proj-card {
-    background: var(--surface-color); border: 1px solid var(--border-color);
-    position: relative; cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: proj-in 0.5s ease both;
-    overflow: hidden;
+/* OVERRIDE GRID FOR 3D CAROUSEL */
+.proj-grid {
+    position: relative;
+    width: 100%;
+    height: 580px; /* space for cards + hover lift + highlights */
+    transform-style: preserve-3d;
+    display: block; /* override default grid */
+    margin: 0 auto;
 }
+
+/* CARD Base Carousel Style */
+.proj-card {
+    background: var(--surface-color); 
+    border: 1px solid var(--border-color);
+    position: absolute; 
+    top: 0;
+    left: 50%;
+    width: 90%;
+    max-width: 420px;
+    margin: 0;
+    cursor: pointer;
+    overflow: hidden;
+    will-change: transform, opacity, filter;
+    transform-origin: center center;
+    backface-visibility: hidden;
+    
+    /* Premium Spring animation transitions */
+    transition: 
+        transform 0.8s cubic-bezier(0.25, 1.25, 0.45, 1),
+        opacity 0.8s cubic-bezier(0.25, 1, 0.45, 1),
+        filter 0.8s ease,
+        box-shadow 0.8s ease;
+}
+
 /* Animated tracing border */
 .proj-card::before {
     content: '';
@@ -62,28 +92,198 @@
     z-index: 5;
     transition: background-size 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.proj-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 40px rgba(232,71,63,0.18);
-}
+
 .proj-card:hover::before {
     background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
 }
 .proj-card.hidden { display: none; }
 
-@keyframes proj-in {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
+/* Carousel State Transformations */
+
+/* Center featured spotlight */
+.proj-card.pos-center {
+    transform: translate3d(-50%, 0, 0) scale(1) rotateY(0deg);
+    opacity: 1;
+    filter: none;
+    z-index: 30;
+    pointer-events: auto;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(232, 71, 63, 0.15);
 }
-@media (prefers-reduced-motion: no-preference) {
-    .proj-card.glitch-enter {
-        animation: proj-in 0.5s ease both, glitch-flash 0.3s ease 0.5s;
+
+/* Center card premium hover lift */
+.proj-card.pos-center:hover {
+    transform: translate3d(-50%, -8px, 0) scale(1.02);
+    box-shadow: 0 24px 55px rgba(232, 71, 63, 0.25);
+}
+
+/* Left card position */
+.proj-card.pos-left {
+    transform: translate3d(-135%, 0, -180px) scale(0.82) rotateY(12deg);
+    opacity: 0.55;
+    filter: blur(1.5px) brightness(0.6);
+    z-index: 10;
+    pointer-events: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Right card position */
+.proj-card.pos-right {
+    transform: translate3d(35%, 0, -180px) scale(0.82) rotateY(-12deg);
+    opacity: 0.55;
+    filter: blur(1.5px) brightness(0.6);
+    z-index: 10;
+    pointer-events: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Inactive/Hidden cards */
+.proj-card.pos-hidden {
+    transform: translate3d(-50%, 0, -300px) scale(0.5);
+    opacity: 0;
+    filter: blur(5px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* RESPONSIVE BREAKPOINTS FOR 3D TRANSFORMS */
+@media (max-width: 1024px) {
+    .proj-grid {
+        height: 560px;
     }
-    @keyframes glitch-flash {
-        0%,100% { filter: none; }
-        20% { filter: brightness(1.4) hue-rotate(10deg); }
-        60% { filter: brightness(0.8); }
+    .proj-card.pos-left {
+        transform: translate3d(-120%, 0, -150px) scale(0.82) rotateY(10deg);
     }
+    .proj-card.pos-right {
+        transform: translate3d(20%, 0, -150px) scale(0.82) rotateY(-10deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .proj-carousel-wrapper {
+        padding: 1.5rem 0 2.5rem;
+    }
+    .proj-grid {
+        height: 540px;
+    }
+    .proj-card {
+        max-width: 340px;
+    }
+    .proj-card.pos-left {
+        transform: translate3d(-102%, 0, -120px) scale(0.78) rotateY(8deg);
+        opacity: 0.45;
+        filter: blur(1px) brightness(0.55);
+    }
+    .proj-card.pos-right {
+        transform: translate3d(2%, 0, -120px) scale(0.78) rotateY(-8deg);
+        opacity: 0.45;
+        filter: blur(1px) brightness(0.55);
+    }
+}
+
+@media (max-width: 480px) {
+    .proj-grid {
+        height: 520px;
+    }
+    .proj-card {
+        max-width: 290px;
+    }
+    .proj-card.pos-left {
+        transform: translate3d(-92%, 0, -100px) scale(0.72) rotateY(6deg);
+        opacity: 0.35;
+        filter: blur(1px) brightness(0.5);
+    }
+    .proj-card.pos-right {
+        transform: translate3d(-8%, 0, -100px) scale(0.72) rotateY(-6deg);
+        opacity: 0.35;
+        filter: blur(1px) brightness(0.5);
+    }
+}
+
+/* CAROUSEL CONTROLS */
+.proj-carousel-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.proj-carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 12px;
+}
+
+.proj-dot {
+    width: 6px;
+    height: 6px;
+    background: #222;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.45, 1);
+    padding: 0;
+    border-radius: 0; /* Brutalist theme: sharp edges */
+}
+
+.proj-dot:hover {
+    background: #444;
+    border-color: var(--accent-color);
+}
+
+.proj-dot.active {
+    width: 28px;
+    height: 4px;
+    background: var(--accent-color);
+    border: none;
+    box-shadow: 0 0 12px rgba(232, 71, 63, 0.4);
+}
+
+.proj-carousel-arrows {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.proj-arrow-btn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-color);
+    border: 1.5px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.45, 1);
+    border-radius: 0; /* Brutalist sharp button */
+    padding: 0;
+}
+
+.proj-arrow-btn svg {
+    transition: transform 0.25s ease;
+}
+
+.proj-arrow-btn:hover {
+    border-color: var(--accent-color);
+    color: #fff;
+    background: var(--surface-elevated);
+    box-shadow: 0 8px 24px rgba(232, 71, 63, 0.15);
+}
+
+.proj-arrow-btn.prev:hover svg {
+    transform: translateX(-2px);
+}
+
+.proj-arrow-btn.next:hover svg {
+    transform: translateX(2px);
+}
+
+.proj-arrow-btn:active {
+    transform: scale(0.95);
 }
 
 /* THUMBNAIL */

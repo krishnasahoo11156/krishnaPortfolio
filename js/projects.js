@@ -111,12 +111,124 @@
     },
   ];
 
+  /* ── 3D CAROUSEL STATE & LOGIC ───────────────────────────── */
+  let activeCards = [];
+  let currentIndex = 0;
+  let rotationInterval = null;
+  let hoveredCard = null;
+  const ROTATION_DELAY = 2500;
+
+  function updateCarouselLayout() {
+    const len = activeCards.length;
+
+    // Reset all cards to hidden by default
+    document.querySelectorAll('.proj-card').forEach(card => {
+      card.classList.remove('pos-left', 'pos-center', 'pos-right', 'pos-hidden');
+      card.classList.add('pos-hidden');
+    });
+
+    if (len === 0) return;
+
+    activeCards.forEach((card, idx) => {
+      card.classList.remove('pos-hidden');
+
+      // Circular difference math
+      let diff = (idx - currentIndex) % len;
+      if (diff < 0) diff += len;
+
+      if (len === 3) {
+        if (diff === 0) {
+          card.classList.add('pos-center');
+        } else if (diff === 1) {
+          card.classList.add('pos-right');
+        } else if (diff === 2) {
+          card.classList.add('pos-left');
+        }
+      } else if (len === 2) {
+        if (diff === 0) {
+          card.classList.add('pos-center');
+        } else if (diff === 1) {
+          card.classList.add('pos-right');
+        }
+      } else if (len === 1) {
+        card.classList.add('pos-center');
+      }
+    });
+
+    // Check if the currently hovered card has become the center card
+    if (hoveredCard && hoveredCard.classList.contains('pos-center')) {
+      stopAutoRotation();
+    } else {
+      startAutoRotation();
+    }
+
+    // Update dots and arrow visibility
+    updateCarouselControls();
+  }
+
+  const dotsContainer = document.getElementById('proj-carousel-dots');
+  const prevBtn = document.getElementById('proj-arrow-prev');
+  const nextBtn = document.getElementById('proj-arrow-next');
+
+  function updateCarouselControls() {
+    if (!dotsContainer) return;
+
+    dotsContainer.innerHTML = '';
+    const len = activeCards.length;
+
+    // Show/hide controls based on active count
+    const controls = document.querySelector('.proj-carousel-controls');
+    if (controls) {
+      controls.style.display = len <= 1 ? 'none' : 'flex';
+    }
+
+    if (len <= 1) return;
+
+    for (let i = 0; i < len; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'proj-dot' + (i === currentIndex ? ' active' : '');
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-selected', i === currentIndex ? 'true' : 'false');
+      dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+
+      dot.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarouselLayout();
+        stopAutoRotation();
+        startAutoRotation();
+      });
+
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function startAutoRotation() {
+    if (rotationInterval) clearInterval(rotationInterval);
+    if (activeCards.length <= 1) return;
+
+    // Safety check: if hovering center card, do not start rotation
+    if (hoveredCard && hoveredCard.classList.contains('pos-center')) return;
+
+    rotationInterval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % activeCards.length;
+      updateCarouselLayout();
+    }, ROTATION_DELAY);
+  }
+
+  function stopAutoRotation() {
+    if (rotationInterval) {
+      clearInterval(rotationInterval);
+      rotationInterval = null;
+    }
+  }
+
   /* ── FILTER TABS ──────────────────────────────────────────── */
   document.querySelectorAll('.proj-filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.proj-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const f = btn.dataset.filter;
+
       document.querySelectorAll('.proj-card').forEach(card => {
         if (f === 'all' || card.dataset.filter === f) {
           card.classList.remove('hidden');
@@ -124,19 +236,17 @@
           card.classList.add('hidden');
         }
       });
+
+      // Update active cards for carousel
+      activeCards = Array.from(document.querySelectorAll('.proj-card')).filter(card => !card.classList.contains('hidden'));
+      currentIndex = 0;
+      updateCarouselLayout();
+
+      // Reset auto-rotation
+      stopAutoRotation();
+      startAutoRotation();
     });
   });
-
-  /* ── SCROLL REVEAL (staggered) ────────────────────────────── */
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('glitch-enter');
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.proj-card').forEach(c => obs.observe(c));
 
   /* ── MODAL ────────────────────────────────────────────────── */
   const backdrop = document.getElementById('proj-modal-backdrop');
@@ -196,6 +306,7 @@
 
     backdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
+    stopAutoRotation();
 
     // animate timeline fill
     requestAnimationFrame(() => {
@@ -209,17 +320,98 @@
   function closeModal() {
     backdrop.classList.remove('open');
     document.body.style.overflow = '';
+
+    // Only resume auto-rotation if the user is NOT currently hovering the center card
+    if (hoveredCard && hoveredCard.classList.contains('pos-center')) {
+      stopAutoRotation();
+    } else {
+      startAutoRotation();
+    }
   }
 
   backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  /* Wire card clicks */
+  /* ── CAROUSEL SETUP & INTERACTIONS ────────────────────────── */
+
+  // Wire card clicks
   document.querySelectorAll('.proj-card').forEach(card => {
     card.addEventListener('click', e => {
+      // Ignore click on links and buttons inside the card
       if (e.target.closest('a') || e.target.closest('.proj-btn')) return;
-      openModal(card.dataset.id);
+
+      if (!card.classList.contains('pos-center')) {
+        // Bring to center
+        e.preventDefault();
+        e.stopPropagation();
+        const idx = activeCards.indexOf(card);
+        if (idx !== -1) {
+          currentIndex = idx;
+          updateCarouselLayout();
+          
+          // Reset timer
+          stopAutoRotation();
+          startAutoRotation();
+        }
+      } else {
+        // Center card click opens modal
+        openModal(card.dataset.id);
+      }
     });
   });
+
+  // Initialize carousel values
+  function initCarousel() {
+    activeCards = Array.from(document.querySelectorAll('.proj-card')).filter(card => !card.classList.contains('hidden'));
+    currentIndex = 0;
+    updateCarouselLayout();
+
+    // Setup precise card-level hover handlers
+    document.querySelectorAll('.proj-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        hoveredCard = card;
+        if (card.classList.contains('pos-center')) {
+          stopAutoRotation();
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (hoveredCard === card) {
+          hoveredCard = null;
+        }
+        startAutoRotation();
+      });
+    });
+
+    // Wire arrow button click events
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        const len = activeCards.length;
+        if (len <= 1) return;
+        currentIndex = (currentIndex - 1 + len) % len;
+        updateCarouselLayout();
+        stopAutoRotation();
+        startAutoRotation();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        const len = activeCards.length;
+        if (len <= 1) return;
+        currentIndex = (currentIndex + 1) % len;
+        updateCarouselLayout();
+        stopAutoRotation();
+        startAutoRotation();
+      });
+    }
+
+    // Start initial rotation if we aren't hovering the center card
+    if (!(hoveredCard && hoveredCard.classList.contains('pos-center'))) {
+      startAutoRotation();
+    }
+  }
+
+  initCarousel();
 
 })();

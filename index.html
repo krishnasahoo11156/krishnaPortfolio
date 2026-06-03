@@ -43,11 +43,11 @@
     <link rel="stylesheet" href="css/typography.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/projects-base.css">
+    <link rel="stylesheet" href="css/projects-base.css?v=4">
     <link rel="stylesheet" href="css/projects-modal.css">
     <link rel="stylesheet" href="css/timeline.css">
     <link rel="stylesheet" href="css/contact.css">
-    <link rel="stylesheet" href="css/polish.css">
+    <link rel="stylesheet" href="css/polish.css?v=4">
 
     <style>
         /* ================================================================
@@ -1453,133 +1453,152 @@
         </div>
 
         <!-- Cards Grid -->
-        <div class="proj-grid">
+        <div class="proj-carousel-wrapper reveal" data-delay="180">
+            <div class="proj-grid">
 
-            <!-- Card 1: CrisisSync -->
-            <div class="proj-card" data-id="crisissync" data-filter="full-stack" data-delay="0">
-                <div class="proj-thumb">
-                    <img src="projectimage/crisisSync.png" alt="CrisisSync screenshot"
-                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <div class="proj-thumb-ph" style="display:none">CRISISSYNC</div>
-                    <div class="proj-thumb-overlay"><span>VIEW PROJECT</span></div>
-                    <span class="proj-thumb-icon">🚨</span>
+                <!-- Card 1: CrisisSync -->
+                <div class="proj-card" data-id="crisissync" data-filter="full-stack" data-delay="0">
+                    <div class="proj-thumb">
+                        <img src="projectimage/crisisSync.png" alt="CrisisSync screenshot"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="proj-thumb-ph" style="display:none">CRISISSYNC</div>
+                        <div class="proj-thumb-overlay"><span>VIEW PROJECT</span></div>
+                        <span class="proj-thumb-icon">🚨</span>
+                    </div>
+                    <div class="proj-body">
+                        <div class="proj-badges">
+                            <span class="badge-live"><span class="badge-dot-g"></span>LIVE</span>
+                            <span class="badge-cat">FULL STACK · AI SYSTEM</span>
+                        </div>
+                        <div class="proj-title">CrisisSync</div>
+                        <p class="proj-oneliner">AI-powered real-time crisis response and emergency coordination platform.
+                        </p>
+                        <div class="proj-tags">
+                            <span class="proj-tag">Flutter</span>
+                            <span class="proj-tag">Firebase</span>
+                            <span class="proj-tag">Gemini AI</span>
+                            <span class="proj-tag">Docker</span>
+                            <span class="proj-tag">Cloud Run</span>
+                            <span class="proj-tag">Maps API</span>
+                        </div>
+                        <div class="proj-timeline">May 2026 · Completed</div>
+                        <div class="proj-actions">
+                            <a href="https://crisissync-web-5ah5sevnmq-el.a.run.app" target="_blank" rel="noopener"
+                                class="proj-btn">LIVE DEMO →</a>
+                            <a href="https://github.com/krishnasahoo11156/crisissync" target="_blank" rel="noopener"
+                                class="proj-btn">GITHUB ↗</a>
+                        </div>
+                    </div>
+                    <div class="proj-highlights">
+                        <ul>
+                            <li>AI incident classification with severity scoring</li>
+                            <li>Role-based portals: Guest, Staff, Admin</li>
+                            <li>Live ADI dashboard + Google Maps tracking</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="proj-body">
-                    <div class="proj-badges">
-                        <span class="badge-live"><span class="badge-dot-g"></span>LIVE</span>
-                        <span class="badge-cat">FULL STACK · AI SYSTEM</span>
+
+                <!-- Card 2: StudySync -->
+                <div class="proj-card" data-id="studysync" data-filter="in-progress" data-delay="200">
+                    <div class="proj-thumb">
+                        <img src="projectimage/studySync.png" alt="StudySync screenshot"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="proj-thumb-ph" style="display:none">STUDYSYNC</div>
+                        <div class="proj-thumb-overlay"><span>VIEW PROJECT</span></div>
+                        <span class="proj-thumb-icon">📚</span>
                     </div>
-                    <div class="proj-title">CrisisSync</div>
-                    <p class="proj-oneliner">AI-powered real-time crisis response and emergency coordination platform.
-                    </p>
-                    <div class="proj-tags">
-                        <span class="proj-tag">Flutter</span>
-                        <span class="proj-tag">Firebase</span>
-                        <span class="proj-tag">Gemini AI</span>
-                        <span class="proj-tag">Docker</span>
-                        <span class="proj-tag">Cloud Run</span>
-                        <span class="proj-tag">Maps API</span>
+                    <div class="proj-body">
+                        <div class="proj-badges">
+                            <span class="badge-progress"><span class="badge-dot-y"></span>IN PROGRESS</span>
+                            <span class="badge-cat">FRONTEND · FULL STACK</span>
+                        </div>
+                        <div class="proj-title">StudySync</div>
+                        <p class="proj-oneliner">All-in-one academic productivity platform with smart scheduling and focus
+                            tools.</p>
+                        <div class="proj-tags">
+                            <span class="proj-tag">React.js</span>
+                            <span class="proj-tag">Vite</span>
+                            <span class="proj-tag">Tailwind CSS</span>
+                            <span class="proj-tag">Firebase</span>
+                            <span class="proj-tag">Web Audio API</span>
+                        </div>
+                        <div class="proj-timeline">April 2026 · In Progress</div>
+                        <div class="proj-actions">
+                            <a href="https://study-sync-eosin-seven.vercel.app/" target="_blank" rel="noopener"
+                                class="proj-btn">LIVE DEMO →</a>
+                            <a href="https://github.com/krishnasahoo11156/StudySync" target="_blank" rel="noopener"
+                                class="proj-btn">GITHUB ↗</a>
+                        </div>
                     </div>
-                    <div class="proj-timeline">May 2026 · Completed</div>
-                    <div class="proj-actions">
-                        <a href="https://crisissync-web-5ah5sevnmq-el.a.run.app" target="_blank" rel="noopener"
-                            class="proj-btn">LIVE DEMO →</a>
-                        <a href="https://github.com/krishnasahoo11156/crisissync" target="_blank" rel="noopener"
-                            class="proj-btn">GITHUB ↗</a>
+                    <div class="proj-highlights">
+                        <ul>
+                            <li>Intelligent calendar with conflict detection</li>
+                            <li>Pomodoro timer with ambient sound generation</li>
+                            <li>Cloud file library with folder system</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="proj-highlights">
-                    <ul>
-                        <li>AI incident classification with severity scoring</li>
-                        <li>Role-based portals: Guest, Staff, Admin</li>
-                        <li>Live ADI dashboard + Google Maps tracking</li>
-                    </ul>
+
+                <!-- Card 3: Onboarding Agent -->
+                <div class="proj-card" data-id="onboarding" data-filter="hackathon" data-delay="400">
+                    <div class="proj-thumb">
+                        <img src="projectimage/onboardAgent.jpeg" alt="Onboarding Agent screenshot"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="proj-thumb-ph" style="display:none">DEV AGENT</div>
+                        <div class="proj-thumb-overlay"><span>VIEW PROJECT</span></div>
+                        <span class="proj-thumb-icon">⚡</span>
+                    </div>
+                    <div class="proj-body">
+                        <div class="proj-badges">
+                            <span class="badge-hackathon">⚡ HACKATHON</span>
+                            <span class="badge-cat">AI SYSTEM · NEXT.JS</span>
+                        </div>
+                        <div class="proj-title">Autonomous Developer Onboarding Agent</div>
+                        <p class="proj-oneliner">AI-powered platform that automates developer setup and guidance from day
+                            one.</p>
+                        <div class="proj-tags">
+                            <span class="proj-tag">Next.js</span>
+                            <span class="proj-tag">TypeScript</span>
+                            <span class="proj-tag">Gemini AI</span>
+                            <span class="proj-tag">NextAuth</span>
+                            <span class="proj-tag">Framer Motion</span>
+                            <span class="proj-tag">Chart.js</span>
+                        </div>
+                        <div class="proj-timeline">March 2026 · Syrus 2026 Hackathon</div>
+                        <div class="proj-actions">
+                            <a href="https://github.com/CMPN-CODECELL/Syrus2026_AlgoMinds" target="_blank" rel="noopener"
+                                class="proj-btn">GITHUB ↗</a>
+                            <span class="proj-btn-ghost">NO LIVE DEMO</span>
+                        </div>
+                    </div>
+                    <div class="proj-highlights">
+                        <ul>
+                            <li>Gemini AI assistant for onboarding guidance</li>
+                            <li>Local environment agent verifies dev tools</li>
+                            <li>HR dashboard with real-time analytics</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div><!-- /.proj-grid -->
+
+            <!-- Carousel Navigation Controls -->
+            <div class="proj-carousel-controls">
+                <div class="proj-carousel-dots" id="proj-carousel-dots" role="tablist" aria-label="Project slide selection"></div>
+                <div class="proj-carousel-arrows">
+                    <button class="proj-arrow-btn prev" id="proj-arrow-prev" aria-label="Previous project">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="proj-arrow-btn next" id="proj-arrow-next" aria-label="Next project">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
                 </div>
             </div>
-
-            <!-- Card 2: StudySync -->
-            <div class="proj-card" data-id="studysync" data-filter="in-progress" data-delay="200">
-                <div class="proj-thumb">
-                    <img src="projectimage/studySync.png" alt="StudySync screenshot"
-                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <div class="proj-thumb-ph" style="display:none">STUDYSYNC</div>
-                    <div class="proj-thumb-overlay"><span>VIEW PROJECT</span></div>
-                    <span class="proj-thumb-icon">📚</span>
-                </div>
-                <div class="proj-body">
-                    <div class="proj-badges">
-                        <span class="badge-progress"><span class="badge-dot-y"></span>IN PROGRESS</span>
-                        <span class="badge-cat">FRONTEND · FULL STACK</span>
-                    </div>
-                    <div class="proj-title">StudySync</div>
-                    <p class="proj-oneliner">All-in-one academic productivity platform with smart scheduling and focus
-                        tools.</p>
-                    <div class="proj-tags">
-                        <span class="proj-tag">React.js</span>
-                        <span class="proj-tag">Vite</span>
-                        <span class="proj-tag">Tailwind CSS</span>
-                        <span class="proj-tag">Firebase</span>
-                        <span class="proj-tag">Web Audio API</span>
-                    </div>
-                    <div class="proj-timeline">April 2026 · In Progress</div>
-                    <div class="proj-actions">
-                        <a href="https://study-sync-eosin-seven.vercel.app/" target="_blank" rel="noopener"
-                            class="proj-btn">LIVE DEMO →</a>
-                        <a href="https://github.com/krishnasahoo11156/StudySync" target="_blank" rel="noopener"
-                            class="proj-btn">GITHUB ↗</a>
-                    </div>
-                </div>
-                <div class="proj-highlights">
-                    <ul>
-                        <li>Intelligent calendar with conflict detection</li>
-                        <li>Pomodoro timer with ambient sound generation</li>
-                        <li>Cloud file library with folder system</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Card 3: Onboarding Agent -->
-            <div class="proj-card" data-id="onboarding" data-filter="hackathon" data-delay="400">
-                <div class="proj-thumb">
-                    <img src="projectimage/onboardAgent.jpeg" alt="Onboarding Agent screenshot"
-                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <div class="proj-thumb-ph" style="display:none">DEV AGENT</div>
-                    <div class="proj-thumb-overlay"><span>VIEW PROJECT</span></div>
-                    <span class="proj-thumb-icon">⚡</span>
-                </div>
-                <div class="proj-body">
-                    <div class="proj-badges">
-                        <span class="badge-hackathon">⚡ HACKATHON</span>
-                        <span class="badge-cat">AI SYSTEM · NEXT.JS</span>
-                    </div>
-                    <div class="proj-title">Autonomous Developer Onboarding Agent</div>
-                    <p class="proj-oneliner">AI-powered platform that automates developer setup and guidance from day
-                        one.</p>
-                    <div class="proj-tags">
-                        <span class="proj-tag">Next.js</span>
-                        <span class="proj-tag">TypeScript</span>
-                        <span class="proj-tag">Gemini AI</span>
-                        <span class="proj-tag">NextAuth</span>
-                        <span class="proj-tag">Framer Motion</span>
-                        <span class="proj-tag">Chart.js</span>
-                    </div>
-                    <div class="proj-timeline">March 2026 · Syrus 2026 Hackathon</div>
-                    <div class="proj-actions">
-                        <a href="https://github.com/CMPN-CODECELL/Syrus2026_AlgoMinds" target="_blank" rel="noopener"
-                            class="proj-btn">GITHUB ↗</a>
-                        <span class="proj-btn-ghost">NO LIVE DEMO</span>
-                    </div>
-                </div>
-                <div class="proj-highlights">
-                    <ul>
-                        <li>Gemini AI assistant for onboarding guidance</li>
-                        <li>Local environment agent verifies dev tools</li>
-                        <li>HR dashboard with real-time analytics</li>
-                    </ul>
-                </div>
-            </div>
-
-        </div><!-- /.proj-grid -->
+        </div><!-- /.proj-carousel-wrapper -->
 
         <!-- GitHub Strip -->
         <div class="proj-github-strip reveal" data-delay="200">
@@ -1825,10 +1844,10 @@
     <!-- Script Imports -->
     <script src="js/hero.js" defer></script>
     <script src="js/main.js" defer></script>
-    <script src="js/projects.js" defer></script>
+    <script src="js/projects.js?v=4" defer></script>
     <script src="js/timeline.js" defer></script>
     <script src="js/contact.js" defer></script>
-    <script src="js/polish.js" defer></script>
+    <script src="js/polish.js?v=2" defer></script>
 
     <!-- Page transition -->
     <script>

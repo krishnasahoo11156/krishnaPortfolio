@@ -271,33 +271,6 @@
         });
     }
 
-    /* ── 6. PROJ CARD STAGGER (supplement main.js) ── */
-    function initProjStagger() {
-        var cards = document.querySelectorAll('.proj-card');
-        if (!cards.length) return;
-
-        var observer = new IntersectionObserver(function (entries, obs) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    var el    = entry.target;
-                    var delay = parseInt(el.dataset.delay || 0, 10);
-                    setTimeout(function () {
-                        el.style.opacity   = '1';
-                        el.style.transform = 'translateY(0)';
-                    }, delay);
-                    obs.unobserve(el);
-                }
-            });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-        cards.forEach(function (card) {
-            card.style.opacity   = '0';
-            card.style.transform = 'translateY(28px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
-        });
-    }
-
     /* ── BOOT ── */
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', boot);
@@ -311,6 +284,5 @@
         initBackToTop();
         initCursor();
         initHamburger();
-        initProjStagger();
     }
 })();
