@@ -115,6 +115,7 @@
   let activeCards = [];
   let currentIndex = 0;
   let rotationInterval = null;
+  let hoveredCard = null;
   const ROTATION_DELAY = 2500;
 
   function updateCarouselLayout() {
@@ -153,11 +154,22 @@
         card.classList.add('pos-center');
       }
     });
+
+    // Check if the currently hovered card has become the center card
+    if (hoveredCard && hoveredCard.classList.contains('pos-center')) {
+      stopAutoRotation();
+    } else {
+      startAutoRotation();
+    }
   }
 
   function startAutoRotation() {
     if (rotationInterval) clearInterval(rotationInterval);
     if (activeCards.length <= 1) return;
+
+    // Safety check: if hovering center card, do not start rotation
+    if (hoveredCard && hoveredCard.classList.contains('pos-center')) return;
+
     rotationInterval = setInterval(() => {
       currentIndex = (currentIndex + 1) % activeCards.length;
       updateCarouselLayout();
@@ -255,6 +267,7 @@
 
     backdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
+    stopAutoRotation();
 
     // animate timeline fill
     requestAnimationFrame(() => {
@@ -268,6 +281,13 @@
   function closeModal() {
     backdrop.classList.remove('open');
     document.body.style.overflow = '';
+
+    // Only resume auto-rotation if the user is NOT currently hovering the center card
+    if (hoveredCard && hoveredCard.classList.contains('pos-center')) {
+      stopAutoRotation();
+    } else {
+      startAutoRotation();
+    }
   }
 
   backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
@@ -306,13 +326,27 @@
     activeCards = Array.from(document.querySelectorAll('.proj-card')).filter(card => !card.classList.contains('hidden'));
     currentIndex = 0;
     updateCarouselLayout();
-    startAutoRotation();
 
-    // Hover detection boundaries
-    const wrapper = document.querySelector('.proj-carousel-wrapper');
-    if (wrapper) {
-      wrapper.addEventListener('mouseenter', stopAutoRotation);
-      wrapper.addEventListener('mouseleave', startAutoRotation);
+    // Setup precise card-level hover handlers
+    document.querySelectorAll('.proj-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        hoveredCard = card;
+        if (card.classList.contains('pos-center')) {
+          stopAutoRotation();
+        }
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (hoveredCard === card) {
+          hoveredCard = null;
+        }
+        startAutoRotation();
+      });
+    });
+
+    // Start initial rotation if we aren't hovering the center card
+    if (!(hoveredCard && hoveredCard.classList.contains('pos-center'))) {
+      startAutoRotation();
     }
   }
 
