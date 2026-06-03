@@ -21,6 +21,7 @@
   --card-shadow-main: rgba(0, 0, 0, 0.45);
   --card-shadow-border: rgba(255, 255, 255, 0.05);
   --modal-backdrop: rgba(0, 0, 0, 0.88);
+  --hero-vignette-bg: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.65) 80%, rgba(0, 0, 0, 0.92) 100%);
 
   --font-heading: 'Bebas Neue', sans-serif;
   --font-body: 'DM Sans', sans-serif;
@@ -63,4 +64,5 @@
   --card-shadow-main: rgba(0, 0, 0, 0.06);
   --card-shadow-border: rgba(0, 0, 0, 0.02);
   --modal-backdrop: rgba(0, 0, 0, 0.6);
+  --hero-vignette-bg: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 60%, rgba(247, 247, 249, 0.2) 80%, rgba(247, 247, 249, 0.75) 100%);
 }
