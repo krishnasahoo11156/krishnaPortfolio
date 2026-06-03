@@ -161,6 +161,45 @@
     } else {
       startAutoRotation();
     }
+
+    // Update dots and arrow visibility
+    updateCarouselControls();
+  }
+
+  const dotsContainer = document.getElementById('proj-carousel-dots');
+  const prevBtn = document.getElementById('proj-arrow-prev');
+  const nextBtn = document.getElementById('proj-arrow-next');
+
+  function updateCarouselControls() {
+    if (!dotsContainer) return;
+
+    dotsContainer.innerHTML = '';
+    const len = activeCards.length;
+
+    // Show/hide controls based on active count
+    const controls = document.querySelector('.proj-carousel-controls');
+    if (controls) {
+      controls.style.display = len <= 1 ? 'none' : 'flex';
+    }
+
+    if (len <= 1) return;
+
+    for (let i = 0; i < len; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'proj-dot' + (i === currentIndex ? ' active' : '');
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-selected', i === currentIndex ? 'true' : 'false');
+      dot.setAttribute('aria-label', `Go to project ${i + 1}`);
+
+      dot.addEventListener('click', () => {
+        currentIndex = i;
+        updateCarouselLayout();
+        stopAutoRotation();
+        startAutoRotation();
+      });
+
+      dotsContainer.appendChild(dot);
+    }
   }
 
   function startAutoRotation() {
@@ -343,6 +382,29 @@
         startAutoRotation();
       });
     });
+
+    // Wire arrow button click events
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        const len = activeCards.length;
+        if (len <= 1) return;
+        currentIndex = (currentIndex - 1 + len) % len;
+        updateCarouselLayout();
+        stopAutoRotation();
+        startAutoRotation();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        const len = activeCards.length;
+        if (len <= 1) return;
+        currentIndex = (currentIndex + 1) % len;
+        updateCarouselLayout();
+        stopAutoRotation();
+        startAutoRotation();
+      });
+    }
 
     // Start initial rotation if we aren't hovering the center card
     if (!(hoveredCard && hoveredCard.classList.contains('pos-center'))) {
