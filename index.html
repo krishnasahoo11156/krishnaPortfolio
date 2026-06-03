@@ -43,11 +43,11 @@
     <link rel="stylesheet" href="css/typography.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/projects-base.css?v=2">
+    <link rel="stylesheet" href="css/projects-base.css?v=4">
     <link rel="stylesheet" href="css/projects-modal.css">
     <link rel="stylesheet" href="css/timeline.css">
     <link rel="stylesheet" href="css/contact.css">
-    <link rel="stylesheet" href="css/polish.css?v=2">
+    <link rel="stylesheet" href="css/polish.css?v=4">
 
     <style>
         /* ================================================================
@@ -1586,8 +1586,16 @@
             <div class="proj-carousel-controls">
                 <div class="proj-carousel-dots" id="proj-carousel-dots" role="tablist" aria-label="Project slide selection"></div>
                 <div class="proj-carousel-arrows">
-                    <button class="proj-arrow-btn prev" id="proj-arrow-prev" aria-label="Previous project">&lsaquo;</button>
-                    <button class="proj-arrow-btn next" id="proj-arrow-next" aria-label="Next project">&rsaquo;</button>
+                    <button class="proj-arrow-btn prev" id="proj-arrow-prev" aria-label="Previous project">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="proj-arrow-btn next" id="proj-arrow-next" aria-label="Next project">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div><!-- /.proj-carousel-wrapper -->

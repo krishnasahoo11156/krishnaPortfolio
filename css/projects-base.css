@@ -204,8 +204,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
-    margin-top: 1.5rem;
+    gap: 1.5rem;
+    margin-top: 2rem;
     width: 100%;
 }
 
@@ -218,34 +218,34 @@
 }
 
 .proj-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #333;
+    width: 6px;
+    height: 6px;
+    background: #222;
     border: 1px solid var(--border-color);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.45, 1);
     padding: 0;
+    border-radius: 0; /* Brutalist theme: sharp edges */
 }
 
 .proj-dot:hover {
-    background: #666;
+    background: #444;
+    border-color: var(--accent-color);
 }
 
 .proj-dot.active {
     width: 28px;
-    height: 5px;
-    border-radius: 3px;
+    height: 4px;
     background: var(--accent-color);
-    border-color: var(--accent-color);
-    box-shadow: 0 0 10px rgba(232, 71, 63, 0.5);
+    border: none;
+    box-shadow: 0 0 12px rgba(232, 71, 63, 0.4);
 }
 
 .proj-carousel-arrows {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
 }
 
 .proj-arrow-btn {
@@ -256,23 +256,34 @@
     justify-content: center;
     background: var(--surface-color);
     border: 1.5px solid var(--border-color);
-    color: #fff;
+    color: var(--text-secondary);
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
-    font-size: 16px;
-    font-family: inherit;
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.45, 1);
+    border-radius: 0; /* Brutalist sharp button */
+    padding: 0;
+}
+
+.proj-arrow-btn svg {
+    transition: transform 0.25s ease;
 }
 
 .proj-arrow-btn:hover {
     border-color: var(--accent-color);
-    color: var(--accent-color);
+    color: #fff;
     background: var(--surface-elevated);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(232, 71, 63, 0.15);
+    box-shadow: 0 8px 24px rgba(232, 71, 63, 0.15);
+}
+
+.proj-arrow-btn.prev:hover svg {
+    transform: translateX(-2px);
+}
+
+.proj-arrow-btn.next:hover svg {
+    transform: translateX(2px);
 }
 
 .proj-arrow-btn:active {
-    transform: translateY(0);
+    transform: scale(0.95);
 }
 
 /* THUMBNAIL */
