@@ -92,10 +92,7 @@
             inset: 0;
             z-index: 9;
             pointer-events: none;
-            background: radial-gradient(ellipse 80% 80% at 50% 50%,
-                    transparent 40%,
-                    rgba(0, 0, 0, 0.65) 80%,
-                    rgba(0, 0, 0, 0.92) 100%);
+            background: var(--hero-vignette-bg);
         }
 
         /* ---- GRAIN / NOISE LAYER ---- */
@@ -189,7 +186,7 @@
             z-index: 5;
             background:
                 radial-gradient(ellipse 60% 70% at 50% 50%, rgba(232, 71, 63, 0.1) 0%, transparent 70%),
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, var(--bg-color) 100%);
             pointer-events: none;
         }
 
@@ -224,10 +221,10 @@
             user-select: none;
         }
 
-        /* First word — white, filled */
+        /* First word — filled */
         #hero-name-krishna {
             font-size: clamp(72px, 15vw, 200px);
-            color: #ffffff;
+            color: var(--text-primary);
             display: block;
         }
 
@@ -235,8 +232,8 @@
         #hero-name-sahoo {
             font-size: clamp(72px, 15vw, 200px);
             color: transparent;
-            -webkit-text-stroke: 2px #e8473f;
-            text-stroke: 2px #e8473f;
+            -webkit-text-stroke: 2px var(--accent-color);
+            text-stroke: 2px var(--accent-color);
             display: block;
         }
 
@@ -244,7 +241,7 @@
         .hero-divider {
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #e8473f, transparent);
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
             margin: 1rem 0;
             opacity: 0.8;
         }
@@ -254,7 +251,7 @@
             font-family: var(--font-body);
             font-size: clamp(14px, 2vw, 20px);
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-secondary);
             letter-spacing: 3px;
             text-transform: uppercase;
             min-height: 1.6em;
@@ -315,7 +312,7 @@
             flex: 1;
             position: relative;
             overflow: hidden;
-            border: 1px solid #222;
+            border: 1px solid var(--border-color);
             transition: box-shadow var(--transition-base), transform var(--transition-slow);
         }
 
@@ -387,7 +384,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: #0d0d0d;
+            background: var(--surface-color);
             border: 1.5px solid #22c55e;
             padding: 6px 14px;
             font-family: 'Courier New', monospace;
@@ -438,7 +435,7 @@
             display: block;
             font-family: var(--font-heading);
             font-size: clamp(52px, 6vw, 88px);
-            color: #ffffff;
+            color: var(--text-primary);
             letter-spacing: 2px;
         }
 
@@ -498,7 +495,7 @@
         .about-counters {
             display: flex;
             align-items: stretch;
-            border-top: 1px solid #222;
+            border-top: 1px solid var(--border-color);
             padding-top: 1.75rem;
             margin-top: auto;
         }
@@ -528,7 +525,7 @@
         .about-counter .cnt-num {
             font-family: var(--font-heading);
             font-size: clamp(32px, 4vw, 52px);
-            color: #ffffff;
+            color: var(--text-primary);
             line-height: 1;
             letter-spacing: 1px;
             transition: color var(--transition-base);
@@ -564,7 +561,7 @@
             display: inline-block;
             font-family: var(--font-heading);
             font-size: clamp(48px, 6vw, 84px);
-            color: #ffffff;
+            color: var(--text-primary);
             letter-spacing: 2px;
             margin-right: 0.5rem;
         }
@@ -604,8 +601,8 @@
 
         /* Skill card */
         .skill-card {
-            background: #111111;
-            border: 1px solid #222;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
             padding: 1.75rem;
             position: relative;
             transition:
@@ -635,7 +632,7 @@
         .skill-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 0 32px 4px rgba(232, 71, 63, 0.18);
-            background-color: #161616;
+            background-color: var(--surface-elevated);
         }
 
         .skill-card:hover::before {
@@ -682,7 +679,7 @@
         .skill-card-title {
             font-family: var(--font-heading);
             font-size: clamp(18px, 2vw, 22px);
-            color: #ffffff;
+            color: var(--text-primary);
             letter-spacing: 1.5px;
             margin: 0 0 1.25rem;
             padding-right: 2rem;
@@ -704,7 +701,7 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
             color: var(--text-secondary);
-            border: 1px solid #333;
+            border: 1px solid var(--border-color);
             padding: 4px 10px;
             transition:
                 border-color 0.2s ease,
@@ -741,7 +738,7 @@
         .sk-progress-track {
             width: 100%;
             height: 3px;
-            background: #222;
+            background: var(--surface-overlay);
             overflow: hidden;
         }
 
