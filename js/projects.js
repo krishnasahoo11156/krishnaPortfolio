@@ -111,12 +111,73 @@
     },
   ];
 
+  /* ── 3D CAROUSEL STATE & LOGIC ───────────────────────────── */
+  let activeCards = [];
+  let currentIndex = 0;
+  let rotationInterval = null;
+  const ROTATION_DELAY = 2500;
+
+  function updateCarouselLayout() {
+    const len = activeCards.length;
+
+    // Reset all cards to hidden by default
+    document.querySelectorAll('.proj-card').forEach(card => {
+      card.classList.remove('pos-left', 'pos-center', 'pos-right', 'pos-hidden');
+      card.classList.add('pos-hidden');
+    });
+
+    if (len === 0) return;
+
+    activeCards.forEach((card, idx) => {
+      card.classList.remove('pos-hidden');
+
+      // Circular difference math
+      let diff = (idx - currentIndex) % len;
+      if (diff < 0) diff += len;
+
+      if (len === 3) {
+        if (diff === 0) {
+          card.classList.add('pos-center');
+        } else if (diff === 1) {
+          card.classList.add('pos-right');
+        } else if (diff === 2) {
+          card.classList.add('pos-left');
+        }
+      } else if (len === 2) {
+        if (diff === 0) {
+          card.classList.add('pos-center');
+        } else if (diff === 1) {
+          card.classList.add('pos-right');
+        }
+      } else if (len === 1) {
+        card.classList.add('pos-center');
+      }
+    });
+  }
+
+  function startAutoRotation() {
+    if (rotationInterval) clearInterval(rotationInterval);
+    if (activeCards.length <= 1) return;
+    rotationInterval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % activeCards.length;
+      updateCarouselLayout();
+    }, ROTATION_DELAY);
+  }
+
+  function stopAutoRotation() {
+    if (rotationInterval) {
+      clearInterval(rotationInterval);
+      rotationInterval = null;
+    }
+  }
+
   /* ── FILTER TABS ──────────────────────────────────────────── */
   document.querySelectorAll('.proj-filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.proj-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const f = btn.dataset.filter;
+
       document.querySelectorAll('.proj-card').forEach(card => {
         if (f === 'all' || card.dataset.filter === f) {
           card.classList.remove('hidden');
@@ -124,19 +185,17 @@
           card.classList.add('hidden');
         }
       });
+
+      // Update active cards for carousel
+      activeCards = Array.from(document.querySelectorAll('.proj-card')).filter(card => !card.classList.contains('hidden'));
+      currentIndex = 0;
+      updateCarouselLayout();
+
+      // Reset auto-rotation
+      stopAutoRotation();
+      startAutoRotation();
     });
   });
-
-  /* ── SCROLL REVEAL (staggered) ────────────────────────────── */
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('glitch-enter');
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.proj-card').forEach(c => obs.observe(c));
 
   /* ── MODAL ────────────────────────────────────────────────── */
   const backdrop = document.getElementById('proj-modal-backdrop');
@@ -214,12 +273,49 @@
   backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  /* Wire card clicks */
+  /* ── CAROUSEL SETUP & INTERACTIONS ────────────────────────── */
+
+  // Wire card clicks
   document.querySelectorAll('.proj-card').forEach(card => {
     card.addEventListener('click', e => {
+      // Ignore click on links and buttons inside the card
       if (e.target.closest('a') || e.target.closest('.proj-btn')) return;
-      openModal(card.dataset.id);
+
+      if (!card.classList.contains('pos-center')) {
+        // Bring to center
+        e.preventDefault();
+        e.stopPropagation();
+        const idx = activeCards.indexOf(card);
+        if (idx !== -1) {
+          currentIndex = idx;
+          updateCarouselLayout();
+          
+          // Reset timer
+          stopAutoRotation();
+          startAutoRotation();
+        }
+      } else {
+        // Center card click opens modal
+        openModal(card.dataset.id);
+      }
     });
   });
+
+  // Initialize carousel values
+  function initCarousel() {
+    activeCards = Array.from(document.querySelectorAll('.proj-card')).filter(card => !card.classList.contains('hidden'));
+    currentIndex = 0;
+    updateCarouselLayout();
+    startAutoRotation();
+
+    // Hover detection boundaries
+    const wrapper = document.querySelector('.proj-carousel-wrapper');
+    if (wrapper) {
+      wrapper.addEventListener('mouseenter', stopAutoRotation);
+      wrapper.addEventListener('mouseleave', startAutoRotation);
+    }
+  }
+
+  initCarousel();
 
 })();
