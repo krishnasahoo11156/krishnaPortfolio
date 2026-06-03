@@ -10,6 +10,17 @@
   --text-tertiary: #52526a;
   --border-color: #2a2a35;
   --border-subtle: rgba(255, 255, 255, 0.06);
+  --footer-bg: #0a0a0e;
+  --mobile-overlay-bg: rgba(13, 13, 16, 0.96);
+  --navbar-bg: rgba(13, 13, 16, 0.82);
+  --navbar-bg-scrolled: rgba(13, 13, 16, 0.95);
+  --navbar-border: rgba(255, 255, 255, 0.07);
+  --navbar-shadow: rgba(0, 0, 0, 0.45);
+  --navbar-shadow-border: rgba(255, 255, 255, 0.06);
+  --card-shadow-accent: rgba(232, 71, 63, 0.15);
+  --card-shadow-main: rgba(0, 0, 0, 0.45);
+  --card-shadow-border: rgba(255, 255, 255, 0.05);
+  --modal-backdrop: rgba(0, 0, 0, 0.88);
 
   --font-heading: 'Bebas Neue', sans-serif;
   --font-body: 'DM Sans', sans-serif;
@@ -27,4 +38,29 @@
 
   /* Section divider */
   --section-gap: 80px;
+}
+
+:root[data-theme="light"] {
+  --bg-color: #f7f7f9;
+  --surface-color: #ffffff;
+  --surface-elevated: #f0f0f4;
+  --surface-overlay: #e5e5eb;
+  --accent-color: #d33a32;
+  --accent-hover: #b82a22;
+  --text-primary: #121217;
+  --text-secondary: #52526a;
+  --text-tertiary: #8a8a9a;
+  --border-color: #e2e2e9;
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --footer-bg: #eaeaea;
+  --mobile-overlay-bg: rgba(247, 247, 249, 0.96);
+  --navbar-bg: rgba(247, 247, 249, 0.82);
+  --navbar-bg-scrolled: rgba(247, 247, 249, 0.95);
+  --navbar-border: rgba(0, 0, 0, 0.07);
+  --navbar-shadow: rgba(0, 0, 0, 0.05);
+  --navbar-shadow-border: rgba(0, 0, 0, 0.06);
+  --card-shadow-accent: rgba(232, 71, 63, 0.08);
+  --card-shadow-main: rgba(0, 0, 0, 0.06);
+  --card-shadow-border: rgba(0, 0, 0, 0.02);
+  --modal-backdrop: rgba(0, 0, 0, 0.6);
 }

@@ -103,9 +103,9 @@
 .card:hover {
   transform: translateY(-6px);
   box-shadow:
-    0 12px 40px rgba(232, 71, 63, 0.15),
-    0 2px 8px rgba(0, 0, 0, 0.4),
-    0 1px 0 rgba(255, 255, 255, 0.05);
+    0 12px 40px var(--card-shadow-accent),
+    0 2px 8px var(--card-shadow-main),
+    0 1px 0 var(--card-shadow-border);
   background-color: var(--surface-elevated);
 }
 
@@ -136,24 +136,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(13, 13, 16, 0.82);
+  background-color: var(--navbar-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 1000;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid var(--navbar-border);
   transition: padding var(--transition-base), background-color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .navbar.scrolled {
   padding: 0.9rem 2rem;
-  background-color: rgba(13, 13, 16, 0.95);
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.06);
+  background-color: var(--navbar-bg-scrolled);
+  box-shadow: 0 4px 32px var(--navbar-shadow), 0 1px 0 var(--navbar-shadow-border);
 }
 
 .logo {
   font-family: var(--font-heading);
   font-size: 2rem;
-  color: white;
+  color: var(--text-primary);
   transition: color var(--transition-fast), letter-spacing var(--transition-fast);
 }
 
@@ -202,6 +202,43 @@
 .nav-links a.active {
   color: var(--accent-color);
 }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  padding: 0;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.theme-toggle-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+}
+
+[data-theme="light"] .sun-icon { display: none; }
+[data-theme="light"] .moon-icon { display: block; }
+:root:not([data-theme="light"]) .sun-icon { display: block; }
+:root:not([data-theme="light"]) .moon-icon { display: none; }
 
 
 /* =============================================

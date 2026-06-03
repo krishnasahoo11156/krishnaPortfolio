@@ -20,7 +20,7 @@ body.loading > *:not(#page-loader):not(#cursor-dot):not(#cursor-ring):not(#scrol
     position: fixed;
     inset: 0;
     z-index: 99999;
-    background: #0d0d10;
+    background: var(--bg-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,7 +47,7 @@ body.loading > *:not(#page-loader):not(#cursor-dot):not(#cursor-ring):not(#scrol
 .loader-ks {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 72px;
-    color: #f0f0f5;
+    color: var(--text-primary);
     letter-spacing: 0.5em;
     opacity: 0;
     transform: translateY(0);
@@ -249,7 +249,7 @@ body.loading .hero-layer-fg {
     display: block;
     width: 24px;
     height: 2px;
-    background: #fff;
+    background: var(--text-primary);
     transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
     transform-origin: center;
 }
@@ -269,7 +269,7 @@ body.loading .hero-layer-fg {
     position: fixed;
     inset: 0;
     z-index: 1050;
-    background: rgba(13, 13, 16, 0.96);
+    background: var(--mobile-overlay-bg);
     backdrop-filter: blur(24px);
     display: flex;
     flex-direction: column;
@@ -305,7 +305,7 @@ body.loading .hero-layer-fg {
     top: 1.5rem;
     right: 1.5rem;
     font-size: 2rem;
-    color: #fff;
+    color: var(--text-primary);
     background: none;
     border: none;
     cursor: pointer;
@@ -319,7 +319,7 @@ body.loading .hero-layer-fg {
     /* Show hamburger, hide desktop links + CTA */
     .nav-hamburger { display: flex; }
     .nav-links { display: none; }
-    .navbar > .btn { display: none; }
+    .navbar .btn-blogs { display: none; }
 
     /* Hero */
     .hero { min-height: 90svh; }

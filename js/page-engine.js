@@ -32,6 +32,7 @@
     buildSkillCards();
     buildFlowchart();
     buildRealWorld();
+    initThemeToggle();
   });
 
   /* ── HERO SUBTITLE ────────────────────────────── */
@@ -185,7 +186,7 @@
     /* Arrow marker */
     svg.innerHTML = `<defs>
       <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-        <path d="M0,0 L0,6 L8,3 z" fill="#E05C3A"/>
+        <path d="M0,0 L0,6 L8,3 z" fill="var(--accent)"/>
       </marker></defs>`;
 
     const paths = [];
@@ -199,7 +200,7 @@
         const prevBottom = 20 + (i - 1) * (NH + GAP) + NH;
         const p = document.createElementNS(NS, 'path');
         p.setAttribute('d', `M${cx},${prevBottom} L${cx},${y}`);
-        p.setAttribute('stroke', '#E05C3A');
+        p.setAttribute('stroke', 'var(--accent)');
         p.setAttribute('stroke-width', '1.5');
         p.setAttribute('fill', 'none');
         p.setAttribute('marker-end', 'url(#arr)');
@@ -212,8 +213,8 @@
       rect.setAttribute('x', x);       rect.setAttribute('y', y);
       rect.setAttribute('width', NW);   rect.setAttribute('height', NH);
       rect.setAttribute('rx', '6');
-      rect.setAttribute('fill',   node.isEnd ? '#E05C3A' : '#1a1a1a');
-      rect.setAttribute('stroke', '#E05C3A');
+      rect.setAttribute('fill',   node.isEnd ? 'var(--accent)' : 'var(--surface)');
+      rect.setAttribute('stroke', 'var(--accent)');
       rect.setAttribute('stroke-width', '1.5');
       if (node.isEnd) rect.classList.add('end-node-rect');
       svg.appendChild(rect);
@@ -223,7 +224,7 @@
       txt.setAttribute('x', cx);
       txt.setAttribute('y', y + NH / 2 + 5);
       txt.setAttribute('text-anchor', 'middle');
-      txt.setAttribute('fill', '#ffffff');
+      txt.setAttribute('fill', node.isEnd ? '#ffffff' : 'var(--text)');
       txt.setAttribute('font-family', 'Bebas Neue, sans-serif');
       txt.setAttribute('font-size', '13');
       txt.textContent = node.label;
@@ -301,6 +302,17 @@
         });
       }, 300);
     }, 800);
+  }
+
+  function initThemeToggle() {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
   }
 
 })();
