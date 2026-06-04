@@ -26,14 +26,20 @@
   };
 
   /* ── INIT ─────────────────────────────────────── */
-  document.addEventListener('DOMContentLoaded', () => {
+  function bootEngine() {
     setHeroSubtitle();
     runTerminal();
     buildSkillCards();
     buildFlowchart();
     buildRealWorld();
     initThemeToggle();
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootEngine);
+  } else {
+    bootEngine();
+  }
 
   /* ── HERO SUBTITLE ────────────────────────────── */
   function setHeroSubtitle() {

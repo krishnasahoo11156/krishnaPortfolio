@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+function bootMain() {
 
     /* =============================================
        SMOOTH SCROLLING
@@ -190,5 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
             window.dispatchEvent(new CustomEvent('themechanged', { detail: { theme: newTheme } }));
         });
     }
+}
 
-});
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootMain);
+} else {
+    bootMain();
+}
