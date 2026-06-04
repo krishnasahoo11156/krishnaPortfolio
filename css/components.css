@@ -215,12 +215,16 @@
   color: var(--text-secondary);
   width: 44px;
   height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
   padding: 0;
+  border-radius: 0;
 }
 
 .theme-toggle-btn:hover {
@@ -233,12 +237,24 @@
   width: 18px;
   height: 18px;
   stroke: currentColor;
+  fill: none;
 }
 
-[data-theme="light"] .sun-icon { display: none; }
-[data-theme="light"] .moon-icon { display: block; }
-:root:not([data-theme="light"]) .sun-icon { display: block; }
-:root:not([data-theme="light"]) .moon-icon { display: none; }
+/* Sun is shown by default (dark mode) */
+.sun-icon {
+  display: block;
+}
+.moon-icon {
+  display: none;
+}
+
+/* Moon is shown in light mode */
+[data-theme="light"] .sun-icon {
+  display: none;
+}
+[data-theme="light"] .moon-icon {
+  display: block;
+}
 
 
 /* =============================================
