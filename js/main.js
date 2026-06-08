@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+function bootMain() {
 
     /* =============================================
        SMOOTH SCROLLING
@@ -160,4 +160,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     counters.forEach(c => counterObserver.observe(c));
 
-});
+    /* =============================================
+       THEME TOGGLE
+       ============================================= */
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const heroImg = document.querySelector('.hero-img');
+    
+    const updateHeroImage = (theme) => {
+        if (!heroImg) return;
+        if (theme === 'light') {
+            heroImg.src = 'lightmode.png';
+        } else {
+            heroImg.src = 'image.png';
+        }
+    };
+
+    if (themeToggleBtn) {
+        const initialTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        updateHeroImage(initialTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateHeroImage(newTheme);
+            
+            window.dispatchEvent(new CustomEvent('themechanged', { detail: { theme: newTheme } }));
+        });
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootMain);
+} else {
+    bootMain();
+}

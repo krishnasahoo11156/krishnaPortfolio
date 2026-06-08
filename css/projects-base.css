@@ -8,7 +8,7 @@
     font-size: clamp(48px, 6vw, 84px);
     letter-spacing: 2px;
 }
-.proj-heading .ph-selected { color: #fff; }
+.proj-heading .ph-selected { color: var(--text-primary); }
 .proj-heading .ph-work     { color: var(--accent-color); margin-left: 0.35rem; }
 
 .proj-subtext {
@@ -270,7 +270,7 @@
 .proj-arrow-btn:hover {
     border-color: var(--accent-color);
     color: #fff;
-    background: var(--surface-elevated);
+    background: var(--accent-color);
     box-shadow: 0 8px 24px rgba(232, 71, 63, 0.15);
 }
 
@@ -372,7 +372,7 @@
 /* TITLE & ONE-LINER */
 .proj-title {
     font-family: var(--font-heading); font-size: clamp(19px, 2.2vw, 24px);
-    color: #fff; letter-spacing: 1px; margin-bottom: 0.35rem;
+    color: var(--text-primary); letter-spacing: 1px; margin-bottom: 0.35rem;
 }
 .proj-oneliner {
     font-size: 12px; color: var(--text-secondary); line-height: 1.65;
@@ -433,7 +433,7 @@
 }
 .proj-github-link {
     font-family: var(--font-heading); font-size: clamp(15px, 1.8vw, 20px);
-    letter-spacing: 3px; color: #fff; text-decoration: none;
+    letter-spacing: 3px; color: var(--text-primary); text-decoration: none;
     border: 1.5px solid var(--text-secondary); padding: 14px 36px;
     display: inline-block;
     transition: border-color 0.25s, color 0.25s, background 0.25s;

@@ -91,7 +91,7 @@
     display: block;
     font-family: var(--font-heading);
     font-size: clamp(52px, 7vw, 96px);
-    color: #ffffff;
+    color: var(--text-primary);
     letter-spacing: 2px;
 }
 .contact-heading .ch-touch {
@@ -138,7 +138,7 @@
 .contact-info-block .cib-value {
     font-family: var(--font-body);
     font-size: 14px;
-    color: #ffffff;
+    color: var(--text-primary);
     font-weight: 500;
     display: block;
 }
@@ -185,7 +185,7 @@
     align-items: center;
     gap: 0.75rem;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid var(--border-subtle);
     color: var(--text-secondary);
     font-family: var(--font-body);
     font-size: 13px;
@@ -321,7 +321,7 @@
     font-family: var(--font-body);
     font-size: 12px;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--text-primary);
     letter-spacing: 0.5px;
     margin-bottom: 0.5rem;
     display: block;
@@ -334,10 +334,10 @@
     background-position: bottom left;
     background-repeat: no-repeat;
     border: none;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--border-color);
     outline: none;
     padding: 10px 0;
-    color: #ffffff;
+    color: var(--text-primary);
     font-family: var(--font-body);
     font-size: 14px;
     border-radius: 0;
@@ -456,7 +456,7 @@
 .cs-headline {
     font-family: var(--font-heading);
     font-size: clamp(36px, 5vw, 64px);
-    color: #ffffff;
+    color: var(--text-primary);
     letter-spacing: 3px;
     line-height: 1;
     margin-bottom: 1rem;
@@ -484,7 +484,7 @@
 .site-footer {
     position: relative;
     z-index: 1;
-    background: #0a0a0e;
+    background: var(--footer-bg);
     border-top: 1px solid var(--border-color);
     margin-top: 0;
 }
@@ -524,11 +524,11 @@
 }
 .footer-marquee-wrap::before {
     left: 0;
-    background: linear-gradient(to right, #0a0a0e, transparent);
+    background: linear-gradient(to right, var(--footer-bg), transparent);
 }
 .footer-marquee-wrap::after {
     right: 0;
-    background: linear-gradient(to left, #0a0a0e, transparent);
+    background: linear-gradient(to left, var(--footer-bg), transparent);
 }
 
 .footer-marquee {
@@ -597,7 +597,7 @@
 
 /* Bottom micro line */
 .footer-micro {
-    border-top: 1px solid rgba(255,255,255,0.04);
+    border-top: 1px solid var(--border-subtle);
     text-align: center;
     padding: 10px 40px;
 }
@@ -675,7 +675,7 @@
     justify-content: center;
     width: 44px;
     height: 44px;
-    border: 1px solid #222222;
+    border: 1px solid var(--border-color);
     background: transparent;
     color: #888888;
     transition:

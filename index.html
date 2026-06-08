@@ -2,6 +2,12 @@
 <html lang="en">
 
 <head>
+    <script>
+        (function() {
+            var theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krishna Sahoo — Software Developer</title>
@@ -38,16 +44,16 @@
         rel="stylesheet">
 
     <!-- CSS Imports -->
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/typography.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/projects-base.css?v=4">
-    <link rel="stylesheet" href="css/projects-modal.css">
-    <link rel="stylesheet" href="css/timeline.css">
-    <link rel="stylesheet" href="css/contact.css">
-    <link rel="stylesheet" href="css/polish.css?v=4">
+    <link rel="stylesheet" href="css/variables.css?v=5">
+    <link rel="stylesheet" href="css/base.css?v=5">
+    <link rel="stylesheet" href="css/typography.css?v=5">
+    <link rel="stylesheet" href="css/layout.css?v=5">
+    <link rel="stylesheet" href="css/components.css?v=5">
+    <link rel="stylesheet" href="css/projects-base.css?v=5">
+    <link rel="stylesheet" href="css/projects-modal.css?v=5">
+    <link rel="stylesheet" href="css/timeline.css?v=5">
+    <link rel="stylesheet" href="css/contact.css?v=5">
+    <link rel="stylesheet" href="css/polish.css?v=5">
 
     <style>
         /* ================================================================
@@ -86,10 +92,7 @@
             inset: 0;
             z-index: 9;
             pointer-events: none;
-            background: radial-gradient(ellipse 80% 80% at 50% 50%,
-                    transparent 40%,
-                    rgba(0, 0, 0, 0.65) 80%,
-                    rgba(0, 0, 0, 0.92) 100%);
+            background: var(--hero-vignette-bg);
         }
 
         /* ---- GRAIN / NOISE LAYER ---- */
@@ -183,7 +186,7 @@
             z-index: 5;
             background:
                 radial-gradient(ellipse 60% 70% at 50% 50%, rgba(232, 71, 63, 0.1) 0%, transparent 70%),
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, var(--bg-color) 100%);
             pointer-events: none;
         }
 
@@ -218,10 +221,10 @@
             user-select: none;
         }
 
-        /* First word — white, filled */
+        /* First word — filled */
         #hero-name-krishna {
             font-size: clamp(72px, 15vw, 200px);
-            color: #ffffff;
+            color: var(--text-primary);
             display: block;
         }
 
@@ -229,8 +232,8 @@
         #hero-name-sahoo {
             font-size: clamp(72px, 15vw, 200px);
             color: transparent;
-            -webkit-text-stroke: 2px #e8473f;
-            text-stroke: 2px #e8473f;
+            -webkit-text-stroke: 2px var(--accent-color);
+            text-stroke: 2px var(--accent-color);
             display: block;
         }
 
@@ -238,7 +241,7 @@
         .hero-divider {
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #e8473f, transparent);
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
             margin: 1rem 0;
             opacity: 0.8;
         }
@@ -309,7 +312,7 @@
             flex: 1;
             position: relative;
             overflow: hidden;
-            border: 1px solid #222;
+            border: 1px solid var(--border-color);
             transition: box-shadow var(--transition-base), transform var(--transition-slow);
         }
 
@@ -381,7 +384,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: #0d0d0d;
+            background: var(--surface-color);
             border: 1.5px solid #22c55e;
             padding: 6px 14px;
             font-family: 'Courier New', monospace;
@@ -432,7 +435,7 @@
             display: block;
             font-family: var(--font-heading);
             font-size: clamp(52px, 6vw, 88px);
-            color: #ffffff;
+            color: var(--text-primary);
             letter-spacing: 2px;
         }
 
@@ -492,7 +495,7 @@
         .about-counters {
             display: flex;
             align-items: stretch;
-            border-top: 1px solid #222;
+            border-top: 1px solid var(--border-color);
             padding-top: 1.75rem;
             margin-top: auto;
         }
@@ -522,7 +525,7 @@
         .about-counter .cnt-num {
             font-family: var(--font-heading);
             font-size: clamp(32px, 4vw, 52px);
-            color: #ffffff;
+            color: var(--text-primary);
             line-height: 1;
             letter-spacing: 1px;
             transition: color var(--transition-base);
@@ -558,7 +561,7 @@
             display: inline-block;
             font-family: var(--font-heading);
             font-size: clamp(48px, 6vw, 84px);
-            color: #ffffff;
+            color: var(--text-primary);
             letter-spacing: 2px;
             margin-right: 0.5rem;
         }
@@ -598,8 +601,8 @@
 
         /* Skill card */
         .skill-card {
-            background: #111111;
-            border: 1px solid #222;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
             padding: 1.75rem;
             position: relative;
             transition:
@@ -629,7 +632,7 @@
         .skill-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 0 32px 4px rgba(232, 71, 63, 0.18);
-            background-color: #161616;
+            background-color: var(--surface-elevated);
         }
 
         .skill-card:hover::before {
@@ -676,7 +679,7 @@
         .skill-card-title {
             font-family: var(--font-heading);
             font-size: clamp(18px, 2vw, 22px);
-            color: #ffffff;
+            color: var(--text-primary);
             letter-spacing: 1.5px;
             margin: 0 0 1.25rem;
             padding-right: 2rem;
@@ -698,7 +701,7 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
             color: var(--text-secondary);
-            border: 1px solid #333;
+            border: 1px solid var(--border-color);
             padding: 4px 10px;
             transition:
                 border-color 0.2s ease,
@@ -735,7 +738,7 @@
         .sk-progress-track {
             width: 100%;
             height: 3px;
-            background: #222;
+            background: var(--surface-overlay);
             overflow: hidden;
         }
 
@@ -1143,9 +1146,15 @@
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
         </div>
-        <a href="https://app.notion.com/p/Blogger-85838c0a3d1c835db595812c4135dffc?source=copy_link" target="_blank" rel="noopener" class="btn btn-primary" aria-label="Visit my blogs">
-            My Blogs
-        </a>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light/dark theme">
+                <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <a href="https://app.notion.com/p/Blogger-85838c0a3d1c835db595812c4135dffc?source=copy_link" target="_blank" rel="noopener" class="btn btn-primary btn-blogs" aria-label="Visit my blogs">
+                My Blogs
+            </a>
+        </div>
         <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false"
             aria-controls="nav-mobile-overlay">
             <span></span>
@@ -1836,23 +1845,19 @@
         </footer>
 
     </section>
-
-
-
-
     <!-- Script Imports -->
-    <script src="js/hero.js" defer></script>
-    <script src="js/main.js" defer></script>
-    <script src="js/projects.js?v=4" defer></script>
-    <script src="js/timeline.js" defer></script>
-    <script src="js/contact.js" defer></script>
-    <script src="js/polish.js?v=2" defer></script>
+    <script src="js/hero.js?v=5" defer></script>
+    <script src="js/main.js?v=5" defer></script>
+    <script src="js/projects.js?v=5" defer></script>
+    <script src="js/timeline.js?v=5" defer></script>
+    <script src="js/contact.js?v=5" defer></script>
+    <script src="js/polish.js?v=5" defer></script>
 
     <!-- Page transition -->
     <script>
         function navigateTo(url) {
             var overlay = document.createElement('div');
-            overlay.style.cssText = 'position:fixed;inset:0;background:#0d0d0d;opacity:0;z-index:9999;transition:opacity 0.3s ease;pointer-events:none';
+            overlay.style.cssText = 'position:fixed;inset:0;background:var(--bg-color);opacity:0;z-index:9999;transition:opacity 0.3s ease;pointer-events:none';
             document.body.appendChild(overlay);
             requestAnimationFrame(function () { overlay.style.opacity = '1'; });
             setTimeout(function () { window.location.href = url; }, 320);

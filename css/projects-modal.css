@@ -3,7 +3,7 @@
 /* BACKDROP */
 .proj-modal-backdrop {
     position: fixed; inset: 0; z-index: 2000;
-    background: rgba(0,0,0,0.88);
+    background: var(--modal-backdrop, rgba(0,0,0,0.88));
     backdrop-filter: blur(6px);
     display: flex; align-items: center; justify-content: center;
     padding: 1.5rem;
@@ -52,7 +52,7 @@
 .modal-title {
     font-family: var(--font-heading);
     font-size: clamp(28px, 4vw, 50px);
-    color: #fff; letter-spacing: 2px;
+    color: var(--text-primary); letter-spacing: 2px;
     margin-bottom: 0.9rem; line-height: 1.05;
 }
 
