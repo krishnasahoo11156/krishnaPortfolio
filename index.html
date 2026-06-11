@@ -54,6 +54,7 @@
     <link rel="stylesheet" href="css/timeline.css?v=5">
     <link rel="stylesheet" href="css/contact.css?v=5">
     <link rel="stylesheet" href="css/polish.css?v=5">
+    <link rel="stylesheet" href="css/github-stats.css?v=5">
 
     <style>
         /* ================================================================
@@ -1610,9 +1611,9 @@
 
         <!-- GitHub Strip -->
         <div class="proj-github-strip reveal" data-delay="200">
-            <a href="https://github.com/krishnasahoo11156" target="_blank" rel="noopener" class="proj-github-link">
-                MORE ON GITHUB →
-            </a>
+            <button id="github-analytics-trigger" class="proj-github-link">
+                GITHUB ANALYTICS →
+            </button>
         </div>
 
     </section>
@@ -1845,6 +1846,44 @@
         </footer>
 
     </section>
+
+    <!-- GitHub Stats Modal Backdrop -->
+    <div id="gh-stats-backdrop" class="gh-stats-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="gh-stats-modal">
+            <!-- Modal Close Button -->
+            <button class="gh-modal-close" id="gh-modal-close-btn" aria-label="Close GitHub Stats">✕</button>
+            
+            <div id="gh-stats-content">
+                <!-- Skeleton Loading State (default view) -->
+                <div class="gh-skeleton-container">
+                    <div class="gh-skeleton-header">
+                        <div class="gh-skeleton-avatar animate-shimmer"></div>
+                        <div class="gh-skeleton-header-info">
+                            <div class="gh-skeleton-line title animate-shimmer"></div>
+                            <div class="gh-skeleton-line subtitle animate-shimmer"></div>
+                        </div>
+                    </div>
+                    <div class="gh-skeleton-progress animate-shimmer"></div>
+                    <div class="gh-skeleton-grid">
+                        <div class="gh-skeleton-card animate-shimmer"></div>
+                        <div class="gh-skeleton-card animate-shimmer"></div>
+                        <div class="gh-skeleton-card animate-shimmer"></div>
+                        <div class="gh-skeleton-card animate-shimmer"></div>
+                    </div>
+                    <div class="gh-skeleton-chart animate-shimmer"></div>
+                    <div class="gh-skeleton-calendar animate-shimmer"></div>
+                    <div class="gh-skeleton-repos">
+                        <div class="gh-skeleton-repo-card animate-shimmer"></div>
+                        <div class="gh-skeleton-repo-card animate-shimmer"></div>
+                    </div>
+                </div>
+                
+                <!-- Dynamic Content (hidden initially) -->
+                <div class="gh-dynamic-content" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Script Imports -->
     <script src="js/hero.js?v=5" defer></script>
     <script src="js/main.js?v=5" defer></script>
@@ -1852,6 +1891,7 @@
     <script src="js/timeline.js?v=5" defer></script>
     <script src="js/contact.js?v=5" defer></script>
     <script src="js/polish.js?v=5" defer></script>
+    <script src="js/github-stats.js?v=5" defer></script>
 
     <!-- Page transition -->
     <script>
