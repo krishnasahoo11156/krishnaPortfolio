@@ -604,8 +604,16 @@ body.loading .hero-layer-fg {
     font-family: var(--font-body);
     font-size: 13px;
     padding: 6px 0;
-    outline: none;
+    outline: none !important;
     min-width: 0;
+}
+
+input.chat-input:focus,
+input.chat-input:focus-visible,
+#chat-widget button:focus,
+#chat-widget button:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .chat-input::placeholder {
