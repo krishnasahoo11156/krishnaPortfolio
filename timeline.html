@@ -40,12 +40,71 @@
     <!-- Scroll Progress Bar -->
     <div id="scroll-progress" aria-hidden="true"></div>
 
-    <!-- Back To Top -->
-    <button id="back-to-top" aria-label="Back to top">
+    <!-- Chat Widget Toggle Button -->
+    <button id="chat-toggle" aria-label="Toggle Chat" class="cursor-hover">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 4l-8 8h5v8h6v-8h5z" fill="currentColor"/>
+            <path class="chat-path" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            <path class="close-path" d="M18 6L6 18M6 6l12 12" style="display: none;" />
         </svg>
     </button>
+
+    <!-- Chat Widget Window -->
+    <div id="chat-widget" role="dialog" aria-label="Krishna's Assistant Chat" aria-hidden="true">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">KS</div>
+                <div class="chat-title-group">
+                    <span class="chat-title">Krishna's Assistant</span>
+                    <span class="chat-status">Online</span>
+                </div>
+            </div>
+            <button class="chat-close-btn" id="chat-widget-close" aria-label="Close Chat">✕</button>
+        </div>
+
+        <!-- Scrollable Messages -->
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be generated dynamically by JS -->
+        </div>
+
+        <!-- Suggested Questions -->
+        <div class="chat-suggestions-container" id="chat-suggestions-container">
+            <div class="chat-suggestions-inner" id="chat-suggestions">
+                <!-- Suggestion chips will be populated here -->
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input-bar">
+            <!-- Plus Button -->
+            <button class="chat-plus-btn" id="chat-plus-btn" aria-label="Toggle detailed response">
+                +
+                <span class="chat-tooltip">detailed response</span>
+            </button>
+            
+            <!-- Input Form wrapper -->
+            <div class="chat-input-form">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Ask a question..." aria-label="Type your message">
+                <!-- Voice Mic Button -->
+                <button class="chat-mic-btn" id="chat-mic-btn" aria-label="Voice input">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8" y1="23" x2="16" y2="23"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Send Button -->
+            <button class="chat-send-btn" id="chat-send-btn" aria-label="Send message">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+            </button>
+        </div>
+    </div>
 
     <!-- NAVBAR -->
     <nav class="detail-nav" role="navigation" aria-label="Main navigation">

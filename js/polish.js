@@ -141,21 +141,365 @@
         }, { passive: true });
     }
 
-    /* ── 3. BACK TO TOP ── */
-    function initBackToTop() {
-        var btn = document.getElementById('back-to-top');
-        if (!btn) return;
+    /* ── 3. CHAT WIDGET ── */
+    function initChatWidget() {
+        var toggle = document.getElementById('chat-toggle');
+        var widget = document.getElementById('chat-widget');
+        var closeBtn = document.getElementById('chat-widget-close');
+        var messagesContainer = document.getElementById('chat-messages');
+        var suggestionsContainer = document.getElementById('chat-suggestions-container');
+        var suggestionsInner = document.getElementById('chat-suggestions');
+        var inputField = document.getElementById('chat-input');
+        var sendBtn = document.getElementById('chat-send-btn');
+        var micBtn = document.getElementById('chat-mic-btn');
+        var plusBtn = document.getElementById('chat-plus-btn');
 
-        window.addEventListener('scroll', function () {
-            if (window.scrollY > 400) {
-                btn.classList.add('visible');
+        if (!toggle || !widget) return;
+
+        var priorQuestions = [
+            "Who is Krishna Sahoo?",
+            "What projects has Krishna built?",
+            "Where is Krishna based?",
+            "What certifications does Krishna have?",
+            "What skills does Krishna possess?",
+            "How can I contact Krishna?"
+        ];
+
+        var lastValidInput = "";
+        var lastMatches = priorQuestions;
+        var isDetailed = false;
+        var initialized = false;
+        var isListening = false;
+
+        function displayWelcome() {
+            if (initialized) return;
+            initialized = true;
+            appendMessage('assistant', "Hi there! 👋 I am here to introduce Krishna to you. Ask me any question you would like about his skills, experience, or certifications!");
+        }
+
+        function toggleWidget() {
+            var isOpen = widget.classList.contains('open');
+            if (isOpen) {
+                widget.classList.remove('open');
+                toggle.classList.remove('open');
+                widget.setAttribute('aria-hidden', 'true');
+                var chatPath = toggle.querySelector('.chat-path');
+                var closePath = toggle.querySelector('.close-path');
+                if (chatPath && closePath) {
+                    chatPath.style.display = 'block';
+                    closePath.style.display = 'none';
+                }
             } else {
-                btn.classList.remove('visible');
+                widget.classList.add('open');
+                toggle.classList.add('open');
+                widget.setAttribute('aria-hidden', 'false');
+                var chatPath = toggle.querySelector('.chat-path');
+                var closePath = toggle.querySelector('.close-path');
+                if (chatPath && closePath) {
+                    chatPath.style.display = 'none';
+                    closePath.style.display = 'block';
+                }
+                displayWelcome();
+                setTimeout(function() {
+                    inputField.focus();
+                }, 300);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
-        }, { passive: true });
+        }
 
-        btn.addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        toggle.addEventListener('click', toggleWidget);
+        if (closeBtn) closeBtn.addEventListener('click', toggleWidget);
+
+        /* Suggestions Rendering */
+        function renderSuggestions(questions) {
+            suggestionsInner.innerHTML = '';
+            if (questions.length === 0) {
+                suggestionsContainer.classList.remove('visible');
+                return;
+            }
+            questions.forEach(function (q) {
+                var chip = document.createElement('button');
+                chip.className = 'chat-suggestion-chip cursor-hover';
+                chip.textContent = q;
+                chip.addEventListener('click', function () {
+                    inputField.value = q;
+                    sendMessage();
+                    suggestionsContainer.classList.remove('visible');
+                });
+                suggestionsInner.appendChild(chip);
+            });
+            suggestionsContainer.classList.add('visible');
+        }
+
+        /* Suggestions search logic with graduated opacity fade */
+        inputField.addEventListener('input', function() {
+            var val = inputField.value.trim().toLowerCase();
+            
+            if (!val) {
+                lastValidInput = "";
+                lastMatches = priorQuestions;
+                suggestionsContainer.style.opacity = '1';
+                renderSuggestions(priorQuestions);
+                return;
+            }
+            
+            var matches = priorQuestions.filter(function(q) {
+                return q.toLowerCase().indexOf(val) !== -1;
+            });
+            
+            if (matches.length > 0) {
+                lastValidInput = val;
+                lastMatches = matches;
+                suggestionsContainer.style.opacity = '1';
+                renderSuggestions(matches);
+            } else {
+                // Graduate opacity decrease based on non-matching letters
+                var mismatchCount = val.length - lastValidInput.length;
+                var opacity = Math.max(0, 1 - (mismatchCount * 0.3));
+                
+                if (opacity <= 0) {
+                    suggestionsContainer.classList.remove('visible');
+                    suggestionsContainer.style.opacity = '0';
+                } else {
+                    suggestionsContainer.classList.add('visible');
+                    suggestionsContainer.style.opacity = opacity;
+                    renderSuggestions(lastMatches);
+                }
+            }
+        });
+
+        inputField.addEventListener('focus', function() {
+            var val = inputField.value.trim().toLowerCase();
+            if (!val) {
+                suggestionsContainer.style.opacity = '1';
+                renderSuggestions(priorQuestions);
+            }
+        });
+
+        inputField.addEventListener('blur', function() {
+            // Slight timeout so click event on suggestions can fire before list hides
+            setTimeout(function() {
+                suggestionsContainer.classList.remove('visible');
+            }, 250);
+        });
+
+        /* Detailed response toggle */
+        if (plusBtn) {
+            plusBtn.addEventListener('click', function() {
+                isDetailed = !isDetailed;
+                plusBtn.classList.toggle('active', isDetailed);
+            });
+        }
+
+        /* Microphone voice search simulator */
+        if (micBtn) {
+            micBtn.addEventListener('click', function() {
+                if (isListening) return;
+                isListening = true;
+                micBtn.classList.add('listening');
+                inputField.placeholder = "Listening...";
+                inputField.value = "";
+                suggestionsContainer.classList.remove('visible');
+                
+                var mockSpeech = "What certifications does Krishna have?";
+                var index = 0;
+                
+                setTimeout(function() {
+                    inputField.placeholder = "Transcribing...";
+                    var typeInterval = setInterval(function() {
+                        if (index < mockSpeech.length) {
+                            inputField.value += mockSpeech[index];
+                            index++;
+                        } else {
+                            clearInterval(typeInterval);
+                            setTimeout(function() {
+                                micBtn.classList.remove('listening');
+                                inputField.placeholder = "Ask a question...";
+                                isListening = false;
+                                sendMessage();
+                            }, 500);
+                        }
+                    }, 40);
+                }, 1200);
+            });
+        }
+
+        /* Message appending */
+        function appendMessage(sender, text, hasProjectBtn) {
+            var wrapper = document.createElement('div');
+            wrapper.className = 'chat-bubble-wrapper ' + sender;
+            
+            var bubble = document.createElement('div');
+            bubble.className = 'chat-bubble';
+            bubble.innerHTML = text;
+            wrapper.appendChild(bubble);
+            
+            if (hasProjectBtn) {
+                var btn = document.createElement('button');
+                btn.className = 'chat-project-btn cursor-hover';
+                btn.innerHTML = 'Explore Projects &rarr;';
+                btn.addEventListener('click', function() {
+                    // Check if on index.html
+                    var isIndex = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || !window.location.pathname.includes('.html');
+                    if (isIndex) {
+                        var target = document.getElementById('projects');
+                        if (target) {
+                            var top = target.getBoundingClientRect().top + window.scrollY - 80;
+                            window.scrollTo({ top: top, behavior: 'smooth' });
+                            toggleWidget(); // Close chat
+                        }
+                    } else {
+                        window.location.href = 'index.html#projects';
+                    }
+                });
+                wrapper.appendChild(btn);
+            }
+            
+            var time = document.createElement('div');
+            time.className = 'chat-time';
+            var now = new Date();
+            time.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            wrapper.appendChild(time);
+            
+            messagesContainer.appendChild(wrapper);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        /* Typing indicator */
+        var typingIndicator = null;
+        function showTypingIndicator() {
+            typingIndicator = document.createElement('div');
+            typingIndicator.className = 'chat-bubble-wrapper assistant';
+            typingIndicator.innerHTML = '<div class="chat-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>';
+            messagesContainer.appendChild(typingIndicator);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            if (typingIndicator && typingIndicator.parentNode) {
+                typingIndicator.parentNode.removeChild(typingIndicator);
+            }
+            typingIndicator = null;
+        }
+
+        /* Mock Response selector */
+        function getMockResponse(query, detailed) {
+            var clean = query.toLowerCase();
+            
+            if (clean.indexOf('project') !== -1) {
+                if (detailed) {
+                    return {
+                        text: "Krishna is a passionate developer who builds full-stack applications. Some of his highlights include:<br>1. <strong>Syrus Hackathon Project</strong> - An Autonomous Developer Onboarding Agent.<br>2. <strong>GitHub Stats Dashboard</strong> - Visualizes commits, repos, and languages in real-time.<br>3. <strong>Vite/React Templates</strong> - Fine-tuned modular layout components.<br>Use the button below to see the interactive portfolio items!",
+                        hasProjects: true
+                    };
+                }
+                return {
+                    text: "Krishna has built several full-stack applications and AI workflows, including an Autonomous Developer Onboarding Agent. Tap below to see the full list of projects!",
+                    hasProjects: true
+                };
+            }
+            
+            if (clean.indexOf('cert') !== -1 || clean.indexOf('licens') !== -1) {
+                if (detailed) {
+                    return {
+                        text: "Krishna's certifications include:<br>• <strong>Google Study Jams 2025</strong> - Cloud/Developer track, ranking in the top 80 of 400+ participants.<br>• <strong>VESIT IQAC Workshops</strong> - Certificate of completion in Prompt-to-Production and Python.<br>• <strong>Hackathon Awards</strong> - Winner of UniMerge Hackathon.<br>He is preparing a visual Certifications gallery section to add to this site very soon!",
+                        hasProjects: false
+                    };
+                }
+                return {
+                    text: "Krishna is certified in Cloud/Google Developer tracks via Google Study Jams (Top 80 of 400+ participants) and has completed multiple Python & Prompt Engineering certifications at VESIT. He'll be adding a certificates gallery to this site soon!",
+                    hasProjects: false
+                };
+            }
+            
+            if (clean.indexOf('skill') !== -1 || clean.indexOf('tech') !== -1) {
+                if (detailed) {
+                    return {
+                        text: "Krishna's core skill set spans multiple layers:<br>• <strong>Languages:</strong> JavaScript (ES6+), Python, HTML5, CSS3.<br>• <strong>Frameworks:</strong> React, Node.js, Express.<br>• <strong>Databases & Cloud:</strong> Firebase, SQL.<br>• <strong>AI/Data Science:</strong> Prompt engineering, data analysis, automations.",
+                        hasProjects: false
+                    };
+                }
+                return {
+                    text: "Krishna specializes in Javascript web development (React, Node.js, Express), Firebase, Python, and Artificial Intelligence & Data Science architectures.",
+                    hasProjects: false
+                };
+            }
+            
+            if (clean.indexOf('who') !== -1 || clean.indexOf('krishna') !== -1) {
+                if (detailed) {
+                    return {
+                        text: "Krishna Sahoo is a Software Developer and student based in Mumbai, India. He is currently pursuing his B.E. in Artificial Intelligence & Data Science at Vivekanand Education Society's Institute of Technology (VESIT). He is an SSC topper and RSP Silver medalist with a passion for automations.",
+                        hasProjects: false
+                    };
+                }
+                return {
+                    text: "Krishna Sahoo is a Software Developer from Mumbai, India, specializing in full-stack web engineering and AI implementations. He is currently studying AI & Data Science at VESIT.",
+                    hasProjects: false
+                };
+            }
+            
+            if (clean.indexOf('contact') !== -1 || clean.indexOf('email') !== -1 || clean.indexOf('hire') !== -1) {
+                if (detailed) {
+                    return {
+                        text: "You can reach Krishna through these channels:<br>• <strong>Email:</strong> krishnasahoo11156@gmail.com<br>• <strong>LinkedIn:</strong> linkedin.com/in/krishna-sahoo-b3440537a<br>• <strong>GitHub:</strong> github.com/krishnasahoo11156<br>Feel free to fill out the form in the Contact section to message him directly!",
+                        hasProjects: false
+                    };
+                }
+                return {
+                    text: "You can mail Krishna at krishnasahoo11156@gmail.com, connect via LinkedIn, or use the Contact form at the bottom of the page.",
+                    hasProjects: false
+                };
+            }
+            
+            if (clean.indexOf('where') !== -1 || clean.indexOf('location') !== -1) {
+                return {
+                    text: "Krishna is based in Mumbai, Maharashtra, India. He is open to remote roles worldwide.",
+                    hasProjects: false
+                };
+            }
+            
+            // Fallback response
+            if (detailed) {
+                return {
+                    text: "Thank you for asking! I'm Krishna's AI representative. Currently, I can tell you all about his projects (with navigation support), certificates, technical skill stack, academic timeline, or contact info. Try asking 'What projects has he built?'",
+                    hasProjects: false
+                };
+            }
+            return {
+                text: "I'm here to introduce Krishna to you. Ask me about his projects, skills, certifications, or how to contact him!",
+                hasProjects: false
+            };
+        }
+
+        function sendMessage() {
+            var query = inputField.value.trim();
+            if (!query) return;
+            
+            appendMessage('user', query);
+            inputField.value = "";
+            suggestionsContainer.classList.remove('visible');
+            
+            showTypingIndicator();
+            
+            setTimeout(function() {
+                removeTypingIndicator();
+                var reply = getMockResponse(query, isDetailed);
+                appendMessage('assistant', reply.text, reply.hasProjects);
+                
+                if (isDetailed) {
+                    isDetailed = false;
+                    plusBtn.classList.remove('active');
+                }
+            }, 1000);
+        }
+
+        if (sendBtn) {
+            sendBtn.addEventListener('click', sendMessage);
+        }
+        inputField.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
         });
     }
 
@@ -281,7 +625,7 @@
     function boot() {
         initLoader();
         initScrollProgress();
-        initBackToTop();
+        initChatWidget();
         initCursor();
         initHamburger();
     }
