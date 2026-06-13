@@ -565,8 +565,8 @@ body.loading .hero-layer-fg {
 .chat-tooltip {
     position: absolute;
     bottom: calc(100% + 10px);
-    left: 20px;
-    transform: translateY(4px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
     background: var(--surface-overlay);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
@@ -587,7 +587,8 @@ body.loading .hero-layer-fg {
     content: '';
     position: absolute;
     top: 100%;
-    left: 15px;
+    left: 50%;
+    transform: translateX(-50%);
     border-width: 5px;
     border-style: solid;
     border-color: var(--surface-overlay) transparent transparent transparent;
@@ -595,7 +596,7 @@ body.loading .hero-layer-fg {
 
 .chat-plus-btn:hover .chat-tooltip {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
 }
 
 /* Input Form */
