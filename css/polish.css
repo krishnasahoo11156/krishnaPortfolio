@@ -518,25 +518,45 @@ body.loading .hero-layer-fg {
     border-radius: 50%;
     border: 1px solid var(--border-color);
     background: var(--surface-elevated);
-    color: var(--text-secondary);
+    color: transparent !important;
+    font-size: 0px !important;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    position: relative;
+}
+
+.chat-plus-btn::before {
+    content: '+';
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, color 0.2s ease;
+    position: absolute;
+    inset: 0;
+}
+
+.chat-plus-btn:hover::before {
+    color: var(--text-primary);
 }
 
 .chat-plus-btn:hover {
     border-color: var(--accent-color);
-    color: var(--text-primary);
     background: var(--surface-overlay);
 }
 
 .chat-plus-btn.active {
     background: var(--accent-color);
     border-color: var(--accent-color);
+}
+
+.chat-plus-btn.active::before {
     color: #fff;
     transform: rotate(45deg);
 }
