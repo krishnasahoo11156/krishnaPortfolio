@@ -288,6 +288,10 @@
             plusBtn.addEventListener('click', function() {
                 isDetailed = !isDetailed;
                 plusBtn.classList.toggle('active', isDetailed);
+                var tooltip = plusBtn.querySelector('.chat-tooltip');
+                if (tooltip) {
+                    tooltip.textContent = isDetailed ? "Switch to Normal Mode" : "Switch to Detailed Response";
+                }
             });
         }
 
@@ -489,6 +493,10 @@
                 if (isDetailed) {
                     isDetailed = false;
                     plusBtn.classList.remove('active');
+                    var tooltip = plusBtn.querySelector('.chat-tooltip');
+                    if (tooltip) {
+                        tooltip.textContent = "Switch to Detailed Response";
+                    }
                 }
             }, 1000);
         }
