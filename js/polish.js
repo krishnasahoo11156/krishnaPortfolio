@@ -869,6 +869,8 @@
             var query = inputField.value.trim();
             if (!query) return;
             
+            var detailedModeActive = isDetailed; // Capture detailed state before resetting
+            
             keysList = getAvailableKeys(); // Re-read keys list before dispatching API request
             appendMessageUI('user', query, null, true);
             inputField.value = "";
@@ -877,17 +879,17 @@
             showTypingIndicator();
             
             if (keysList.length > 0) {
-                fetchGeminiResponse(query, isDetailed, 0)
+                fetchGeminiResponse(query, detailedModeActive, 0)
                 .then(function(reply) {
                     removeTypingIndicator();
-                    appendMessageUI('assistant', reply.text, reply.reference, true);
+                    appendMessageUI('assistant', reply.text, detailedModeActive ? reply.reference : null, true);
                 });
             } else {
                 // Offline Local Fallback
                 setTimeout(function() {
                     removeTypingIndicator();
-                    var reply = getMockResponse(query, isDetailed);
-                    appendMessageUI('assistant', reply.text, reply.reference, true);
+                    var reply = getMockResponse(query, detailedModeActive);
+                    appendMessageUI('assistant', reply.text, detailedModeActive ? reply.reference : null, true);
                 }, 800);
             }
 
