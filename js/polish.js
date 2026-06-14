@@ -156,6 +156,47 @@
 
         if (!toggle || !widget) return;
 
+        // Dynamically load config.js if not already present
+        if (typeof window.GEMINI_API_KEYS === 'undefined') {
+            var script = document.createElement('script');
+            script.src = 'js/config.js';
+            script.async = false;
+            document.head.appendChild(script);
+        }
+
+        /* ── CHAT STATIC REFERENCE DATABASE ── */
+        var KRISHNA_DB = {
+            personal: {
+                name: "Krishna Sahoo",
+                role: "Software Developer & Student",
+                location: "Mumbai, Maharashtra, India",
+                email: "krishnasahoo11156@gmail.com",
+                github: "github.com/krishnasahoo11156",
+                linkedin: "linkedin.com/in/krishna-sahoo-b3440537a",
+                availability: "Open to remote roles globally",
+                education: "B.E. in Artificial Intelligence & Data Science at VESIT (2025 – 2029)"
+            },
+            skills: {
+                HTML5: "Semantic structure, ARIA accessibility, forms validation.",
+                CSS3: "Layout models (Flexbox, Grid), animations, glassmorphism.",
+                JavaScript: "Async programming, fetch, DOM manipulation.",
+                React: "Component architecture, hooks, state management.",
+                Backend: "Node.js, Express.js routing, middleware.",
+                CloudAndDevOps: "Firebase Auth/Firestore, Docker, Google Cloud Run.",
+                VersionControl: "Git versioning, feature branching, GitHub collaboration."
+            },
+            projects: {
+                CrisisSync: "AI crisis response coord platform. Built with Flutter, Firebase, Docker, Google Cloud Run. Uses Gemini AI for incident severity scoring.",
+                StudySync: "Academic productivity app. Built with React, Vite, Tailwind, Firebase. Pomodoro timer + Web Audio ambient sounds.",
+                OnboardingAgent: "Autonomous Developer Onboarding Next.js app built at Syrus 2026. Automates dev environment checks and generates learning paths."
+            },
+            achievements: {
+                GoogleStudyJams: "Ranked Top 80 of 400+ in GDG Cloud track (Oct 2025).",
+                UniMergeHackathon: "Winner of UniMerge Hackathon (Apr 2026).",
+                Workshops: "VESIT IQAC Prompt-to-Production (Feb 2026), AI Colegion Python (Sep 2025)."
+            }
+        };
+
         var priorQuestions = [
             "Who is Krishna Sahoo?",
             "What projects has Krishna built?",
@@ -170,18 +211,164 @@
         var isDetailed = false;
         var initialized = false;
         var isListening = false;
+        var activeKeyIndex = 0;
+        var keysList = [];
+
+        // Fetch keys from environment/config + user overrides
+        function getAvailableKeys() {
+            var keys = [];
+            if (window.GEMINI_API_KEYS && Array.isArray(window.GEMINI_API_KEYS)) {
+                window.GEMINI_API_KEYS.forEach(function(k) {
+                    if (k && k.trim() !== "" && k.indexOf("YOUR_GEMINI") === -1) {
+                        keys.push(k.trim());
+                    }
+                });
+            }
+            var userKey = localStorage.getItem('user_gemini_key');
+            if (userKey && userKey.trim() !== "") {
+                keys.push(userKey.trim());
+            }
+            return keys;
+        }
+
+        keysList = getAvailableKeys();
+
+        /* ── INJECT SETTINGS COG & PANEL ── */
+        var header = widget.querySelector('.chat-header');
+        if (header && !document.getElementById('chat-settings-toggle')) {
+            var settingsBtn = document.createElement('button');
+            settingsBtn.id = 'chat-settings-toggle';
+            settingsBtn.className = 'chat-settings-btn cursor-hover';
+            settingsBtn.setAttribute('aria-label', 'Open Settings');
+            settingsBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>';
+            
+            closeBtn.parentNode.insertBefore(settingsBtn, closeBtn);
+
+            var settingsPanel = document.createElement('div');
+            settingsPanel.className = 'chat-settings-panel';
+            settingsPanel.id = 'chat-settings-panel';
+            settingsPanel.innerHTML = `
+                <h4 class="chat-settings-title">Assistant Settings</h4>
+                <p class="chat-settings-desc">Provide your Gemini API key(s) to activate live AI answers. If empty, the chat will fall back to local offline search. Keys are kept safely on your machine.</p>
+                <div class="chat-settings-form">
+                    <div class="chat-settings-input-group">
+                        <label for="chat-api-key-input">Gemini API Key</label>
+                        <input type="password" id="chat-api-key-input" placeholder="AIzaSy...">
+                    </div>
+                    <div class="chat-settings-actions">
+                        <button class="chat-settings-btn-save" id="chat-settings-save">Save Key</button>
+                        <button class="chat-settings-btn-clear" id="chat-settings-clear">Clear Key</button>
+                    </div>
+                </div>
+                <div class="chat-settings-status idle" id="chat-settings-status">Offline mode.</div>
+            `;
+            widget.appendChild(settingsPanel);
+
+            // Handle panel toggle
+            settingsBtn.addEventListener('click', function() {
+                var isOpen = settingsPanel.classList.toggle('open');
+                if (isOpen) {
+                    var keyInput = document.getElementById('chat-api-key-input');
+                    keyInput.value = localStorage.getItem('user_gemini_key') || "";
+                    updateSettingsStatus();
+                }
+            });
+
+            // Save key
+            document.getElementById('chat-settings-save').addEventListener('click', function() {
+                var keyInput = document.getElementById('chat-api-key-input');
+                var val = keyInput.value.trim();
+                var statusEl = document.getElementById('chat-settings-status');
+
+                if (val === "") {
+                    localStorage.removeItem('user_gemini_key');
+                    updateSettingsStatus();
+                    return;
+                }
+
+                statusEl.textContent = "Verifying key...";
+                statusEl.className = "chat-settings-status idle";
+
+                fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + val, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: "Ping" }] }] })
+                })
+                .then(function(res) {
+                    if (res.ok) {
+                        localStorage.setItem('user_gemini_key', val);
+                        statusEl.textContent = "API Key verified & saved successfully!";
+                        statusEl.className = "chat-settings-status success";
+                        keysList = getAvailableKeys();
+                    } else {
+                        statusEl.textContent = "Invalid API Key. Please verify and try again.";
+                        statusEl.className = "chat-settings-status error";
+                    }
+                })
+                .catch(function() {
+                    statusEl.textContent = "Validation request failed. Check internet connection.";
+                    statusEl.className = "chat-settings-status error";
+                });
+            });
+
+            // Clear key
+            document.getElementById('chat-settings-clear').addEventListener('click', function() {
+                var keyInput = document.getElementById('chat-api-key-input');
+                keyInput.value = "";
+                localStorage.removeItem('user_gemini_key');
+                updateSettingsStatus();
+            });
+        }
+
+        function updateSettingsStatus() {
+            var statusEl = document.getElementById('chat-settings-status');
+            if (!statusEl) return;
+            
+            keysList = getAvailableKeys();
+            if (keysList.length > 0) {
+                statusEl.textContent = "Live Gemini Mode active (" + keysList.length + " key(s) loaded).";
+                statusEl.className = "chat-settings-status success";
+            } else {
+                statusEl.textContent = "Offline Mode. (Fallback responding active)";
+                statusEl.className = "chat-settings-status idle";
+            }
+        }
+
+        /* ── CHAT SESSION STORAGE RESTORATION ── */
+        function loadHistory() {
+            var history = JSON.parse(sessionStorage.getItem('ks_chat_history') || '[]');
+            if (history.length > 0) {
+                initialized = true;
+                history.forEach(function(msg) {
+                    appendMessageUI(msg.sender, msg.text, msg.reference, false);
+                });
+            } else {
+                displayWelcome();
+            }
+        }
+
+        function saveMessageToHistory(sender, text, reference) {
+            var history = JSON.parse(sessionStorage.getItem('ks_chat_history') || '[]');
+            history.push({ sender: sender, text: text, reference: reference });
+            // Keep history limit to 20 messages
+            if (history.length > 20) history.shift();
+            sessionStorage.setItem('ks_chat_history', JSON.stringify(history));
+        }
 
         function displayWelcome() {
             if (initialized) return;
             initialized = true;
-            appendMessage('assistant', "Hi there! 👋 I am here to introduce Krishna to you. Ask me any question you would like about his skills, experience, or certifications!");
+            appendMessageUI('assistant', "Hi there! 👋 I am here to introduce Krishna to you. Ask me any question you would like about his skills, experience, or certifications!", null, true);
         }
 
         function toggleWidget() {
             var isOpen = widget.classList.contains('open');
+            var panel = document.getElementById('chat-settings-panel');
+            
             if (isOpen) {
                 widget.classList.remove('open');
                 toggle.classList.remove('open');
+                if (panel) panel.classList.remove('open');
                 widget.setAttribute('aria-hidden', 'true');
                 var chatPath = toggle.querySelector('.chat-path');
                 var closePath = toggle.querySelector('.close-path');
@@ -199,7 +386,8 @@
                     chatPath.style.display = 'none';
                     closePath.style.display = 'block';
                 }
-                displayWelcome();
+                keysList = getAvailableKeys(); // Refresh key list in case config.js finished loading post-boot
+                loadHistory();
                 setTimeout(function() {
                     inputField.focus();
                 }, 300);
@@ -277,7 +465,6 @@
         });
 
         inputField.addEventListener('blur', function() {
-            // Slight timeout so click event on suggestions can fire before list hides
             setTimeout(function() {
                 suggestionsContainer.classList.remove('visible');
             }, 250);
@@ -295,68 +482,170 @@
             });
         }
 
-        /* Microphone voice search simulator */
-        if (micBtn) {
-            micBtn.addEventListener('click', function() {
-                if (isListening) return;
+        /* ── VOICE INPUT (NATIVE WEB SPEECH API) ── */
+        var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            var recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onstart = function() {
                 isListening = true;
                 micBtn.classList.add('listening');
-                inputField.placeholder = "Listening...";
+                inputField.placeholder = "Listening (Speak now)...";
                 inputField.value = "";
                 suggestionsContainer.classList.remove('visible');
+            };
+
+            recognition.onresult = function(event) {
+                var transcript = "";
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    transcript += event.results[i][0].transcript;
+                }
+                inputField.value = transcript;
+            };
+
+            recognition.onend = function() {
+                isListening = false;
+                micBtn.classList.remove('listening');
+                inputField.placeholder = "Ask a question...";
                 
-                var mockSpeech = "What certifications does Krishna have?";
-                var index = 0;
-                
+                // Automatically send message on speech end
                 setTimeout(function() {
-                    inputField.placeholder = "Transcribing...";
-                    var typeInterval = setInterval(function() {
-                        if (index < mockSpeech.length) {
-                            inputField.value += mockSpeech[index];
-                            index++;
-                        } else {
-                            clearInterval(typeInterval);
-                            setTimeout(function() {
-                                micBtn.classList.remove('listening');
-                                inputField.placeholder = "Ask a question...";
-                                isListening = false;
-                                sendMessage();
-                            }, 500);
-                        }
-                    }, 40);
-                }, 1200);
+                    if (inputField.value.trim() !== "" && !isListening) {
+                        sendMessage();
+                    }
+                }, 800);
+            };
+
+            recognition.onerror = function(event) {
+                isListening = false;
+                micBtn.classList.remove('listening');
+                console.error("SpeechRecognition error: ", event.error);
+                if (event.error === 'not-allowed') {
+                    inputField.placeholder = "Mic permission denied.";
+                } else {
+                    inputField.placeholder = "Speech error. Try typing.";
+                }
+                setTimeout(function() {
+                    inputField.placeholder = "Ask a question...";
+                }, 3000);
+            };
+
+            micBtn.addEventListener('click', function() {
+                if (isListening) {
+                    recognition.stop();
+                } else {
+                    try {
+                        recognition.start();
+                    } catch (e) {
+                        console.error("SpeechRecognition already started: ", e);
+                    }
+                }
+            });
+        } else {
+            // SpeechRecognition not supported in browser
+            micBtn.style.opacity = '0.4';
+            micBtn.addEventListener('click', function() {
+                appendMessageUI('assistant', "Voice recognition is not supported in this browser. Please try typing your question, or use Google Chrome / Microsoft Edge.", null, false);
             });
         }
 
-        /* Message appending */
-        function appendMessage(sender, text, hasProjectBtn) {
+        /* ── MARKDOWN TO HTML CONVERTER ── */
+        function formatMarkdown(text) {
+            var lines = text.split('\n');
+            var inList = false;
+            var result = [];
+
+            lines.forEach(function(line) {
+                var cleanLine = line.trim();
+                // Check list items
+                if (cleanLine.startsWith('•') || cleanLine.startsWith('-') || cleanLine.startsWith('* ')) {
+                    var content = cleanLine.replace(/^[•\-*]\s*/, '');
+                    content = content.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                                     .replace(/`([^`]+)`/g, '<code class="chat-inline-code">$1</code>');
+                    
+                    if (!inList) {
+                        result.push('<ul>');
+                        inList = true;
+                    }
+                    result.push('<li>' + content + '</li>');
+                } else {
+                    if (inList) {
+                        result.push('</ul>');
+                        inList = false;
+                    }
+                    if (cleanLine === '') {
+                        result.push('<br>');
+                    } else {
+                        var formatted = cleanLine
+                            .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                            .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                            .replace(/`([^`]+)`/g, '<code class="chat-inline-code">$1</code>');
+                        result.push('<p>' + formatted + '</p>');
+                    }
+                }
+            });
+            if (inList) {
+                result.push('</ul>');
+            }
+            return result.join('');
+        }
+
+        /* ── RENDER & ACTION REFERENCE NAVIGATION ── */
+        function appendMessageUI(sender, text, reference, save) {
             var wrapper = document.createElement('div');
             wrapper.className = 'chat-bubble-wrapper ' + sender;
             
             var bubble = document.createElement('div');
             bubble.className = 'chat-bubble';
-            bubble.innerHTML = text;
+            bubble.innerHTML = formatMarkdown(text);
             wrapper.appendChild(bubble);
             
-            if (hasProjectBtn) {
-                var btn = document.createElement('button');
-                btn.className = 'chat-project-btn cursor-hover';
-                btn.innerHTML = 'Explore Projects &rarr;';
-                btn.addEventListener('click', function() {
-                    // Check if on index.html
-                    var isIndex = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || !window.location.pathname.includes('.html');
-                    if (isIndex) {
-                        var target = document.getElementById('projects');
+            if (reference) {
+                var refBtn = document.createElement('button');
+                refBtn.className = 'chat-reference-btn cursor-hover';
+                refBtn.textContent = 'Take me to reference →';
+                
+                refBtn.addEventListener('click', function() {
+                    var parts = reference.split('#');
+                    var page = parts[0];
+                    var hash = parts[1] || "";
+                    
+                    var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                    if (currentPage === "" || currentPage === "/") currentPage = 'index.html';
+                    
+                    if (page === currentPage || (page === 'index.html' && currentPage === 'index.html')) {
+                        // Same page scroll
+                        var target = document.getElementById(hash);
                         if (target) {
-                            var top = target.getBoundingClientRect().top + window.scrollY - 80;
+                            // Expand collapsible accordion details
+                            if (target.tagName.toLowerCase() === 'details') {
+                                target.open = true;
+                            } else if (target.closest('details')) {
+                                target.closest('details').open = true;
+                            }
+                            
+                            var offset = 80;
+                            var top = target.getBoundingClientRect().top + window.scrollY - offset;
                             window.scrollTo({ top: top, behavior: 'smooth' });
-                            toggleWidget(); // Close chat
+                            
+                            target.classList.add('reference-flash');
+                            setTimeout(function() {
+                                target.classList.remove('reference-flash');
+                            }, 1800);
+                            
+                            toggleWidget();
                         }
                     } else {
-                        window.location.href = 'index.html#projects';
+                        // Cross page navigate
+                        sessionStorage.setItem('pending_reference_scroll', hash);
+                        navigateTo(page);
                     }
                 });
-                wrapper.appendChild(btn);
+                wrapper.appendChild(refBtn);
             }
             
             var time = document.createElement('div');
@@ -367,6 +656,10 @@
             
             messagesContainer.appendChild(wrapper);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            if (save) {
+                saveMessageToHistory(sender, text, reference);
+            }
         }
 
         /* Typing indicator */
@@ -386,119 +679,226 @@
             typingIndicator = null;
         }
 
-        /* Mock Response selector */
+        /* ── OFFLINE RULE MATCHING FALLBACK ── */
         function getMockResponse(query, detailed) {
             var clean = query.toLowerCase();
             
-            if (clean.indexOf('project') !== -1) {
+            if (clean.indexOf('project') !== -1 || clean.indexOf('work') !== -1 || clean.indexOf('app') !== -1) {
                 if (detailed) {
                     return {
-                        text: "Krishna is a passionate developer who builds full-stack applications. Some of his highlights include:<br>1. <strong>Syrus Hackathon Project</strong> - An Autonomous Developer Onboarding Agent.<br>2. <strong>GitHub Stats Dashboard</strong> - Visualizes commits, repos, and languages in real-time.<br>3. <strong>Vite/React Templates</strong> - Fine-tuned modular layout components.<br>Use the button below to see the interactive portfolio items!",
-                        hasProjects: true
+                        text: "Krishna Sahoo builds full-stack applications with modular component architecture:\n• **CrisisSync**: Live crisis mapping built with Flutter, Firebase, Docker, Google Cloud Run, utilizing Gemini AI for automated classification.\n• **StudySync**: Study workflow site using React, Vite, Tailwind CSS, and Web Audio API for timer soundscapes.\n• **Autonomous Developer Onboarding Agent**: Won Syrus 2026 Hackathon, uses Next.js and environment checking node scripts.",
+                        reference: "index.html#projects"
                     };
                 }
                 return {
-                    text: "Krishna has built several full-stack applications and AI workflows, including an Autonomous Developer Onboarding Agent. Tap below to see the full list of projects!",
-                    hasProjects: true
+                    text: "Krishna Sahoo has built Flutter/Firebase and React full-stack apps (CrisisSync, StudySync, and an Onboarding Agent). Tap reference to see all projects.",
+                    reference: "index.html#projects"
                 };
             }
             
-            if (clean.indexOf('cert') !== -1 || clean.indexOf('licens') !== -1) {
+            if (clean.indexOf('cert') !== -1 || clean.indexOf('jam') !== -1 || clean.indexOf('hackathon') !== -1 || clean.indexOf('award') !== -1 || clean.indexOf('winner') !== -1) {
                 if (detailed) {
                     return {
-                        text: "Krishna's certifications include:<br>• <strong>Google Study Jams 2025</strong> - Cloud/Developer track, ranking in the top 80 of 400+ participants.<br>• <strong>VESIT IQAC Workshops</strong> - Certificate of completion in Prompt-to-Production and Python.<br>• <strong>Hackathon Awards</strong> - Winner of UniMerge Hackathon.<br>He is preparing a visual Certifications gallery section to add to this site very soon!",
-                        hasProjects: false
+                        text: "Krishna Sahoo's competition track record includes:\n• **Google Study Jams**: Cloud track gdg rank (Top 80 of 400+ participants).\n• **UniMerge Hackathon**: Winner (April 2026).\n• **Syrus Hackathon**: Autonomous dev onboarding agent design recognition (March 2026).\n• **Prompt-to-Production Workshop**: VESIT Python and engineering certificate.",
+                        reference: "timeline.html#achievements-toggle"
                     };
                 }
                 return {
-                    text: "Krishna is certified in Cloud/Google Developer tracks via Google Study Jams (Top 80 of 400+ participants) and has completed multiple Python & Prompt Engineering certifications at VESIT. He'll be adding a certificates gallery to this site soon!",
-                    hasProjects: false
+                    text: "Krishna is the winner of UniMerge Hackathon, ranked top 80 of 400+ in Google Study Jams, and was recognized at Syrus Hackathon.",
+                    reference: "timeline.html#achievements-toggle"
                 };
             }
             
-            if (clean.indexOf('skill') !== -1 || clean.indexOf('tech') !== -1) {
+            if (clean.indexOf('skill') !== -1 || clean.indexOf('stack') !== -1 || clean.indexOf('language') !== -1 || clean.indexOf('tech') !== -1) {
                 if (detailed) {
                     return {
-                        text: "Krishna's core skill set spans multiple layers:<br>• <strong>Languages:</strong> JavaScript (ES6+), Python, HTML5, CSS3.<br>• <strong>Frameworks:</strong> React, Node.js, Express.<br>• <strong>Databases & Cloud:</strong> Firebase, SQL.<br>• <strong>AI/Data Science:</strong> Prompt engineering, data analysis, automations.",
-                        hasProjects: false
+                        text: "Krishna's core skill set spans three core departments:\n• **Languages**: JavaScript ES6+, Dart, HTML5/CSS3, Python.\n• **Frameworks**: React, Node.js, Express.js, Flutter.\n• **Cloud & DevOps**: Firebase, SQL, Docker containerization, Google Cloud Run.",
+                        reference: "index.html#skills"
                     };
                 }
                 return {
-                    text: "Krishna specializes in Javascript web development (React, Node.js, Express), Firebase, Python, and Artificial Intelligence & Data Science architectures.",
-                    hasProjects: false
+                    text: "Krishna specializes in JS full-stack (React, Node, Express), Flutter, Firebase cloud setups, Docker deployment, and Python.",
+                    reference: "index.html#skills"
                 };
             }
             
-            if (clean.indexOf('who') !== -1 || clean.indexOf('krishna') !== -1) {
+            if (clean.indexOf('who') !== -1 || clean.indexOf('krishna') !== -1 || clean.indexOf('bio') !== -1 || clean.indexOf('background') !== -1) {
                 if (detailed) {
                     return {
-                        text: "Krishna Sahoo is a Software Developer and student based in Mumbai, India. He is currently pursuing his B.E. in Artificial Intelligence & Data Science at Vivekanand Education Society's Institute of Technology (VESIT). He is an SSC topper and RSP Silver medalist with a passion for automations.",
-                        hasProjects: false
+                        text: "Krishna Sahoo is a Software Developer based in Mumbai, India. He is a B.E. student studying Artificial Intelligence & Data Science at VESIT (2025-2029). He is an SSC academic topper, debate winner, and RSP Silver medalist with a passion for web engineering and automations.",
+                        reference: "index.html#about"
                     };
                 }
                 return {
-                    text: "Krishna Sahoo is a Software Developer from Mumbai, India, specializing in full-stack web engineering and AI implementations. He is currently studying AI & Data Science at VESIT.",
-                    hasProjects: false
+                    text: "Krishna Sahoo is a software developer and B.E. AI & Data Science undergrad at VESIT, Mumbai, focused on building clean web systems.",
+                    reference: "index.html#about"
                 };
             }
             
-            if (clean.indexOf('contact') !== -1 || clean.indexOf('email') !== -1 || clean.indexOf('hire') !== -1) {
+            if (clean.indexOf('contact') !== -1 || clean.indexOf('email') !== -1 || clean.indexOf('hire') !== -1 || clean.indexOf('linkedin') !== -1) {
                 if (detailed) {
                     return {
-                        text: "You can reach Krishna through these channels:<br>• <strong>Email:</strong> krishnasahoo11156@gmail.com<br>• <strong>LinkedIn:</strong> linkedin.com/in/krishna-sahoo-b3440537a<br>• <strong>GitHub:</strong> github.com/krishnasahoo11156<br>Feel free to fill out the form in the Contact section to message him directly!",
-                        hasProjects: false
+                        text: "To hire or message Krishna Sahoo:\n• **Email**: krishnasahoo11156@gmail.com\n• **LinkedIn**: linkedin.com/in/krishna-sahoo-b3440537a\n• **GitHub**: github.com/krishnasahoo11156\n• Alternatively, fill out the inquiry form directly on the contact section.",
+                        reference: "index.html#contact"
                     };
                 }
                 return {
-                    text: "You can mail Krishna at krishnasahoo11156@gmail.com, connect via LinkedIn, or use the Contact form at the bottom of the page.",
-                    hasProjects: false
+                    text: "Contact Krishna via email at krishnasahoo11156@gmail.com, connect on LinkedIn, or fill out the contact form below.",
+                    reference: "index.html#contact"
                 };
             }
             
-            if (clean.indexOf('where') !== -1 || clean.indexOf('location') !== -1) {
+            if (clean.indexOf('school') !== -1 || clean.indexOf('college') !== -1 || clean.indexOf('vesit') !== -1 || clean.indexOf('education') !== -1 || clean.indexOf('timeline') !== -1) {
+                if (detailed) {
+                    return {
+                        text: "Krishna's academic timeline is fully mapped:\n• **VESIT Undergraduate**: B.E. AI & Data Science (2025 - 2029).\n• **BA Talreja College**: Higher Secondary Merit performer (2022 - 2024).\n• **Gurukul International**: SSC Topper & Debate winner (2016 - 2022).\n• **Jeevan Jyoti English High**: Primary Education (2012 - 2015).",
+                        reference: "timeline.html"
+                    };
+                }
                 return {
-                    text: "Krishna is based in Mumbai, Maharashtra, India. He is open to remote roles worldwide.",
-                    hasProjects: false
+                    text: "Krishna studies B.E. AI & Data Science at VESIT (2025-2029) and was the SSC Topper at Gurukul International. See the full timeline details.",
+                    reference: "timeline.html"
                 };
             }
-            
-            // Fallback response
+
+            if (clean.indexOf('resume') !== -1 || clean.indexOf('cv') !== -1 || clean.indexOf('download') !== -1) {
+                return {
+                    text: "You can download Krishna Sahoo's Resume from the link on the home page or via the FAQ details.",
+                    reference: "faq.html#q-resume"
+                };
+            }
+
+            // General fallback
             if (detailed) {
                 return {
-                    text: "Thank you for asking! I'm Krishna's AI representative. Currently, I can tell you all about his projects (with navigation support), certificates, technical skill stack, academic timeline, or contact info. Try asking 'What projects has he built?'",
-                    hasProjects: false
+                    text: "Thank you for asking! I'm Krishna's AI representative. In detailed mode, I can direct you to exact sections of this site. Ask me about his projects, technical skills, certifications, school chronology, or contact channels.",
+                    reference: "faq.html"
                 };
             }
             return {
-                text: "I'm here to introduce Krishna to you. Ask me about his projects, skills, certifications, or how to contact him!",
-                hasProjects: false
+                text: "I am here to represent Krishna. Ask me about his projects, skills, academic timeline, or contact info!",
+                reference: "faq.html"
             };
+        }
+
+        /* ── LIVE GEMINI API OR FALLBACK DISPATCHER ── */
+        function fetchGeminiResponse(query, detailedMode, retryCount) {
+            if (retryCount >= keysList.length) {
+                // All loaded keys exhausted or rate-limited
+                var offline = getMockResponse(query, detailedMode);
+                return Promise.resolve(offline);
+            }
+            
+            var apiKey = keysList[(activeKeyIndex + retryCount) % keysList.length];
+            var url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
+            
+            var systemPrompt = "You are Krishna's Assistant, a friendly and extremely helpful AI representative for Krishna Sahoo on his personal portfolio website. " +
+                "Krishna's profile details: " + JSON.stringify(KRISHNA_DB) + ". " +
+                "Format responses with simple, clean markdown (use **bold** for highlights, *italics*, lists, and inline code like `code` tags). Do not use headers (#) or tables. " +
+                "Normal mode (detailedMode = false): be brief and concise. Keep responses under 2 sentences. " +
+                "Detailed mode (detailedMode = true): provide a thorough, structured response with bullet lists. AND you MUST append a reference target in the format [REFERENCE: page.html#id] at the very end of your response, where page.html#id matches one of these: " +
+                "- index.html#about (for general bio, location, age) " +
+                "- index.html#skills (for core skill proficiency details) " +
+                "- index.html#projects (for CrisisSync, StudySync, or Onboarding Agent) " +
+                "- index.html#contact (for email, socials, inquiry form) " +
+                "- timeline.html (for high school, college names, educational milestones) " +
+                "- timeline.html#achievements-toggle (for Study Jams rank, hackathon wins, workshops) " +
+                "- core-foundation.html (for HTML5, CSS3, ES6 JavaScript) " +
+                "- frontend-frameworks.html (for React.js, Responsive layout, UI/UX UI) " +
+                "- backend-tools.html (for Node.js, Express, Firebase, Git versioning, GitHub) " +
+                "- faq.html#q-resume (for downloading resume/CV PDF) " +
+                "- faq.html#q-vesit (for B.E. AI & Data Science details) " +
+                "- faq.html (for general help or Q&A). Choose the single best reference matching the content.";
+
+            var promptText = query;
+            if (detailedMode) {
+                promptText += " (Answer thoroughly in detailed mode, and append the appropriate [REFERENCE: page.html#id] tag at the very end)";
+            } else {
+                promptText += " (Answer concisely in normal mode, under 2 sentences)";
+            }
+
+            return fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: promptText }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: { temperature: 0.6, maxOutputTokens: 600 }
+                })
+            })
+            .then(function(res) {
+                if (res.status === 429) {
+                    console.warn("Gemini API Rate Limit on active key. Rotating index...");
+                    return fetchGeminiResponse(query, detailedMode, retryCount + 1);
+                }
+                if (!res.ok) throw new Error("API status " + res.status);
+                return res.json();
+            })
+            .then(function(data) {
+                if (!data.candidates || !data.candidates[0].content || !data.candidates[0].content.parts[0].text) {
+                    throw new Error("Invalid response format");
+                }
+                // Save the successful key index
+                activeKeyIndex = (activeKeyIndex + retryCount) % keysList.length;
+                var replyText = data.candidates[0].content.parts[0].text;
+                
+                // Parse out reference
+                var refRegex = /\[REFERENCE:\s*([^\]]+)\]/i;
+                var match = replyText.match(refRegex);
+                var reference = null;
+                var cleanText = replyText;
+                
+                if (match) {
+                    reference = match[1].trim();
+                    cleanText = replyText.replace(refRegex, "").trim();
+                }
+                
+                return { text: cleanText, reference: reference };
+            })
+            .catch(function(err) {
+                console.error("Gemini API error: ", err);
+                if (retryCount + 1 < keysList.length) {
+                    return fetchGeminiResponse(query, detailedMode, retryCount + 1);
+                }
+                // If all fails, fall back to offline database
+                return getMockResponse(query, detailedMode);
+            });
         }
 
         function sendMessage() {
             var query = inputField.value.trim();
             if (!query) return;
             
-            appendMessage('user', query);
+            keysList = getAvailableKeys(); // Re-read keys list before dispatching API request
+            appendMessageUI('user', query, null, true);
             inputField.value = "";
             suggestionsContainer.classList.remove('visible');
             
             showTypingIndicator();
             
-            setTimeout(function() {
-                removeTypingIndicator();
-                var reply = getMockResponse(query, isDetailed);
-                appendMessage('assistant', reply.text, reply.hasProjects);
-                
-                if (isDetailed) {
-                    isDetailed = false;
-                    plusBtn.classList.remove('active');
-                    var tooltip = plusBtn.querySelector('.chat-tooltip');
-                    if (tooltip) {
-                        tooltip.textContent = "Switch to Detailed Response";
-                    }
+            if (keysList.length > 0) {
+                fetchGeminiResponse(query, isDetailed, 0)
+                .then(function(reply) {
+                    removeTypingIndicator();
+                    appendMessageUI('assistant', reply.text, reply.reference, true);
+                });
+            } else {
+                // Offline Local Fallback
+                setTimeout(function() {
+                    removeTypingIndicator();
+                    var reply = getMockResponse(query, isDetailed);
+                    appendMessageUI('assistant', reply.text, reply.reference, true);
+                }, 800);
+            }
+
+            if (isDetailed) {
+                isDetailed = false;
+                plusBtn.classList.remove('active');
+                var tooltip = plusBtn.querySelector('.chat-tooltip');
+                if (tooltip) {
+                    tooltip.textContent = "Switch to Detailed Response";
                 }
-            }, 1000);
+            }
         }
 
         if (sendBtn) {
@@ -630,11 +1030,37 @@
         boot();
     }
 
+    function checkPendingReference() {
+        var pending = sessionStorage.getItem('pending_reference_scroll');
+        if (pending) {
+            sessionStorage.removeItem('pending_reference_scroll');
+            setTimeout(function() {
+                var target = document.getElementById(pending);
+                if (target) {
+                    if (target.tagName.toLowerCase() === 'details') {
+                        target.open = true;
+                    } else if (target.closest('details')) {
+                        target.closest('details').open = true;
+                    }
+                    var offset = 80;
+                    var top = target.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top: top, behavior: 'smooth' });
+                    
+                    target.classList.add('reference-flash');
+                    setTimeout(function() {
+                        target.classList.remove('reference-flash');
+                    }, 1800);
+                }
+            }, 800);
+        }
+    }
+
     function boot() {
         initLoader();
         initScrollProgress();
         initChatWidget();
         initCursor();
         initHamburger();
+        checkPendingReference();
     }
 })();

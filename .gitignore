@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+
+# Local configuration files containing API keys
+js/config.js
+
+# OS files
+.DS_Store
+Thumbs.db

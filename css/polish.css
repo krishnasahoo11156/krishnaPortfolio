@@ -949,3 +949,252 @@ section.container {
     .nav-mobile-overlay,
     #page-loader { display: none !important; }
 }
+
+/* ================================================================
+   ADDITIONAL CHAT WIDGET FEATURES — SETTINGS, REFERENCES, MARKDOWN
+   ================================================================ */
+.chat-settings-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+}
+
+.chat-settings-btn:hover {
+    color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.chat-settings-btn svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Settings Overlay Panel */
+.chat-settings-panel {
+    position: absolute;
+    top: 53px; /* directly below header */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 10, 10, 0.94);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+}
+
+.chat-settings-panel.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.chat-settings-title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    letter-spacing: 1.5px;
+    margin: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.chat-settings-desc {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.chat-settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.chat-settings-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.chat-settings-input-group label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-tertiary);
+}
+
+.chat-settings-input-group input {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 11px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.chat-settings-input-group input:focus {
+    border-color: var(--accent-color);
+}
+
+.chat-settings-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.chat-settings-btn-save {
+    background: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.chat-settings-btn-save:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.chat-settings-btn-clear {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.chat-settings-btn-clear:hover {
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.chat-settings-status {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chat-settings-status.success { color: #22c55e; }
+.chat-settings-status.error { color: #ef4444; }
+.chat-settings-status.idle { color: var(--text-tertiary); }
+
+/* Reference button inside chat bubble wrapper */
+.chat-reference-btn {
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 5px 12px;
+    margin-top: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+}
+
+.chat-reference-btn:hover {
+    background: var(--accent-color);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(232, 71, 63, 0.4);
+}
+
+/* Markdown formatting inside bubbles */
+.chat-bubble-wrapper.assistant .chat-bubble p {
+    margin: 0 0 0.5rem;
+}
+
+.chat-bubble-wrapper.assistant .chat-bubble p:last-child {
+    margin-bottom: 0;
+}
+
+.chat-bubble-wrapper.assistant .chat-bubble ul,
+.chat-bubble-wrapper.assistant .chat-bubble ol {
+    margin: 0.5rem 0;
+    padding-left: 1.25rem;
+}
+
+.chat-bubble-wrapper.assistant .chat-bubble li {
+    margin-bottom: 0.25rem;
+}
+
+.chat-inline-code {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #ff7c75;
+}
+
+/* Target reference glow animation */
+.reference-flash {
+    outline: 2px solid var(--accent-color) !important;
+    animation: reference-pulse 1.8s ease-in-out forwards;
+}
+
+@keyframes reference-pulse {
+    0% {
+        outline-color: rgba(232, 71, 63, 0);
+        box-shadow: 0 0 0 rgba(232, 71, 63, 0);
+    }
+    15% {
+        outline-color: rgba(232, 71, 63, 1);
+        box-shadow: 0 0 25px rgba(232, 71, 63, 0.8);
+        transform: scale(1.015);
+    }
+    80% {
+        outline-color: rgba(232, 71, 63, 1);
+        box-shadow: 0 0 25px rgba(232, 71, 63, 0.8);
+        transform: scale(1.015);
+    }
+    100% {
+        outline-color: rgba(232, 71, 63, 0);
+        box-shadow: 0 0 0 rgba(232, 71, 63, 0);
+    }
+}
+
