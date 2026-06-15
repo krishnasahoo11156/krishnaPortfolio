@@ -1420,17 +1420,59 @@ section.container {
     flex-shrink: 0;
 }
 
-/* Certificates Grid */
-.certs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+/* Certificates Marquee */
+.certs-marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    padding: 2rem 0;
     perspective: 1000px;
+}
+
+.certs-marquee::before,
+.certs-marquee::after {
+    content: "";
+    height: 100%;
+    width: 150px;
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    top: 0;
+}
+
+.certs-marquee::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-color) 0%, transparent 100%);
+}
+
+.certs-marquee::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-color) 0%, transparent 100%);
+}
+
+.certs-track {
+    display: flex;
+    width: max-content;
+    gap: 2rem;
+    animation: marquee-scroll 24s linear infinite;
+}
+
+.certs-marquee:hover .certs-track {
+    animation-play-state: paused;
+}
+
+.certs-group {
+    display: flex;
+    gap: 2rem;
+    flex-shrink: 0;
 }
 
 /* Card Outer styling */
 .cert-card {
     position: relative;
+    width: 320px;
+    flex-shrink: 0;
     background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: 12px;
@@ -1440,6 +1482,15 @@ section.container {
     will-change: transform;
     transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.1s ease;
     box-shadow: 0 8px 30px var(--card-shadow-main);
+}
+
+@keyframes marquee-scroll {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
 }
 
 /* Custom glow on hover based on glow color attribute */
