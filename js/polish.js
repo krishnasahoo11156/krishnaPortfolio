@@ -236,31 +236,69 @@
         /* ── INJECT SETTINGS COG & PANEL ── */
         var header = widget.querySelector('.chat-header');
         if (header && !document.getElementById('chat-settings-toggle')) {
+            // Remove redundant close button from DOM
+            if (closeBtn && closeBtn.parentNode) {
+                closeBtn.parentNode.removeChild(closeBtn);
+            }
+
             var settingsBtn = document.createElement('button');
             settingsBtn.id = 'chat-settings-toggle';
             settingsBtn.className = 'chat-settings-btn cursor-hover';
             settingsBtn.setAttribute('aria-label', 'Open Settings');
             settingsBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>';
             
-            closeBtn.parentNode.insertBefore(settingsBtn, closeBtn);
+            header.appendChild(settingsBtn);
 
             var settingsPanel = document.createElement('div');
             settingsPanel.className = 'chat-settings-panel';
             settingsPanel.id = 'chat-settings-panel';
             settingsPanel.innerHTML = `
                 <h4 class="chat-settings-title">Assistant Settings</h4>
-                <p class="chat-settings-desc">Provide your Gemini API key(s) to activate live AI answers. If empty, the chat will fall back to local offline search. Keys are kept safely on your machine.</p>
-                <div class="chat-settings-form">
-                    <div class="chat-settings-input-group">
-                        <label for="chat-api-key-input">Gemini API Key</label>
-                        <input type="password" id="chat-api-key-input" placeholder="AIzaSy...">
+                
+                <div class="chat-settings-options">
+                    <div class="chat-settings-option-item">
+                        <div class="option-info">
+                            <span class="option-label">Detailed Answers</span>
+                            <span class="option-desc">Get comprehensive explanations and references by default.</span>
+                        </div>
+                        <label class="chat-switch">
+                            <input type="checkbox" id="chat-toggle-detailed-setting">
+                            <span class="chat-slider"></span>
+                        </label>
                     </div>
-                    <div class="chat-settings-actions">
-                        <button class="chat-settings-btn-save" id="chat-settings-save">Save Key</button>
-                        <button class="chat-settings-btn-clear" id="chat-settings-clear">Clear Key</button>
+                    
+                    <div class="chat-settings-option-item">
+                        <div class="option-info">
+                            <span class="option-label">Clear Conversation</span>
+                            <span class="option-desc">Reset conversation history and start a new session.</span>
+                        </div>
+                        <button class="chat-settings-btn-reset" id="chat-reset-history">Reset</button>
                     </div>
                 </div>
-                <div class="chat-settings-status idle" id="chat-settings-status">Offline mode.</div>
+
+                <div class="chat-settings-advanced">
+                    <button class="chat-advanced-toggle" id="chat-advanced-toggle">
+                        <span>Developer Settings</span>
+                        <svg viewBox="0 0 24 24" class="arrow-icon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    
+                    <div class="chat-advanced-content" id="chat-advanced-content">
+                        <p class="chat-settings-desc">Provide your Gemini API key to activate live AI answers. If empty, the chat will fall back to local offline search. Keys are kept safely on your machine.</p>
+                        <div class="chat-settings-form">
+                            <div class="chat-settings-input-group">
+                                <label for="chat-api-key-input">Gemini API Key</label>
+                                <input type="password" id="chat-api-key-input" placeholder="AIzaSy...">
+                            </div>
+                            <div class="chat-settings-actions">
+                                <button class="chat-settings-btn-save" id="chat-settings-save">Save Key</button>
+                                <button class="chat-settings-btn-clear" id="chat-settings-clear">Clear Key</button>
+                            </div>
+                        </div>
+                        <div class="chat-settings-status idle" id="chat-settings-status">Offline mode.</div>
+                    </div>
+                </div>
             `;
             widget.appendChild(settingsPanel);
 
@@ -269,9 +307,53 @@
                 var isOpen = settingsPanel.classList.toggle('open');
                 if (isOpen) {
                     var keyInput = document.getElementById('chat-api-key-input');
-                    keyInput.value = localStorage.getItem('user_gemini_key') || "";
+                    if (keyInput) keyInput.value = localStorage.getItem('user_gemini_key') || "";
                     updateSettingsStatus();
+                    
+                    // Sync detailed mode checkbox
+                    var settingsSwitch = document.getElementById('chat-toggle-detailed-setting');
+                    if (settingsSwitch) {
+                        settingsSwitch.checked = isDetailed;
+                    }
                 }
+            });
+
+            // Detailed mode checkbox toggle
+            document.getElementById('chat-toggle-detailed-setting').addEventListener('change', function(e) {
+                isDetailed = e.target.checked;
+                if (plusBtn) {
+                    plusBtn.classList.toggle('active', isDetailed);
+                    var tooltip = plusBtn.querySelector('.chat-tooltip');
+                    if (tooltip) {
+                        tooltip.textContent = isDetailed ? "Switch to Normal Mode" : "Switch to Detailed Response";
+                    }
+                }
+            });
+
+            // Clear conversation history
+            document.getElementById('chat-reset-history').addEventListener('click', function() {
+                sessionStorage.removeItem('ks_chat_history');
+                messagesContainer.innerHTML = '';
+                initialized = false;
+                displayWelcome();
+                
+                // Visual feedback on button
+                var btn = document.getElementById('chat-reset-history');
+                var oldText = btn.textContent;
+                btn.textContent = "Cleared!";
+                btn.style.borderColor = "#22c55e";
+                btn.style.color = "#22c55e";
+                setTimeout(function() {
+                    btn.textContent = oldText;
+                    btn.style.borderColor = "";
+                    btn.style.color = "";
+                }, 1500);
+            });
+
+            // Developer settings accordion toggle
+            document.getElementById('chat-advanced-toggle').addEventListener('click', function() {
+                var advContainer = this.parentNode;
+                advContainer.classList.toggle('open');
             });
 
             // Save key
@@ -314,7 +396,7 @@
             // Clear key
             document.getElementById('chat-settings-clear').addEventListener('click', function() {
                 var keyInput = document.getElementById('chat-api-key-input');
-                keyInput.value = "";
+                if (keyInput) keyInput.value = "";
                 localStorage.removeItem('user_gemini_key');
                 updateSettingsStatus();
             });
@@ -899,6 +981,10 @@
                 var tooltip = plusBtn.querySelector('.chat-tooltip');
                 if (tooltip) {
                     tooltip.textContent = "Switch to Detailed Response";
+                }
+                var settingsSwitch = document.getElementById('chat-toggle-detailed-setting');
+                if (settingsSwitch) {
+                    settingsSwitch.checked = false;
                 }
             }
         }
