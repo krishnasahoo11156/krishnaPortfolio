@@ -689,44 +689,64 @@
             if (reference) {
                 var refBtn = document.createElement('button');
                 refBtn.className = 'chat-reference-btn cursor-hover';
-                refBtn.textContent = 'Take me to reference →';
                 
-                refBtn.addEventListener('click', function() {
-                    var parts = reference.split('#');
-                    var page = parts[0];
-                    var hash = parts[1] || "";
-                    
-                    var currentPage = window.location.pathname.split('/').pop() || 'index.html';
-                    if (currentPage === "" || currentPage === "/") currentPage = 'index.html';
-                    
-                    if (page === currentPage || (page === 'index.html' && currentPage === 'index.html')) {
-                        // Same page scroll
-                        var target = document.getElementById(hash);
-                        if (target) {
-                            // Expand collapsible accordion details
-                            if (target.tagName.toLowerCase() === 'details') {
-                                target.open = true;
-                            } else if (target.closest('details')) {
-                                target.closest('details').open = true;
-                            }
-                            
-                            var offset = 80;
-                            var top = target.getBoundingClientRect().top + window.scrollY - offset;
-                            window.scrollTo({ top: top, behavior: 'smooth' });
-                            
-                            target.classList.add('reference-flash');
-                            setTimeout(function() {
-                                target.classList.remove('reference-flash');
-                            }, 1800);
-                            
-                            toggleWidget();
-                        }
-                    } else {
-                        // Cross page navigate
-                        sessionStorage.setItem('pending_reference_scroll', hash);
-                        navigateTo(page);
+                var isExternal = reference.startsWith('http://') || reference.startsWith('https://') || reference.startsWith('mailto:');
+                
+                if (isExternal) {
+                    var btnText = "Visit Link →";
+                    if (reference.indexOf('instagram.com') !== -1) {
+                        btnText = "Krishna's Instagram Account";
+                    } else if (reference.indexOf('linkedin.com') !== -1) {
+                        btnText = "Krishna's LinkedIn Profile";
+                    } else if (reference.indexOf('github.com') !== -1) {
+                        btnText = "Krishna's GitHub Profile";
+                    } else if (reference.startsWith('mailto:')) {
+                        btnText = "Send Krishna an Email";
                     }
-                });
+                    refBtn.textContent = btnText;
+                    
+                    refBtn.addEventListener('click', function() {
+                        window.open(reference, '_blank', 'noopener,noreferrer');
+                    });
+                } else {
+                    refBtn.textContent = 'Take me to reference →';
+                    refBtn.addEventListener('click', function() {
+                        var parts = reference.split('#');
+                        var page = parts[0];
+                        var hash = parts[1] || "";
+                        
+                        var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                        if (currentPage === "" || currentPage === "/") currentPage = 'index.html';
+                        
+                        if (page === currentPage || (page === 'index.html' && currentPage === 'index.html')) {
+                            // Same page scroll
+                            var target = document.getElementById(hash);
+                            if (target) {
+                                // Expand collapsible accordion details
+                                if (target.tagName.toLowerCase() === 'details') {
+                                    target.open = true;
+                                } else if (target.closest('details')) {
+                                    target.closest('details').open = true;
+                                }
+                                
+                                var offset = 80;
+                                var top = target.getBoundingClientRect().top + window.scrollY - offset;
+                                window.scrollTo({ top: top, behavior: 'smooth' });
+                                
+                                target.classList.add('reference-flash');
+                                setTimeout(function() {
+                                    target.classList.remove('reference-flash');
+                                }, 1800);
+                                
+                                toggleWidget();
+                            }
+                        } else {
+                            // Cross page navigate
+                            sessionStorage.setItem('pending_reference_scroll', hash);
+                            navigateTo(page);
+                        }
+                    });
+                }
                 wrapper.appendChild(refBtn);
             }
             
@@ -761,104 +781,160 @@
             typingIndicator = null;
         }
 
-        /* ── OFFLINE RULE MATCHING FALLBACK ── */
-        function getMockResponse(query, detailed) {
-            var clean = query.toLowerCase();
-            
-            if (clean.indexOf('project') !== -1 || clean.indexOf('work') !== -1 || clean.indexOf('app') !== -1) {
-                if (detailed) {
-                    return {
-                        text: "Krishna Sahoo builds full-stack applications with modular component architecture:\n• **CrisisSync**: Live crisis mapping built with Flutter, Firebase, Docker, Google Cloud Run, utilizing Gemini AI for automated classification.\n• **StudySync**: Study workflow site using React, Vite, Tailwind CSS, and Web Audio API for timer soundscapes.\n• **Autonomous Developer Onboarding Agent**: Won Syrus 2026 Hackathon, uses Next.js and environment checking node scripts.",
-                        reference: "index.html#projects"
-                    };
-                }
-                return {
-                    text: "Krishna Sahoo has built Flutter/Firebase and React full-stack apps (CrisisSync, StudySync, and an Onboarding Agent). Tap reference to see all projects.",
-                    reference: "index.html#projects"
-                };
+        /* ── CHAT STATIC REFERENCE DATABASE FOR OFFLINE CLASSIFIER ── */
+        var OFFLINE_TOPICS = [
+            {
+                id: 'greeting',
+                keywords: ['hi', 'hello', 'hey', 'greetings', 'morning', 'evening', 'sup', 'yo', 'assistant', 'representative'],
+                text: "Hello! I am Krishna's AI Assistant. I'm here to represent him and answer any questions you have about his skills, projects, experience, or achievements. How can I help you today?",
+                reference: null
+            },
+            {
+                id: 'thanks',
+                keywords: ['thank', 'thanks', 'cool', 'awesome', 'great', 'perfect', 'ok', 'okay'],
+                text: "You're very welcome! Be sure to connect with Krishna if you have any questions or collaboration ideas.",
+                reference: null
+            },
+            {
+                id: 'instagram',
+                keywords: ['instagram', 'insta', 'ig', 'social'],
+                text: "You can find and follow Krishna on Instagram where he shares his journey, project snippets, and developer updates. Click the button below to visit his profile!",
+                reference: "https://instagram.com/krishnasahoo11156"
+            },
+            {
+                id: 'linkedin',
+                keywords: ['linkedin', 'linked-in', 'profile', 'social', 'network', 'career'],
+                text: "Krishna is active on LinkedIn for professional networking, collaborations, and career discussions. Click the button below to view his profile and connect with him!",
+                reference: "https://linkedin.com/in/krishna-sahoo-b3440537a"
+            },
+            {
+                id: 'github',
+                keywords: ['github', 'git-hub', 'repo', 'repositories', 'code', 'commit', 'source', 'projects'],
+                text: "Explore Krishna's open-source projects, source code, and developer commits directly on GitHub. Click the button below to view his repositories!",
+                reference: "https://github.com/krishnasahoo11156"
+            },
+            {
+                id: 'email',
+                keywords: ['email', 'gmail', 'mail', 'contact', 'reach', 'message', 'hire', 'write', 'inquiry'],
+                text: "You can reach out to Krishna directly via email at **krishnasahoo11156@gmail.com** or by filling out the contact form at the bottom of the page. Click below to write him an email!",
+                reference: "mailto:krishnasahoo11156@gmail.com"
+            },
+            {
+                id: 'resume',
+                keywords: ['resume', 'cv', 'download', 'pdf', 'hiring', 'experience'],
+                text: "Krishna's professional resume is available for viewing and downloading. It includes a comprehensive summary of his academic records, skills, and hackathon projects. Click the button below to navigate to the download link.",
+                reference: "faq.html#q-resume"
+            },
+            {
+                id: 'unimerge',
+                keywords: ['unimerge', 'uni-merge', 'hackathon winner'],
+                text: "Krishna won the prestigious **UniMerge Hackathon** in April 2026! He was recognized as the champion for building complex system integrations and scalable automations under intense competition pressure.",
+                reference: "timeline.html#achievements-toggle"
+            },
+            {
+                id: 'crisissync',
+                keywords: ['crisissync', 'crisis-sync', 'crisis response', 'disaster', 'flutter map'],
+                text: "Krishna built **CrisisSync** — a full-stack real-time crisis response and emergency coordination platform. It utilizes a Flutter frontend, a Firebase backend (Auth/Realtime Database), and is containerized using Docker and deployed on Google Cloud Run. It leverages Gemini AI to automatically score report severity and display active coordination metrics on live maps.",
+                reference: "index.html#projects"
+            },
+            {
+                id: 'studysync',
+                keywords: ['studysync', 'study-sync', 'study app', 'productivity', 'pomodoro'],
+                text: "Krishna built **StudySync** — a comprehensive academic productivity dashboard. Developed with React.js, Vite, Tailwind CSS, and Firebase, it features a calendar with automatic conflict resolution, a Pomodoro timer backed by Web Audio API ambient soundscapes (rain, lofi beats), and a cloud file manager.",
+                reference: "index.html#projects"
+            },
+            {
+                id: 'onboarding',
+                keywords: ['onboarding', 'onboard', 'onboarding agent', 'syrus', 'developer onboarding', 'autonomous agent'],
+                text: "Developed at Syrus 2026, the **Autonomous Developer Onboarding Agent** automates day-one configurations. It features a lightweight node script to check local software installations, a Gemini AI assistant to answer questions, and an HR monitoring dashboard built with Chart.js, Next.js, and TypeScript.",
+                reference: "index.html#projects"
+            },
+            {
+                id: 'vesit',
+                keywords: ['vesit', 'college', 'university', 'education', 'degree', 'study', 'major', 'academics', 'timeline'],
+                text: "Krishna is pursuing a Bachelor of Engineering (B.E.) in **Artificial Intelligence & Data Science** at Vivekanand Education Society's Institute of Technology (**VESIT**), Mumbai (2025–2029). He maintains a strong focus on software engineering, AI, and advanced data systems.",
+                reference: "timeline.html"
+            },
+            {
+                id: 'studyjams',
+                keywords: ['studyjams', 'study jams', 'gdg', 'google study jams', 'cloud track'],
+                text: "Krishna ranked in the **Top 80 of 400+ participants** in the Google Study Jams (GDG Cloud Track) in October 2025, demonstrating early proficiency in Google Cloud systems.",
+                reference: "timeline.html#achievements-toggle"
+            },
+            {
+                id: 'skills',
+                keywords: ['skill', 'skills', 'stack', 'languages', 'programming', 'know', 'tech', 'learn', 'frontend', 'backend', 'devops'],
+                text: "Krishna's technical stack spans:\n• **Languages**: JavaScript ES6+, Dart, HTML5/CSS3, Python.\n• **Frameworks**: React.js, Node.js, Express, Flutter.\n• **Cloud & Systems**: Firebase, Docker, Google Cloud Run, SQL database systems.\n• **Workflows**: Git version control, GitHub collaboration.",
+                reference: "index.html#skills"
+            },
+            {
+                id: 'achievements',
+                keywords: ['achievement', 'achievements', 'win', 'won', 'competition', 'hackathon', 'award', 'certificate', 'trophy'],
+                text: "Krishna's competitive achievements include:\n• **UniMerge Hackathon**: Winner (April 2026)\n• **Syrus Hackathon**: Autonomous dev agent recognition (March 2026)\n• **Google Study Jams**: Top 80 of 400+ (October 2025)\n• Multiple Python engineering certificates and workshops.",
+                reference: "timeline.html#achievements-toggle"
+            },
+            {
+                id: 'projects',
+                keywords: ['project', 'projects', 'build', 'work', 'codebase', 'applications', 'portfolio'],
+                text: "Krishna's highlighted projects include:\n• **CrisisSync**: Live Flutter/Docker crisis coordinator mapped with Gemini AI.\n• **StudySync**: Pomodoro & soundscape study dashboard (React/Vite).\n• **Autonomous Developer Onboarding Agent**: Won Syrus 2026 hackathon recognition.\n• Click below to unfold his portfolio projects.",
+                reference: "index.html#projects"
+            },
+            {
+                id: 'about',
+                keywords: ['who is', 'krishna', 'sahoo', 'background', 'about', 'bio', 'personal', 'where', 'location'],
+                text: "Krishna Sahoo is a Software Developer and undergrad AI & Data Science student at VESIT, Mumbai. He is a passionate system builder, SSC topper, debate winner, and RSP Silver medalist with a goal to craft smart, automated web solutions.",
+                reference: "index.html#about"
             }
-            
-            if (clean.indexOf('cert') !== -1 || clean.indexOf('jam') !== -1 || clean.indexOf('hackathon') !== -1 || clean.indexOf('award') !== -1 || clean.indexOf('winner') !== -1) {
-                if (detailed) {
-                    return {
-                        text: "Krishna Sahoo's competition track record includes:\n• **Google Study Jams**: Cloud track gdg rank (Top 80 of 400+ participants).\n• **UniMerge Hackathon**: Winner (April 2026).\n• **Syrus Hackathon**: Autonomous dev onboarding agent design recognition (March 2026).\n• **Prompt-to-Production Workshop**: VESIT Python and engineering certificate.",
-                        reference: "timeline.html#achievements-toggle"
-                    };
+        ];
+
+        function findBestOfflineResponse(query) {
+            var clean = query.toLowerCase().trim();
+            if (!clean) return null;
+
+            var bestTopic = null;
+            var maxScore = 0;
+
+            for (var i = 0; i < OFFLINE_TOPICS.length; i++) {
+                var topic = OFFLINE_TOPICS[i];
+                var score = 0;
+
+                for (var j = 0; j < topic.keywords.length; j++) {
+                    var kw = topic.keywords[j];
+                    
+                    if (clean === kw) {
+                        score += 15; // Exact match is highest priority
+                    } else if (clean.indexOf(kw) !== -1) {
+                        score += kw.length; // Proportional to keyword length
+                        
+                        // Word boundary bonus
+                        var regex = new RegExp('\\b' + kw.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '\\b', 'i');
+                        if (regex.test(clean)) {
+                            score += 5;
+                        }
+                    }
                 }
-                return {
-                    text: "Krishna is the winner of UniMerge Hackathon, ranked top 80 of 400+ in Google Study Jams, and was recognized at Syrus Hackathon.",
-                    reference: "timeline.html#achievements-toggle"
-                };
+
+                if (score > maxScore) {
+                    maxScore = score;
+                    bestTopic = topic;
+                }
             }
-            
-            if (clean.indexOf('skill') !== -1 || clean.indexOf('stack') !== -1 || clean.indexOf('language') !== -1 || clean.indexOf('tech') !== -1) {
-                if (detailed) {
-                    return {
-                        text: "Krishna's core skill set spans three core departments:\n• **Languages**: JavaScript ES6+, Dart, HTML5/CSS3, Python.\n• **Frameworks**: React, Node.js, Express.js, Flutter.\n• **Cloud & DevOps**: Firebase, SQL, Docker containerization, Google Cloud Run.",
-                        reference: "index.html#skills"
-                    };
-                }
+
+            if (maxScore > 0 && bestTopic) {
                 return {
-                    text: "Krishna specializes in JS full-stack (React, Node, Express), Flutter, Firebase cloud setups, Docker deployment, and Python.",
-                    reference: "index.html#skills"
-                };
-            }
-            
-            if (clean.indexOf('who') !== -1 || clean.indexOf('krishna') !== -1 || clean.indexOf('bio') !== -1 || clean.indexOf('background') !== -1) {
-                if (detailed) {
-                    return {
-                        text: "Krishna Sahoo is a Software Developer based in Mumbai, India. He is a B.E. student studying Artificial Intelligence & Data Science at VESIT (2025-2029). He is an SSC academic topper, debate winner, and RSP Silver medalist with a passion for web engineering and automations.",
-                        reference: "index.html#about"
-                    };
-                }
-                return {
-                    text: "Krishna Sahoo is a software developer and B.E. AI & Data Science undergrad at VESIT, Mumbai, focused on building clean web systems.",
-                    reference: "index.html#about"
-                };
-            }
-            
-            if (clean.indexOf('contact') !== -1 || clean.indexOf('email') !== -1 || clean.indexOf('hire') !== -1 || clean.indexOf('linkedin') !== -1) {
-                if (detailed) {
-                    return {
-                        text: "To hire or message Krishna Sahoo:\n• **Email**: krishnasahoo11156@gmail.com\n• **LinkedIn**: linkedin.com/in/krishna-sahoo-b3440537a\n• **GitHub**: github.com/krishnasahoo11156\n• Alternatively, fill out the inquiry form directly on the contact section.",
-                        reference: "index.html#contact"
-                    };
-                }
-                return {
-                    text: "Contact Krishna via email at krishnasahoo11156@gmail.com, connect on LinkedIn, or fill out the contact form below.",
-                    reference: "index.html#contact"
-                };
-            }
-            
-            if (clean.indexOf('school') !== -1 || clean.indexOf('college') !== -1 || clean.indexOf('vesit') !== -1 || clean.indexOf('education') !== -1 || clean.indexOf('timeline') !== -1) {
-                if (detailed) {
-                    return {
-                        text: "Krishna's academic timeline is fully mapped:\n• **VESIT Undergraduate**: B.E. AI & Data Science (2025 - 2029).\n• **BA Talreja College**: Higher Secondary Merit performer (2022 - 2024).\n• **Gurukul International**: SSC Topper & Debate winner (2016 - 2022).\n• **Jeevan Jyoti English High**: Primary Education (2012 - 2015).",
-                        reference: "timeline.html"
-                    };
-                }
-                return {
-                    text: "Krishna studies B.E. AI & Data Science at VESIT (2025-2029) and was the SSC Topper at Gurukul International. See the full timeline details.",
-                    reference: "timeline.html"
+                    text: bestTopic.text,
+                    reference: bestTopic.reference
                 };
             }
 
-            if (clean.indexOf('resume') !== -1 || clean.indexOf('cv') !== -1 || clean.indexOf('download') !== -1) {
-                return {
-                    text: "You can download Krishna Sahoo's Resume from the link on the home page or via the FAQ details.",
-                    reference: "faq.html#q-resume"
-                };
-            }
-
-            // General fallback
-            if (detailed) {
-                return {
-                    text: "Thank you for asking! I'm Krishna's AI representative. In detailed mode, I can direct you to exact sections of this site. Ask me about his projects, technical skills, certifications, school chronology, or contact channels.",
-                    reference: "faq.html"
-                };
-            }
+            // Fallback suggestions
             return {
-                text: "I am here to represent Krishna. Ask me about his projects, skills, academic timeline, or contact info!",
+                text: "I want to give you a clever answer, but I couldn't find a direct match. As Krishna's Assistant, I can tell you about:\n" +
+                      "• Projects like **CrisisSync**, **StudySync**, or the **Onboarding Agent**\n" +
+                      "• Hackathons like the **UniMerge Hackathon** or **Syrus Hackathon**\n" +
+                      "• How to connect on **Instagram**, **LinkedIn**, or **GitHub**\n" +
+                      "• His academic background at **VESIT** or download his **Resume**.\n\n" +
+                      "What would you like to know?",
                 reference: "faq.html"
             };
         }
@@ -867,18 +943,19 @@
         function fetchGeminiResponse(query, detailedMode, retryCount) {
             if (retryCount >= keysList.length) {
                 // All loaded keys exhausted or rate-limited
-                var offline = getMockResponse(query, detailedMode);
+                var offline = findBestOfflineResponse(query);
                 return Promise.resolve(offline);
             }
             
             var apiKey = keysList[(activeKeyIndex + retryCount) % keysList.length];
             var url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
             
-            var systemPrompt = "You are Krishna's Assistant, a friendly and extremely helpful AI representative for Krishna Sahoo on his personal portfolio website. " +
+            var systemPrompt = "You are Krishna's Assistant, a friendly, extremely intelligent, and witty AI representative for Krishna Sahoo on his personal portfolio website. " +
+                "You must act as if you are Krishna's actual personal assistant responding on his behalf. Be polite, engaging, and professional. " +
                 "Krishna's profile details: " + JSON.stringify(KRISHNA_DB) + ". " +
                 "Format responses with simple, clean markdown (use **bold** for highlights, *italics*, lists, and inline code like `code` tags). Do not use headers (#) or tables. " +
-                "Normal mode (detailedMode = false): be brief and concise. Keep responses under 2 sentences. " +
-                "Detailed mode (detailedMode = true): provide a thorough, structured response with bullet lists. AND you MUST append a reference target in the format [REFERENCE: page.html#id] at the very end of your response, where page.html#id matches one of these: " +
+                "Normal mode (detailedMode = false): be brief and concise. Keep responses under 2-4 sentences. " +
+                "Detailed mode (detailedMode = true): provide a thorough, structured response with bullet lists. AND you MUST append a reference target in the format [REFERENCE: target] at the very end of your response, where target matches one of these: " +
                 "- index.html#about (for general bio, location, age) " +
                 "- index.html#skills (for core skill proficiency details) " +
                 "- index.html#projects (for CrisisSync, StudySync, or Onboarding Agent) " +
@@ -890,13 +967,18 @@
                 "- backend-tools.html (for Node.js, Express, Firebase, Git versioning, GitHub) " +
                 "- faq.html#q-resume (for downloading resume/CV PDF) " +
                 "- faq.html#q-vesit (for B.E. AI & Data Science details) " +
-                "- faq.html (for general help or Q&A). Choose the single best reference matching the content.";
+                "- faq.html (for general help or Q&A). Choose the single best reference matching the content. " +
+                "CRITICAL: If the user asks for a specific social media account or link (such as Instagram, LinkedIn, GitHub, or direct Email), you MUST set the reference to the direct URL in [REFERENCE: url] format, where url is one of: " +
+                "- https://instagram.com/krishnasahoo11156 (Instagram) " +
+                "- https://linkedin.com/in/krishna-sahoo-b3440537a (LinkedIn) " +
+                "- https://github.com/krishnasahoo11156 (GitHub) " +
+                "- mailto:krishnasahoo11156@gmail.com (Email)";
 
             var promptText = query;
             if (detailedMode) {
-                promptText += " (Answer thoroughly in detailed mode, and append the appropriate [REFERENCE: page.html#id] tag at the very end)";
+                promptText += " (Answer thoroughly as Krishna's personal AI Assistant, and append the appropriate [REFERENCE: target] tag at the very end)";
             } else {
-                promptText += " (Answer concisely in normal mode, under 2 sentences)";
+                promptText += " (Answer cleverly and specifically as Krishna's personal AI Assistant, in 2 to 4 sentences)";
             }
 
             return fetch(url, {
@@ -943,7 +1025,7 @@
                     return fetchGeminiResponse(query, detailedMode, retryCount + 1);
                 }
                 // If all fails, fall back to offline database
-                return getMockResponse(query, detailedMode);
+                return findBestOfflineResponse(query);
             });
         }
 
@@ -964,14 +1046,14 @@
                 fetchGeminiResponse(query, detailedModeActive, 0)
                 .then(function(reply) {
                     removeTypingIndicator();
-                    appendMessageUI('assistant', reply.text, detailedModeActive ? reply.reference : null, true);
+                    appendMessageUI('assistant', reply.text, (detailedModeActive || (reply.reference && (reply.reference.startsWith('http') || reply.reference.startsWith('mailto')))) ? reply.reference : null, true);
                 });
             } else {
                 // Offline Local Fallback
                 setTimeout(function() {
                     removeTypingIndicator();
-                    var reply = getMockResponse(query, detailedModeActive);
-                    appendMessageUI('assistant', reply.text, detailedModeActive ? reply.reference : null, true);
+                    var reply = findBestOfflineResponse(query);
+                    appendMessageUI('assistant', reply.text, (detailedModeActive || (reply.reference && (reply.reference.startsWith('http') || reply.reference.startsWith('mailto')))) ? reply.reference : null, true);
                 }, 800);
             }
 
