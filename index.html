@@ -1503,12 +1503,20 @@
 
     <!-- Projects Section -->
     <section id="projects" class="container">
-        <span class="label reveal" data-delay="0">PORTFOLIO</span>
-
-        <h2 class="proj-heading reveal" data-delay="60">
-            <span class="ph-selected">SELECTED</span><span class="ph-work">WORK</span>
-        </h2>
-        <p class="proj-subtext reveal" data-delay="120">Things I've actually built and shipped.</p>
+        <div class="projects-header reveal" data-delay="0">
+            <div class="projects-header-left">
+                <span class="label">PORTFOLIO</span>
+                <h2 class="proj-heading">
+                    <span class="ph-selected">SELECTED</span><span class="ph-work">WORK</span>
+                </h2>
+                <p class="proj-subtext">Things I've actually built and shipped.</p>
+            </div>
+            <div class="projects-header-right">
+                <button id="github-analytics-trigger" class="btn btn-outline proj-github-analytics-btn">
+                    GITHUB ANALYTICS &rarr;
+                </button>
+            </div>
+        </div>
 
         <!-- Filter Tabs -->
         <div class="proj-filters reveal" data-delay="160">
@@ -1667,12 +1675,7 @@
             </div>
         </div><!-- /.proj-carousel-wrapper -->
 
-        <!-- GitHub Strip -->
-        <div class="proj-github-strip reveal" data-delay="200">
-            <button id="github-analytics-trigger" class="proj-github-link">
-                GITHUB ANALYTICS →
-            </button>
-        </div>
+
 
     </section>
 
