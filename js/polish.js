@@ -1583,23 +1583,21 @@
                     />
                 </div>
                 <div class="cert-body">
-                    <div class="cert-issuer">
-                        ${cert.issuerLogos.map(logo => `<img src="${logo}" alt="" onerror="this.style.display='none'" />`).join('')}
-                        <span>${cert.issuer}</span>
+                    <div class="cert-header-row">
+                        <div class="cert-issuer">
+                            ${cert.issuerLogos.map(logo => `<img src="${logo}" alt="" onerror="this.style.display='none'" />`).join('')}
+                            <span>${cert.issuer}</span>
+                        </div>
+                        <div class="cert-type-badge">${cert.type}</div>
                     </div>
-                    <div class="cert-type-badge">${cert.type}</div>
                     <div class="cert-title">${cert.title}</div>
                     <div class="cert-meta">
                         🗓 <span>${cert.date}</span><br/>
                         🔑 ID: <span title="${cert.credentialId}">${cert.credentialId}</span>
                     </div>
-                    <div class="cert-about">${cert.about}</div>
-                    <div class="cert-skills">
-                        ${cert.skills.map(s => `<span class="cert-skill-tag">${s}</span>`).join('')}
-                    </div>
                     <div class="cert-cta">
                         ${cert.credentialUrl 
-                            ? `<a href="${cert.credentialUrl}" target="_blank" rel="noopener">View Credential ↗</a>`
+                            ? `<a href="${cert.credentialUrl}" target="_blank" rel="noopener">Take me to the URL to view the credential ↗</a>`
                             : `<div class="cert-cta-disabled">🏅 Simplilearn Verified</div>`
                         }
                     </div>
