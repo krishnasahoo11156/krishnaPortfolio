@@ -1234,45 +1234,265 @@
     }
 
     function initCertificates() {
-        var cards = document.querySelectorAll('.cert-card');
-        if (!cards.length) return;
+        var track = document.querySelector('.certs-track');
+        if (!track) return;
 
-        cards.forEach(function (card) {
-            var glowColor = card.getAttribute('data-glow-color') || '#e8473f';
-            var shadowColor = 'rgba(232, 71, 63, 0.18)'; 
-            if (glowColor.indexOf('#') === 0) {
-                var r = parseInt(glowColor.substring(1, 3), 16);
-                var g = parseInt(glowColor.substring(3, 5), 16);
-                var b = parseInt(glowColor.substring(5, 7), 16);
-                shadowColor = 'rgba(' + r + ',' + g + ',' + b + ', 0.25)';
+        // 1. Data array
+        const certificatesData = [
+          // GCP Compute (id 1)
+          {
+            id: 1,
+            image: "certificates/the-basics-of-google-cloud-compute-skill-badge.png",
+            title: "The Basics of Google Cloud Compute",
+            type: "Skill Badge",
+            issuer: "Google Cloud",
+            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerColor: "#4285F4",
+            date: "October 11, 2025",
+            expiry: "No Expiration",
+            credentialId: "791d9cf7-ada1-4f00-a153-384baba249c6",
+            credentialUrl: "https://www.credly.com/earner/earned/badge/791d9cf7-ada1-4f00-a153-384baba249c6",
+            about: "Validates hands-on proficiency with Google Cloud Compute Engine — the backbone of GCP infrastructure. Covers virtual machine creation and management, persistent disk configuration, and web server deployment at scale. Earned by completing a series of lab-based challenges in a live GCP environment.",
+            skills: ["Compute Engine", "Virtual Machines", "Web Servers", "Persistent Disks"],
+            timelinePos: 5,
+            timelineLabel: "Oct 11",
+            timelineYear: "2025",
+            shortIssuer: "GCP"
+          },
+          // GCP Network (id 3)
+          {
+            id: 3,
+            image: "certificates/set-up-a-google-cloud-network-skill-badge.png",
+            title: "Set Up a Google Cloud Network",
+            type: "Skill Badge",
+            issuer: "Google Cloud",
+            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerColor: "#4285F4",
+            date: "October 23, 2025",
+            expiry: "No Expiration",
+            credentialId: "8afbf4ee-14ac-458e-aa05-3178624998c4",
+            credentialUrl: "https://www.credly.com/earner/earned/badge/8afbf4ee-14ac-458e-aa05-3178624998c4",
+            about: "Validates practical skills in setting up and securing cloud networking infrastructure on Google Cloud Platform. Covers VPC configuration, firewall rules, IAM access control, and database migration strategies — core competencies for any cloud infrastructure or DevOps role.",
+            skills: ["Cloud Computing", "Database Migration", "IAM", "VPC Networks", "Firewall Rules"],
+            timelinePos: 17,
+            timelineLabel: "Oct 23",
+            shortIssuer: "GCP"
+          },
+          // GCP Data (id 2)
+          {
+            id: 2,
+            image: "certificates/store-process-and-manage-data-on-google-cloud-conso.png",
+            title: "Store, Process, and Manage Data on Google Cloud - Console",
+            type: "Skill Badge",
+            issuer: "Google Cloud",
+            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerColor: "#4285F4",
+            date: "October 24, 2025",
+            expiry: "No Expiration",
+            credentialId: "61f13aee-bad7-462b-85a6-529fc2c36b13",
+            credentialUrl: "https://www.credly.com/earner/earned/badge/61f13aee-bad7-462b-85a6-529fc2c36b13",
+            about: "Demonstrates the ability to store, process, and manage structured and unstructured data on Google Cloud using the Console interface. Covers Cloud Storage buckets, Cloud Functions triggers, Pub/Sub messaging pipelines, and image processing workflows — all deployed without writing code, purely through GCP's Console UI.",
+            skills: ["Cloud Storage", "Google Cloud Compute", "Image Processing", "Pub/Sub", "Cloud Functions"],
+            timelinePos: 29,
+            timelineLabel: "Oct 24",
+            shortIssuer: "GCP"
+          },
+          // GCP Vertex AI (id 4)
+          {
+            id: 4,
+            image: "certificates/prompt-design-in-vertex-ai-skill-badge.png",
+            title: "Prompt Design in Vertex AI",
+            type: "Skill Badge",
+            issuer: "Google Cloud",
+            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerColor: "#4285F4",
+            date: "October 25, 2025",
+            expiry: "No Expiration",
+            credentialId: "98dc94d6-fa5a-4b4d-a5c2-70a468371fef",
+            credentialUrl: "https://www.credly.com/earner/earned/badge/98dc94d6-fa5a-4b4d-a5c2-70a468371fef",
+            about: "Covers the fundamentals of prompt engineering using Google Cloud's Vertex AI platform and Gemini APIs. Explores zero-shot, few-shot, and chain-of-thought prompting techniques, and how to apply them inside production-grade AI pipelines using Vertex AI Studio — directly relevant to AI/ML application development.",
+            skills: ["Artificial Intelligence", "Generative AI", "Prompt Engineering", "Gemini APIs", "Vertex AI"],
+            timelinePos: 41,
+            timelineLabel: "Oct 25",
+            shortIssuer: "GCP"
+          },
+          // GCP Monitoring (id 5)
+          {
+            id: 5,
+            image: "certificates/monitoring-in-google-cloud-skill-badge.png",
+            title: "Monitoring in Google Cloud",
+            type: "Skill Badge",
+            issuer: "Google Cloud",
+            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerColor: "#4285F4",
+            date: "October 25, 2025",
+            expiry: "No Expiration",
+            credentialId: "eb892802-2f47-441e-8817-437a8988e944",
+            credentialUrl: "https://www.credly.com/earner/earned/badge/eb892802-2f47-441e-8817-437a8988e944",
+            about: "Demonstrates the ability to set up observability and monitoring solutions on GCP using Cloud Monitoring, Logging, and dashboards. Covers alerting policies, uptime checks, metrics explorers, and log-based metrics — essential for maintaining production reliability on Google Cloud infrastructure.",
+            skills: ["Google Cloud Platform (GCP)", "Cloud Monitoring", "Dashboard", "Alerting", "Cloud Logging"],
+            timelinePos: 53,
+            timelineLabel: "Oct 25",
+            shortIssuer: "GCP"
+          },
+          // AWS DevOps (id 7)
+          {
+            id: 7,
+            image: "certificates/fundamentals of devops on aws.png",
+            title: "Fundamentals of DevOps On AWS",
+            type: "Completion Certificate",
+            issuer: "AWS × Simplilearn",
+            issuerLogo: "https://logo.clearbit.com/aws.amazon.com",
+            issuerColor: "#FF9900",
+            date: "June 10, 2026",
+            expiry: "No Expiration",
+            credentialId: "10329571",
+            credentialUrl: null,
+            about: "Introduces core DevOps principles and how they are implemented in the AWS ecosystem. Covers CI/CD pipelines using AWS CodePipeline, CodeBuild, and CodeDeploy, along with infrastructure automation using CloudFormation, monitoring with CloudWatch, and containerization with ECS. Bridges the gap between software development and cloud operations.",
+            skills: ["DevOps", "AWS CodePipeline", "CI/CD", "CloudFormation", "CloudWatch", "ECS"],
+            timelinePos: 82,
+            timelineLabel: "Jun 10",
+            timelineYear: "2026",
+            shortIssuer: "AWS"
+          },
+          // GCP GenAI Studio (id 6)
+          {
+            id: 6,
+            image: "certificates/introduction to generative ai studio.png",
+            title: "Introduction to Generative AI Studio",
+            type: "Completion Certificate",
+            issuer: "Google Cloud × Simplilearn",
+            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerColor: "#4285F4",
+            date: "June 15, 2026",
+            expiry: "No Expiration",
+            credentialId: "10349500",
+            credentialUrl: null,
+            about: "Covers the capabilities and practical usage of Google Cloud's Generative AI Studio — a no-code/low-code interface for experimenting with foundation models like Gemini. Explores model tuning, prompt testing, multimodal inputs, and deploying generative AI applications. Completed through the Simplilearn SkillUp platform powered by Google Cloud.",
+            skills: ["Generative AI", "Vertex AI Studio", "Foundation Models", "Gemini", "Prompt Testing"],
+            timelinePos: 94,
+            timelineLabel: "Jun 15",
+            shortIssuer: "GCP"
+          }
+        ];
+
+        // 2. Build certificate cards
+        const doubledData = [...certificatesData, ...certificatesData];
+        track.innerHTML = doubledData.map((cert, index) => `
+            <div class="cert-card" data-index="${index}" data-id="${cert.id}">
+                <div class="cert-image-wrapper">
+                    <img 
+                        src="${cert.image}" 
+                        alt="${cert.title}" 
+                        onerror="this.style.display='none'; this.parentElement.style.background='#1a1a1a';"
+                    />
+                </div>
+                <div class="cert-body">
+                    <div class="cert-issuer">
+                        <img src="${cert.issuerLogo}" alt="${cert.issuer}" onerror="this.style.display='none'" />
+                        <span>${cert.issuer}</span>
+                    </div>
+                    <div class="cert-type-badge">${cert.type}</div>
+                    <div class="cert-title">${cert.title}</div>
+                    <div class="cert-meta">
+                        🗓 <span>${cert.date}</span><br/>
+                        🔑 ID: <span title="${cert.credentialId}">${cert.credentialId.substring(0, 12)}...</span>
+                    </div>
+                    <div class="cert-about">${cert.about}</div>
+                    <div class="cert-skills">
+                        ${cert.skills.map(s => `<span class="cert-skill-tag">${s}</span>`).join('')}
+                    </div>
+                    <div class="cert-cta">
+                        ${cert.credentialUrl 
+                            ? `<a href="${cert.credentialUrl}" target="_blank" rel="noopener">View Credential ↗</a>`
+                            : `<div class="cert-cta-disabled">🏅 Simplilearn Verified</div>`
+                        }
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // 3. Render Timeline Axis Nodes
+        const timelineNodesContainer = document.querySelector('.certs-timeline-nodes');
+        const timelineAxis = document.querySelector('.certs-timeline-axis');
+        if (timelineNodesContainer) {
+            // Sort to render chronologically
+            const chronologicalCerts = [...certificatesData].sort((a, b) => a.timelinePos - b.timelinePos);
+            
+            // Year markers
+            chronologicalCerts.forEach(cert => {
+                if (cert.timelineYear) {
+                    const yearDiv = document.createElement('div');
+                    yearDiv.className = 'certs-timeline-year-label';
+                    yearDiv.style.left = `${cert.timelinePos}%`;
+                    yearDiv.style.transform = 'translateX(-50%)';
+                    yearDiv.textContent = cert.timelineYear;
+                    timelineAxis.appendChild(yearDiv);
+                }
+            });
+
+            timelineNodesContainer.innerHTML = chronologicalCerts.map(cert => `
+                <div class="certs-timeline-node" style="left: ${cert.timelinePos}%;" data-id="${cert.id}">
+                    <img class="certs-timeline-logo" src="${cert.issuerLogo}" alt="${cert.issuer}" onerror="this.style.display='none'" />
+                    <div class="certs-timeline-dot"></div>
+                    <div class="certs-timeline-label">
+                        ${cert.timelineLabel}<br/>
+                        <span style="font-size: 8px; color: ${cert.issuerColor || '#e8473f'}; font-weight: 700;">${cert.shortIssuer}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 4. Pauses scroll on hover
+        track.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+        track.addEventListener('mouseleave', () => {
+            if (!track.classList.contains('manual-paused')) {
+                track.style.animationPlayState = 'running';
+            }
+        });
+
+        // 5. Card 3D Tilt and Shadow Glow Effects
+        const cards = document.querySelectorAll('.cert-card');
+        cards.forEach(card => {
+            const cardId = parseInt(card.getAttribute('data-id'));
+            const cert = certificatesData.find(c => c.id === cardId);
+            const glowColor = cert ? cert.issuerColor : '#e8473f';
+            
+            // Set dynamic CSS properties for glow colors
+            let shadowColor = 'rgba(232, 71, 63, 0.18)'; 
+            if (glowColor.startsWith('#')) {
+                const r = parseInt(glowColor.substring(1, 3), 16);
+                const g = parseInt(glowColor.substring(3, 5), 16);
+                const b = parseInt(glowColor.substring(5, 7), 16);
+                shadowColor = `rgba(${r}, ${g}, ${b}, 0.25)`;
             }
             card.style.setProperty('--glow-shadow', shadowColor);
             card.style.setProperty('--glow-color', glowColor);
 
             card.addEventListener('mousemove', function (e) {
-                var rect = card.getBoundingClientRect();
-                var x = e.clientX - rect.left; 
-                var y = e.clientY - rect.top;  
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;  
                 
-                var width = rect.width;
-                var height = rect.height;
+                const width = rect.width;
+                const height = rect.height;
                 
-                var px = (x / width) - 0.5;
-                var py = (y / height) - 0.5;
+                const px = (x / width) - 0.5;
+                const py = (y / height) - 0.5;
                 
-                var maxTilt = 12;
-                var tiltX = -py * maxTilt;
-                var tiltY = px * maxTilt;
+                const maxTilt = 10;
+                const tiltX = -py * maxTilt;
+                const tiltY = px * maxTilt;
                 
-                var shineX = (x / width) * 100;
-                var shineY = (y / height) * 100;
+                const shineX = (x / width) * 100;
+                const shineY = (y / height) * 100;
                 
                 card.style.setProperty('--tilt-x', tiltX);
                 card.style.setProperty('--tilt-y', tiltY);
                 card.style.setProperty('--shine-x', shineX);
                 card.style.setProperty('--shine-y', shineY);
                 
-                card.style.transform = 'perspective(1000px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) scale3d(1.04, 1.04, 1.04)';
+                card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
             });
 
             card.addEventListener('mouseleave', function () {
@@ -1281,13 +1501,65 @@
                 card.style.setProperty('--tilt-y', 0);
                 card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
                 
-                setTimeout(function () {
+                setTimeout(() => {
                     card.style.transition = '';
                 }, 500);
             });
 
             card.addEventListener('mouseenter', function () {
                 card.style.transition = 'transform 0.15s ease, box-shadow 0.35s ease, border-color 0.35s ease';
+            });
+        });
+
+        // 6. Interactive Timeline click behavior
+        const timelineNodes = document.querySelectorAll('.certs-timeline-node');
+        let resumeTimeout = null;
+
+        timelineNodes.forEach(node => {
+            node.addEventListener('click', function() {
+                const targetId = parseInt(node.getAttribute('data-id'));
+                
+                // Clear previous active states
+                timelineNodes.forEach(n => n.classList.remove('active'));
+                node.classList.add('active');
+
+                // Find corresponding card in track (first instance)
+                const targetCard = Array.from(cards).find(c => parseInt(c.getAttribute('data-id')) === targetId);
+                if (targetCard) {
+                    const cardIndex = parseInt(targetCard.getAttribute('data-index'));
+                    
+                    // Stop marquee animation
+                    track.style.animation = 'none';
+                    track.classList.add('manual-paused');
+                    
+                    // Calculate step distance (card width 320px + gap 32px)
+                    const cardWidth = 320;
+                    const cardGap = 32; // 2rem
+                    const cardStep = cardWidth + cardGap;
+                    
+                    const marqueeWidth = document.querySelector('.certs-marquee').offsetWidth;
+                    const targetLeft = cardIndex * cardStep;
+                    const targetOffset = targetLeft - (marqueeWidth / 2) + (cardWidth / 2);
+                    
+                    // Smooth scroll to card
+                    track.style.transition = 'transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)';
+                    track.style.transform = `translate3d(-${targetOffset}px, 0, 0)`;
+
+                    // Trigger highlight glow flash on card
+                    cards.forEach(c => c.classList.remove('reference-flash'));
+                    targetCard.classList.add('reference-flash');
+
+                    // Auto-resume marquee after a timeout
+                    clearTimeout(resumeTimeout);
+                    resumeTimeout = setTimeout(() => {
+                        track.style.animation = '';
+                        track.style.transition = '';
+                        track.style.transform = '';
+                        track.classList.remove('manual-paused');
+                        targetCard.classList.remove('reference-flash');
+                        node.classList.remove('active');
+                    }, 6000);
+                }
             });
         });
     }
