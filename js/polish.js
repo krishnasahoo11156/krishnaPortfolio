@@ -1235,6 +1235,7 @@
 
     function initCertificates() {
         // 1. Data array
+        // 1. Data array
         const certificatesData = [
           // GCP Compute (id 1)
           {
@@ -1243,7 +1244,8 @@
             title: "The Basics of Google Cloud Compute",
             type: "Skill Badge",
             issuer: "Google Cloud",
-            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerLogo: "logos/googlecloudlogo.png",
+            issuerLogos: ["logos/googlecloudlogo.png"],
             issuerColor: "#4285F4",
             date: "October 11, 2025",
             expiry: "No Expiration",
@@ -1271,7 +1273,8 @@
             title: "Set Up a Google Cloud Network",
             type: "Skill Badge",
             issuer: "Google Cloud",
-            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerLogo: "logos/googlecloudlogo.png",
+            issuerLogos: ["logos/googlecloudlogo.png"],
             issuerColor: "#4285F4",
             date: "October 23, 2025",
             expiry: "No Expiration",
@@ -1298,7 +1301,8 @@
             title: "Store, Process, and Manage Data on Google Cloud - Console",
             type: "Skill Badge",
             issuer: "Google Cloud",
-            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerLogo: "logos/googlecloudlogo.png",
+            issuerLogos: ["logos/googlecloudlogo.png"],
             issuerColor: "#4285F4",
             date: "October 24, 2025",
             expiry: "No Expiration",
@@ -1325,7 +1329,8 @@
             title: "Get Started with Pub/Sub",
             type: "Skill Badge",
             issuer: "Google Cloud",
-            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerLogo: "logos/googlecloudlogo.png",
+            issuerLogos: ["logos/googlecloudlogo.png"],
             issuerColor: "#4285F4",
             date: "October 24, 2025",
             expiry: "No Expiration",
@@ -1352,7 +1357,8 @@
             title: "Prompt Design in Vertex AI",
             type: "Skill Badge",
             issuer: "Google Cloud",
-            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerLogo: "logos/googlecloudlogo.png",
+            issuerLogos: ["logos/googlecloudlogo.png"],
             issuerColor: "#4285F4",
             date: "October 25, 2025",
             expiry: "No Expiration",
@@ -1379,7 +1385,8 @@
             title: "Monitoring in Google Cloud",
             type: "Skill Badge",
             issuer: "Google Cloud",
-            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerLogo: "logos/googlecloudlogo.png",
+            issuerLogos: ["logos/googlecloudlogo.png"],
             issuerColor: "#4285F4",
             date: "October 25, 2025",
             expiry: "No Expiration",
@@ -1406,7 +1413,8 @@
             title: "Develop GenAI Apps with Gemini and Streamlit",
             type: "Skill Badge",
             issuer: "Google Cloud",
-            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerLogo: "logos/googlecloudlogo.png",
+            issuerLogos: ["logos/googlecloudlogo.png"],
             issuerColor: "#4285F4",
             date: "October 26, 2025",
             expiry: "No Expiration",
@@ -1433,7 +1441,8 @@
             title: "Fundamentals of DevOps On AWS",
             type: "Completion Certificate",
             issuer: "AWS × Simplilearn",
-            issuerLogo: "https://logo.clearbit.com/aws.amazon.com",
+            issuerLogo: "logos/awslogo.png",
+            issuerLogos: ["logos/awslogo.png", "logos/simplilearnlogo.png"],
             issuerColor: "#FF9900",
             date: "June 10, 2026",
             expiry: "No Expiration",
@@ -1462,7 +1471,8 @@
             title: "Introduction to Generative AI Studio",
             type: "Completion Certificate",
             issuer: "Google Cloud × Simplilearn",
-            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerLogo: "logos/googlecloudlogo.png",
+            issuerLogos: ["logos/googlecloudlogo.png", "logos/simplilearnlogo.png"],
             issuerColor: "#4285F4",
             date: "June 15, 2026",
             expiry: "No Expiration",
@@ -1512,8 +1522,8 @@
                 return `
                     <div class="cert-detail-card">
                         <div class="cert-detail-header">
-                            <div class="cert-logo-container">
-                                <img src="${cert.issuerLogo}" alt="${cert.issuer}" class="cert-detail-logo" onerror="this.style.display='none';" />
+                            <div class="cert-logo-container" style="display: flex; gap: 8px; align-items: center; justify-content: center; width: auto; height: 52px; min-width: 52px; padding: 6px 12px;">
+                                ${cert.issuerLogos.map(logo => `<img src="${logo}" alt="" class="cert-detail-logo" style="width: 32px; height: 32px; object-fit: contain; border-radius: 4px;" onerror="this.style.display='none';" />`).join('')}
                             </div>
                             <span class="cert-status-badge ${statusClass}">${statusLabel}</span>
                         </div>
@@ -1554,7 +1564,7 @@
                 </div>
                 <div class="cert-body">
                     <div class="cert-issuer">
-                        <img src="${cert.issuerLogo}" alt="${cert.issuer}" onerror="this.style.display='none'" />
+                        ${cert.issuerLogos.map(logo => `<img src="${logo}" alt="" onerror="this.style.display='none'" />`).join('')}
                         <span>${cert.issuer}</span>
                     </div>
                     <div class="cert-type-badge">${cert.type}</div>
