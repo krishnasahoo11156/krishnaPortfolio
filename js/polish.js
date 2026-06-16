@@ -1434,6 +1434,35 @@
               "Module 4: Deploying Streamlit Prototypes to Cloud Run"
             ]
           },
+          // Hack-AI-Thon Certificate (id 12)
+          {
+            id: 12,
+            image: "certificates/hackaithoncertificate.png",
+            title: "Hack-AI-Thon 2026",
+            type: "Hackathon Participation",
+            issuer: "AI Colegion VESIT",
+            issuerLogo: "logos/ai-colegion.png",
+            issuerLogos: ["logos/ai-colegion.png"],
+            issuerColor: "#8b5cf6",
+            date: "January 28, 2026",
+            expiry: "No Expiration",
+            credentialId: "AIC-2026-HACK",
+            credentialUrl: null,
+            about: "Certificate of participation in Hack-AI-Thon 2026, a 24-hour national level AI-themed hackathon organized by AI Colegion at VESIT. Developed innovative solutions by leveraging artificial intelligence and machine learning to address real-world problems.",
+            skills: ["Generative AI", "Artificial Intelligence", "Python", "Machine Learning", "Rapid Prototyping"],
+            timelinePos: 70,
+            timelineLabel: "Jan 28",
+            timelineYear: "2026",
+            shortIssuer: "AI Colegion",
+            tag: "Hackathon",
+            status: "completed",
+            syllabus: [
+              "Phase 1: Idea Submission & Feasibility Review",
+              "Phase 2: 24-Hour Hackathon Build Phase",
+              "Phase 3: Prototype Deployment & Pitch Presentation",
+              "Phase 4: Evaluation by Industry Experts"
+            ]
+          },
           // CodeCell Syrus Hackathon (id 10)
           {
             id: 10,
