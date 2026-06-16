@@ -884,6 +884,12 @@
                 keywords: ['who is', 'krishna', 'sahoo', 'background', 'about', 'bio', 'personal', 'where', 'location'],
                 text: "Krishna Sahoo is a Software Developer and undergrad AI & Data Science student at VESIT, Mumbai. He is a passionate system builder, SSC topper, debate winner, and RSP Silver medalist with a goal to craft smart, automated web solutions.",
                 reference: "index.html#about"
+            },
+            {
+                id: 'certificates',
+                keywords: ['certificate', 'certificates', 'certification', 'certifications', 'credential', 'credentials', 'aws', 'google cloud', 'deeplearning', 'gdg', 'python certificate'],
+                text: "Krishna Sahoo holds several technical certifications, including:\n• **AWS Certified Cloud Practitioner** (Amazon Web Services)\n• **Google Cloud Certified - Associate Cloud Engineer** (Google Cloud)\n• **Neural Networks & Deep Learning** (DeepLearning.AI)\n• **Google Study Jams Cloud Track** (GDG - Top 80 of 400+)\n• **Certified Associate in Python Programming** (Python Institute)\n• Click the button below to view his certificates in detail.",
+                reference: "certificates.html"
             }
         ];
 
@@ -959,6 +965,8 @@
                 "- index.html#about (for general bio, location, age) " +
                 "- index.html#skills (for core skill proficiency details) " +
                 "- index.html#projects (for CrisisSync, StudySync, or Onboarding Agent) " +
+                "- index.html#certificates (for AWS, Google Cloud, DeepLearning.AI credentials) " +
+                "- certificates.html (for detailed certificates syllabus and credential IDs) " +
                 "- index.html#contact (for email, socials, inquiry form) " +
                 "- timeline.html (for high school, college names, educational milestones) " +
                 "- timeline.html#achievements-toggle (for Study Jams rank, hackathon wins, workshops) " +
@@ -1225,12 +1233,72 @@
         }
     }
 
+    function initCertificates() {
+        var cards = document.querySelectorAll('.cert-card');
+        if (!cards.length) return;
+
+        cards.forEach(function (card) {
+            var glowColor = card.getAttribute('data-glow-color') || '#e8473f';
+            var shadowColor = 'rgba(232, 71, 63, 0.18)'; 
+            if (glowColor.indexOf('#') === 0) {
+                var r = parseInt(glowColor.substring(1, 3), 16);
+                var g = parseInt(glowColor.substring(3, 5), 16);
+                var b = parseInt(glowColor.substring(5, 7), 16);
+                shadowColor = 'rgba(' + r + ',' + g + ',' + b + ', 0.25)';
+            }
+            card.style.setProperty('--glow-shadow', shadowColor);
+            card.style.setProperty('--glow-color', glowColor);
+
+            card.addEventListener('mousemove', function (e) {
+                var rect = card.getBoundingClientRect();
+                var x = e.clientX - rect.left; 
+                var y = e.clientY - rect.top;  
+                
+                var width = rect.width;
+                var height = rect.height;
+                
+                var px = (x / width) - 0.5;
+                var py = (y / height) - 0.5;
+                
+                var maxTilt = 12;
+                var tiltX = -py * maxTilt;
+                var tiltY = px * maxTilt;
+                
+                var shineX = (x / width) * 100;
+                var shineY = (y / height) * 100;
+                
+                card.style.setProperty('--tilt-x', tiltX);
+                card.style.setProperty('--tilt-y', tiltY);
+                card.style.setProperty('--shine-x', shineX);
+                card.style.setProperty('--shine-y', shineY);
+                
+                card.style.transform = 'perspective(1000px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) scale3d(1.04, 1.04, 1.04)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                card.style.transition = 'transform 0.5s ease, box-shadow 0.35s ease, border-color 0.35s ease';
+                card.style.setProperty('--tilt-x', 0);
+                card.style.setProperty('--tilt-y', 0);
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+                
+                setTimeout(function () {
+                    card.style.transition = '';
+                }, 500);
+            });
+
+            card.addEventListener('mouseenter', function () {
+                card.style.transition = 'transform 0.15s ease, box-shadow 0.35s ease, border-color 0.35s ease';
+            });
+        });
+    }
+
     function boot() {
         initLoader();
         initScrollProgress();
         initChatWidget();
         initCursor();
         initHamburger();
+        initCertificates();
         checkPendingReference();
     }
 })();

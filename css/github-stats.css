@@ -87,16 +87,7 @@
     transform: rotate(90deg);
 }
 
-/* TRIGGER BUTTON CUSTOM TRANSITION RESET */
-#github-analytics-trigger {
-    background: transparent;
-    cursor: pointer;
-    font-family: var(--font-heading);
-    font-size: clamp(15px, 1.8vw, 20px);
-    letter-spacing: 3px;
-    border-radius: 0;
-    outline: none;
-}
+
 
 /* ================================================================
    DYNAMIC CONTENT LAYOUTS
