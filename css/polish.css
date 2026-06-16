@@ -1480,6 +1480,18 @@ section.container {
     transition: transform 0.2s ease;
 }
 
+/* Invisible hover helper to expand the target area */
+.certs-timeline-node::before {
+    content: '';
+    position: absolute;
+    top: -36px;
+    bottom: -24px;
+    left: -16px;
+    right: -16px;
+    background: transparent;
+    z-index: 1;
+}
+
 .certs-timeline-node:hover {
     transform: translate(-50%, -50%) scale(1.05);
 }
@@ -1491,6 +1503,8 @@ section.container {
     background: #e8473f;
     border: 2px solid #111;
     transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+    z-index: 2;
 }
 
 .certs-timeline-node:hover .certs-timeline-dot,
@@ -1512,6 +1526,7 @@ section.container {
     background: #1a1a1a;
     border: 1px solid #222;
     padding: 2px;
+    z-index: 2;
 }
 
 .certs-timeline-node:hover .certs-timeline-logo {
@@ -1524,16 +1539,21 @@ section.container {
     top: 14px;
     font-size: 10px;
     font-weight: 500;
-    color: #666;
+    color: var(--text-primary);
     white-space: nowrap;
     text-align: center;
     line-height: 1.4;
-    transition: color 0.2s;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s;
+    z-index: 2;
 }
 
 .certs-timeline-node:hover .certs-timeline-label,
 .certs-timeline-node.active .certs-timeline-label {
-    color: #ffffff;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .certs-timeline-year-label {
