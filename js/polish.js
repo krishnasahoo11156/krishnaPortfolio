@@ -1546,6 +1546,26 @@
                     </div>
                 `;
             }).join('');
+
+            // Click listener to open certificate image lightbox
+            detailGrid.addEventListener('click', function(e) {
+                // Ignore if clicked on links, buttons, or details summary/accordion elements
+                if (e.target.closest('a') || e.target.closest('.cert-verify-btn') || e.target.closest('details')) {
+                    return; 
+                }
+
+                const card = e.target.closest('.cert-detail-card');
+                if (card) {
+                    const titleEl = card.querySelector('.cert-detail-title');
+                    if (titleEl) {
+                        const titleText = titleEl.textContent.trim();
+                        const cert = certificatesData.find(c => c.title === titleText);
+                        if (cert) {
+                            openCertificateModal(cert.image, cert.title);
+                        }
+                    }
+                }
+            });
         }
 
         var track = document.querySelector('.certs-track');
@@ -1586,6 +1606,23 @@
                 </div>
             </div>
         `).join('');
+
+        // Click listener to open certificate image lightbox
+        track.addEventListener('click', function(e) {
+            // Ignore if clicked on links or buttons inside the card
+            if (e.target.closest('a') || e.target.closest('.cert-cta') || e.target.closest('.cert-cta-disabled')) {
+                return;
+            }
+
+            const card = e.target.closest('.cert-card');
+            if (card) {
+                const cardId = parseInt(card.getAttribute('data-id'));
+                const cert = certificatesData.find(c => c.id === cardId);
+                if (cert) {
+                    openCertificateModal(cert.image, cert.title);
+                }
+            }
+        });
 
         // 3. Render Timeline Axis Nodes
         const timelineNodesContainer = document.querySelector('.certs-timeline-nodes');
@@ -1737,6 +1774,51 @@
                 }
             });
         });
+    }
+
+    function openCertificateModal(imageSrc, title) {
+        // Create modal element if it doesn't exist
+        let modal = document.querySelector('.cert-lightbox');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.className = 'cert-lightbox';
+            modal.innerHTML = `
+                <div class="cert-lightbox-backdrop"></div>
+                <div class="cert-lightbox-content">
+                    <button class="cert-lightbox-close" aria-label="Close lightbox">&times;</button>
+                    <img class="cert-lightbox-img" src="" alt="" />
+                    <div class="cert-lightbox-caption"></div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            // Close listeners
+            modal.querySelector('.cert-lightbox-backdrop').addEventListener('click', closeCertificateModal);
+            modal.querySelector('.cert-lightbox-close').addEventListener('click', closeCertificateModal);
+            
+            // Close on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeCertificateModal();
+            });
+        }
+
+        const img = modal.querySelector('.cert-lightbox-img');
+        const caption = modal.querySelector('.cert-lightbox-caption');
+        img.src = imageSrc;
+        img.alt = title;
+        caption.textContent = title;
+
+        // Show modal
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden'; // Prevent page scroll
+    }
+
+    function closeCertificateModal() {
+        const modal = document.querySelector('.cert-lightbox');
+        if (modal) {
+            modal.classList.remove('open');
+            document.body.style.overflow = ''; // Restore scroll
+        }
     }
 
     function boot() {
