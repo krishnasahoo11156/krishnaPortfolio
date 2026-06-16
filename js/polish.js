@@ -1434,6 +1434,65 @@
               "Module 4: Deploying Streamlit Prototypes to Cloud Run"
             ]
           },
+          // CodeCell Syrus Hackathon (id 10)
+          {
+            id: 10,
+            image: "certificates/codecell's-syrus-hackathon.png",
+            title: "Syrus Hackathon 2026 (Top 6 Finalist)",
+            type: "Hackathon Finalist",
+            issuer: "CodeCell VESIT",
+            issuerLogo: "logos/codecell.png",
+            issuerLogos: ["logos/codecell.png"],
+            issuerColor: "#ffbf00",
+            date: "March 18, 2026",
+            expiry: "No Expiration",
+            credentialId: "VESIT_2025_26_UID-0256",
+            credentialUrl: "https://verification.givemycertificate.com/v/563de96d-f546-4d9c-bf14-9faa752f3285",
+            about: "Awarded for participating and securing a spot in the Top 6 Finalists at Syrus Hackathon 2026. Built an Autonomous Developer Onboarding Agent that automates environment setup, dependency verification, and day-one guidance using Gemini AI, Next.js, and TypeScript. Sponsored by Rezinix.ai, Unstop, GitHub, and associate sponsors Interview Buddy, .xyz, Interview Cake, and Archer.",
+            skills: ["Autonomous Agents", "Next.js", "TypeScript", "Gemini AI", "App Development", "DevOps Automation"],
+            timelinePos: 75,
+            timelineLabel: "Mar 18",
+            timelineYear: "2026",
+            shortIssuer: "CodeCell",
+            tag: "Hackathon Achievement",
+            status: "completed",
+            syllabus: [
+              "Project Milestone: Built an Autonomous Developer Onboarding Agent",
+              "Technical Stack: Next.js, TypeScript, Gemini AI, NextAuth, Framer Motion, Chart.js",
+              "Standing: Top 6 Finalists out of all competing teams",
+              "Sponsors & Partners: Rezinix.ai (Title Sponsor), Unstop (Powered By), GitHub (Brand Partner)",
+              "Associate Sponsors: Interview Buddy, .xyz, Interview Cake, The Daily Dough, Archer"
+            ]
+          },
+          // UniMerge 1.0 Hackathon (id 11)
+          {
+            id: 11,
+            image: "certificates/unimergecertificate.png",
+            title: "UniMerge 1.0 Hackathon (Winner)",
+            type: "Hackathon Winner",
+            issuer: "parth.builds Community",
+            issuerLogo: "logos/parth-builds.png.jpeg",
+            issuerLogos: ["logos/parth-builds.png.jpeg"],
+            issuerColor: "#6C5CE7",
+            date: "April 12, 2026",
+            expiry: "No Expiration",
+            credentialId: null,
+            credentialUrl: null,
+            about: "Awarded for securing the 1st Place Winner position in the UniMerge 1.0 Solo Online Hackathon organized by the parth.builds Community. Developed StudySync — an academic productivity platform with smart scheduling, Pomodoro timers, and Web Audio ambient sound generation.",
+            skills: ["React.js", "Vite", "Firebase", "Web Audio API", "Academic Productivity", "Solo Development"],
+            timelinePos: 79,
+            timelineLabel: "Apr 12",
+            timelineYear: "2026",
+            shortIssuer: "parth.builds",
+            tag: "Hackathon Winner",
+            status: "completed",
+            syllabus: [
+              "Hackathon Winner: Secured 1st Place out of all solo competitors",
+              "Project Developed: StudySync (Smart Calendar, Focus Timer, Cloud Library)",
+              "Organizer: Parth Narkar (Creator of parth.builds Community)",
+              "Judges: Kanhayya Gupta (Founder of FME) & Somanath Diksangi (Founder of Vidgenn)"
+            ]
+          },
           // AWS DevOps (id 7)
           {
             id: 7,
