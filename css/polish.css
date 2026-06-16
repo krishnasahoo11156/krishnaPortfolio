@@ -1581,7 +1581,7 @@ section.container {
 /* Card Styling */
 .cert-card {
   width: 420px;
-  min-height: 480px;
+  min-height: 400px;
   background: #111111;
   border: 1px solid #222222;
   border-radius: 12px;
@@ -1592,6 +1592,13 @@ section.container {
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   position: relative;
+}
+
+.cert-card .cert-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .cert-card:hover {
