@@ -1554,27 +1554,8 @@ section.container {
     display: flex;
     padding: 2rem 0;
     perspective: 1000px;
-}
-
-.certs-marquee::before,
-.certs-marquee::after {
-    content: "";
-    height: 100%;
-    width: 150px;
-    position: absolute;
-    z-index: 10;
-    pointer-events: none;
-    top: 0;
-}
-
-.certs-marquee::before {
-    left: 0;
-    background: linear-gradient(to right, var(--bg-color) 0%, transparent 100%);
-}
-
-.certs-marquee::after {
-    right: 0;
-    background: linear-gradient(to left, var(--bg-color) 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
 }
 
 .certs-track {
