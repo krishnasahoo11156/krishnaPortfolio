@@ -1556,14 +1556,27 @@ section.container {
     transform: translateY(0);
 }
 
+/* Green highlight for currently visible certificates in the marquee */
+.certs-timeline-node.visible-in-marquee .certs-timeline-dot {
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e, 0 0 16px rgba(34, 197, 94, 0.6);
+    transform: scale(1.1);
+}
+
+.certs-timeline-node.visible-in-marquee:hover .certs-timeline-dot,
+.certs-timeline-node.visible-in-marquee.active .certs-timeline-dot {
+    background: #ffffff;
+    box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
+    transform: scale(1.3);
+}
+
+.certs-timeline-node.visible-in-marquee:hover .certs-timeline-label,
+.certs-timeline-node.visible-in-marquee.active .certs-timeline-label {
+    color: #22c55e;
+}
+
 .certs-timeline-year-label {
-    position: absolute;
-    top: 48px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #e8473f44;
-    letter-spacing: 0.1em;
-    pointer-events: none;
+    display: none;
 }
 
 /* Certificates Marquee */
@@ -1808,6 +1821,11 @@ section.container {
 :root[data-theme="light"] .certs-timeline-node:hover .certs-timeline-label,
 :root[data-theme="light"] .certs-timeline-node.active .certs-timeline-label {
   color: #000;
+}
+
+:root[data-theme="light"] .certs-timeline-node.visible-in-marquee:hover .certs-timeline-label,
+:root[data-theme="light"] .certs-timeline-node.visible-in-marquee.active .certs-timeline-label {
+  color: #16a34a;
 }
 
 /* Premium Certificate Lightbox/Modal */

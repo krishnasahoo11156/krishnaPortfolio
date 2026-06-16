@@ -1688,17 +1688,6 @@
             // Sort to render chronologically
             const chronologicalCerts = [...certificatesData].sort((a, b) => a.timelinePos - b.timelinePos);
             
-            // Year markers
-            chronologicalCerts.forEach(cert => {
-                if (cert.timelineYear) {
-                    const yearDiv = document.createElement('div');
-                    yearDiv.className = 'certs-timeline-year-label';
-                    yearDiv.style.left = `${cert.timelinePos}%`;
-                    yearDiv.style.transform = 'translateX(-50%)';
-                    yearDiv.textContent = cert.timelineYear;
-                    timelineAxis.appendChild(yearDiv);
-                }
-            });
 
             timelineNodesContainer.innerHTML = chronologicalCerts.map(cert => `
                 <div class="certs-timeline-node" style="left: ${cert.timelinePos}%;" data-id="${cert.id}">
@@ -1831,6 +1820,63 @@
                 }
             });
         });
+
+        // 7. Dynamic Scroll Highlighting
+        function updateTimelineHighlights() {
+            if (!track || !timelineNodesContainer) return;
+            
+            const style = window.getComputedStyle(track);
+            const matrix = style.transform || style.webkitTransform;
+            
+            let trackX = 0;
+            if (matrix && matrix !== 'none') {
+                const parts = matrix.split(',');
+                if (parts.length >= 6) {
+                    trackX = Math.abs(parseFloat(parts[4]));
+                }
+            }
+            
+            const marquee = document.querySelector('.certs-marquee');
+            if (!marquee) return;
+            const marqueeWidth = marquee.offsetWidth;
+            
+            const firstCard = cards[0];
+            if (!firstCard) return;
+            const cardWidth = firstCard.offsetWidth;
+            
+            const styleGap = window.getComputedStyle(track).gap;
+            const gap = parseFloat(styleGap) || 32;
+            const step = cardWidth + gap;
+            
+            const visibleIds = new Set();
+            
+            cards.forEach((card, index) => {
+                const cardId = parseInt(card.getAttribute('data-id'));
+                
+                const leftInViewport = (index * step) - trackX;
+                const rightInViewport = leftInViewport + cardWidth;
+                
+                // Card is visible if a significant portion of it is inside the viewport
+                const threshold = cardWidth * 0.15;
+                if (rightInViewport >= threshold && leftInViewport <= marqueeWidth - threshold) {
+                    visibleIds.add(cardId);
+                }
+            });
+            
+            const timelineNodes = document.querySelectorAll('.certs-timeline-node');
+            timelineNodes.forEach(node => {
+                const nodeId = parseInt(node.getAttribute('data-id'));
+                if (visibleIds.has(nodeId)) {
+                    node.classList.add('visible-in-marquee');
+                } else {
+                    node.classList.remove('visible-in-marquee');
+                }
+            });
+            
+            requestAnimationFrame(updateTimelineHighlights);
+        }
+        
+        requestAnimationFrame(updateTimelineHighlights);
     }
 
     function openCertificateModal(imageSrc, title) {
