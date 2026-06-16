@@ -1234,9 +1234,6 @@
     }
 
     function initCertificates() {
-        var track = document.querySelector('.certs-track');
-        if (!track) return;
-
         // 1. Data array
         const certificatesData = [
           // GCP Compute (id 1)
@@ -1257,7 +1254,15 @@
             timelinePos: 5,
             timelineLabel: "Oct 11",
             timelineYear: "2025",
-            shortIssuer: "GCP"
+            shortIssuer: "GCP",
+            tag: "Cloud Infrastructure",
+            status: "active",
+            syllabus: [
+              "Module 1: Creating and Configuring Virtual Machines",
+              "Module 2: Managing Persistent Disks and Storage",
+              "Module 3: Deploying Web Servers on Compute Engine",
+              "Module 4: Load Balancing and Auto-scaling VMs"
+            ]
           },
           // GCP Network (id 3)
           {
@@ -1274,9 +1279,17 @@
             credentialUrl: "https://www.credly.com/earner/earned/badge/8afbf4ee-14ac-458e-aa05-3178624998c4",
             about: "Validates practical skills in setting up and securing cloud networking infrastructure on Google Cloud Platform. Covers VPC configuration, firewall rules, IAM access control, and database migration strategies — core competencies for any cloud infrastructure or DevOps role.",
             skills: ["Cloud Computing", "Database Migration", "IAM", "VPC Networks", "Firewall Rules"],
-            timelinePos: 17,
+            timelinePos: 15,
             timelineLabel: "Oct 23",
-            shortIssuer: "GCP"
+            shortIssuer: "GCP",
+            tag: "Cloud Networking",
+            status: "active",
+            syllabus: [
+              "Module 1: VPC Network Creation and Routing",
+              "Module 2: Configuring Firewall Rules and IAM Roles",
+              "Module 3: Database Migration and VPC Peering",
+              "Module 4: Network Load Balancers and Cloud NAT"
+            ]
           },
           // GCP Data (id 2)
           {
@@ -1293,9 +1306,44 @@
             credentialUrl: "https://www.credly.com/earner/earned/badge/61f13aee-bad7-462b-85a6-529fc2c36b13",
             about: "Demonstrates the ability to store, process, and manage structured and unstructured data on Google Cloud using the Console interface. Covers Cloud Storage buckets, Cloud Functions triggers, Pub/Sub messaging pipelines, and image processing workflows — all deployed without writing code, purely through GCP's Console UI.",
             skills: ["Cloud Storage", "Google Cloud Compute", "Image Processing", "Pub/Sub", "Cloud Functions"],
-            timelinePos: 29,
+            timelinePos: 25,
             timelineLabel: "Oct 24",
-            shortIssuer: "GCP"
+            shortIssuer: "GCP",
+            tag: "Cloud Storage & Data",
+            status: "active",
+            syllabus: [
+              "Module 1: Managing Cloud Storage Buckets and Access Control",
+              "Module 2: Setting up Cloud Functions Event Triggers",
+              "Module 3: Creating Pub/Sub Topics and Subscriptions",
+              "Module 4: Automating Image Processing Workflows via Console"
+            ]
+          },
+          // GCP Pub/Sub (id 8)
+          {
+            id: 8,
+            image: "certificates/get-started-with-pub-sub-skill-badge.png",
+            title: "Get Started with Pub/Sub",
+            type: "Skill Badge",
+            issuer: "Google Cloud",
+            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerColor: "#4285F4",
+            date: "October 24, 2025",
+            expiry: "No Expiration",
+            credentialId: "850b86a8-c29a-412e-982c-d9c9e6912345",
+            credentialUrl: "https://www.credly.com/earner/earned/badge/850b86a8-c29a-412e-982c-d9c9e6912345",
+            about: "Validates foundational knowledge of Google Cloud Pub/Sub service for asynchronous messaging. Covers topic creation, subscription management, publishing and pulling messages, and integration with Cloud Functions and Dataflow pipelines.",
+            skills: ["Google Cloud Platform (GCP)", "Pub/Sub", "Asynchronous Messaging", "Event-Driven Architecture"],
+            timelinePos: 35,
+            timelineLabel: "Oct 24",
+            shortIssuer: "GCP",
+            tag: "Cloud Messaging",
+            status: "active",
+            syllabus: [
+              "Module 1: Pub/Sub Architecture and Core Concepts",
+              "Module 2: Creating Topics and Managing Subscriptions",
+              "Module 3: Publishing and Pulling Messages via Console and CLI",
+              "Module 4: Integrating Pub/Sub with Cloud Functions"
+            ]
           },
           // GCP Vertex AI (id 4)
           {
@@ -1312,9 +1360,17 @@
             credentialUrl: "https://www.credly.com/earner/earned/badge/98dc94d6-fa5a-4b4d-a5c2-70a468371fef",
             about: "Covers the fundamentals of prompt engineering using Google Cloud's Vertex AI platform and Gemini APIs. Explores zero-shot, few-shot, and chain-of-thought prompting techniques, and how to apply them inside production-grade AI pipelines using Vertex AI Studio — directly relevant to AI/ML application development.",
             skills: ["Artificial Intelligence", "Generative AI", "Prompt Engineering", "Gemini APIs", "Vertex AI"],
-            timelinePos: 41,
+            timelinePos: 45,
             timelineLabel: "Oct 25",
-            shortIssuer: "GCP"
+            shortIssuer: "GCP",
+            tag: "Generative AI",
+            status: "active",
+            syllabus: [
+              "Module 1: Foundations of Prompt Engineering",
+              "Module 2: Zero-shot, Few-shot, and Chain-of-thought Prompting",
+              "Module 3: Vertex AI Studio No-Code Experimentation",
+              "Module 4: Integrating Gemini APIs in Application Code"
+            ]
           },
           // GCP Monitoring (id 5)
           {
@@ -1331,9 +1387,44 @@
             credentialUrl: "https://www.credly.com/earner/earned/badge/eb892802-2f47-441e-8817-437a8988e944",
             about: "Demonstrates the ability to set up observability and monitoring solutions on GCP using Cloud Monitoring, Logging, and dashboards. Covers alerting policies, uptime checks, metrics explorers, and log-based metrics — essential for maintaining production reliability on Google Cloud infrastructure.",
             skills: ["Google Cloud Platform (GCP)", "Cloud Monitoring", "Dashboard", "Alerting", "Cloud Logging"],
-            timelinePos: 53,
+            timelinePos: 55,
             timelineLabel: "Oct 25",
-            shortIssuer: "GCP"
+            shortIssuer: "GCP",
+            tag: "Cloud Observability",
+            status: "active",
+            syllabus: [
+              "Module 1: Setting up Cloud Monitoring Dashboards",
+              "Module 2: Configuring Alerting Policies and Notification Channels",
+              "Module 3: Creating Uptime Checks and Synthetics",
+              "Module 4: Custom Log-based Metrics and Querying in Cloud Logging"
+            ]
+          },
+          // GCP GenAI Apps with Gemini and Streamlit (id 9)
+          {
+            id: 9,
+            image: "certificates/develop-genai-apps-with-gemini-and-streamlit-skill-.png",
+            title: "Develop GenAI Apps with Gemini and Streamlit",
+            type: "Skill Badge",
+            issuer: "Google Cloud",
+            issuerLogo: "https://www.gstatic.com/devrel-devsite/prod/v45f61267e7ca23ebf7e8c91e66e3c1b3000d53ea0c5b7e0a1cf5f0c60e0b8e8/cloud/images/favicons/onecloud/favicon.ico",
+            issuerColor: "#4285F4",
+            date: "October 26, 2025",
+            expiry: "No Expiration",
+            credentialId: "9ae87d12-321a-4abf-b3cd-91a78e52cde3",
+            credentialUrl: "https://www.credly.com/earner/earned/badge/9ae87d12-321a-4abf-b3cd-91a78e52cde3",
+            about: "Demonstrates the ability to build and deploy Generative AI applications using Google Cloud's Gemini API and Streamlit framework. Covers application architecture, API integration, session state handling, and deploying interactive AI prototypes.",
+            skills: ["Generative AI", "Gemini API", "Streamlit", "Python Development", "App Prototyping"],
+            timelinePos: 65,
+            timelineLabel: "Oct 26",
+            shortIssuer: "GCP",
+            tag: "AI App Development",
+            status: "active",
+            syllabus: [
+              "Module 1: Designing GenAI App Architecture with Streamlit",
+              "Module 2: Direct Integration with Gemini API and Vertex AI SDK",
+              "Module 3: Handling Application State and Multi-Turn Chat Sessions",
+              "Module 4: Deploying Streamlit Prototypes to Cloud Run"
+            ]
           },
           // AWS DevOps (id 7)
           {
@@ -1350,10 +1441,19 @@
             credentialUrl: null,
             about: "Introduces core DevOps principles and how they are implemented in the AWS ecosystem. Covers CI/CD pipelines using AWS CodePipeline, CodeBuild, and CodeDeploy, along with infrastructure automation using CloudFormation, monitoring with CloudWatch, and containerization with ECS. Bridges the gap between software development and cloud operations.",
             skills: ["DevOps", "AWS CodePipeline", "CI/CD", "CloudFormation", "CloudWatch", "ECS"],
-            timelinePos: 82,
+            timelinePos: 83,
             timelineLabel: "Jun 10",
             timelineYear: "2026",
-            shortIssuer: "AWS"
+            shortIssuer: "AWS",
+            tag: "DevOps & Cloud Operations",
+            status: "completed",
+            syllabus: [
+              "Module 1: DevOps Principles on AWS Platform",
+              "Module 2: CI/CD Pipelines with CodePipeline & CodeBuild",
+              "Module 3: Infrastructure as Code (IaC) with CloudFormation",
+              "Module 4: Container Orchestration with ECS and EKS",
+              "Module 5: Monitoring and Logging using CloudWatch"
+            ]
           },
           // GCP GenAI Studio (id 6)
           {
@@ -1370,11 +1470,76 @@
             credentialUrl: null,
             about: "Covers the capabilities and practical usage of Google Cloud's Generative AI Studio — a no-code/low-code interface for experimenting with foundation models like Gemini. Explores model tuning, prompt testing, multimodal inputs, and deploying generative AI applications. Completed through the Simplilearn SkillUp platform powered by Google Cloud.",
             skills: ["Generative AI", "Vertex AI Studio", "Foundation Models", "Gemini", "Prompt Testing"],
-            timelinePos: 94,
+            timelinePos: 93,
             timelineLabel: "Jun 15",
-            shortIssuer: "GCP"
+            shortIssuer: "GCP",
+            tag: "Generative AI",
+            status: "completed",
+            syllabus: [
+              "Module 1: Introduction to Foundation Models & Vertex AI",
+              "Module 2: Tuning and Prompt Engineering in Generative AI Studio",
+              "Module 3: Integrating Multimodal Datasets with Gemini Models",
+              "Module 4: Model Evaluation and Deployment Best Practices"
+            ]
           }
         ];
+
+        // Populate detailed catalog if on certificates.html page
+        const detailGrid = document.querySelector('.certs-detail-grid');
+        if (detailGrid) {
+            detailGrid.innerHTML = certificatesData.map(cert => {
+                const credentialIdText = cert.credentialId ? cert.credentialId : "N/A";
+                const verifyButton = cert.credentialUrl 
+                    ? `<a href="${cert.credentialUrl}" target="_blank" rel="noopener" class="cert-verify-btn">Verify Credential &rarr;</a>`
+                    : `<div class="cert-verify-btn" style="opacity: 0.6; cursor: default; border-color: var(--border-color); color: var(--text-secondary); background: transparent;">🏅 Simplilearn Verified</div>`;
+
+                const statusClass = cert.status === 'active' ? 'active' : 'completed';
+                const statusLabel = cert.status === 'active' ? 'Active' : 'Completed';
+
+                const syllabusHtml = cert.syllabus && cert.syllabus.length > 0 
+                    ? `
+                    <details class="cert-syllabus-accordion">
+                        <summary class="cert-syllabus-summary">View Syllabus Modules</summary>
+                        <div class="cert-syllabus-content">
+                            <ul class="cert-syllabus-list">
+                                ${cert.syllabus.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </details>
+                    `
+                    : '';
+
+                return `
+                    <div class="cert-detail-card">
+                        <div class="cert-detail-header">
+                            <div class="cert-logo-container">
+                                <img src="${cert.issuerLogo}" alt="${cert.issuer}" class="cert-detail-logo" onerror="this.style.display='none';" />
+                            </div>
+                            <span class="cert-status-badge ${statusClass}">${statusLabel}</span>
+                        </div>
+                        <div class="cert-detail-tag">${cert.tag || 'Cloud'}</div>
+                        <h3 class="cert-detail-title">${cert.title}</h3>
+                        <div class="cert-detail-meta">
+                            <span class="cert-meta-item">Issuer: <strong>${cert.issuer}</strong></span>
+                            <span class="cert-meta-item">Credential ID: <strong style="word-break: break-all;">${credentialIdText}</strong></span>
+                            <span class="cert-meta-item">Issued: <strong>${cert.date}</strong></span>
+                        </div>
+                        <p class="cert-detail-desc">${cert.about}</p>
+                        <div class="cert-skills-wrap">
+                            <div class="cert-skills-label">Skills Verified</div>
+                            <div class="cert-skills-list">
+                                ${cert.skills.map(s => `<span class="cert-skill-tag">${s}</span>`).join('')}
+                            </div>
+                        </div>
+                        ${syllabusHtml}
+                        ${verifyButton}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        var track = document.querySelector('.certs-track');
+        if (!track) return;
 
         // 2. Build certificate cards
         const doubledData = [...certificatesData, ...certificatesData];
@@ -1396,7 +1561,7 @@
                     <div class="cert-title">${cert.title}</div>
                     <div class="cert-meta">
                         🗓 <span>${cert.date}</span><br/>
-                        🔑 ID: <span title="${cert.credentialId}">${cert.credentialId.substring(0, 12)}...</span>
+                        🔑 ID: <span title="${cert.credentialId}">${cert.credentialId}</span>
                     </div>
                     <div class="cert-about">${cert.about}</div>
                     <div class="cert-skills">
@@ -1532,8 +1697,8 @@
                     track.style.animation = 'none';
                     track.classList.add('manual-paused');
                     
-                    // Calculate step distance (card width 320px + gap 32px)
-                    const cardWidth = 320;
+                    // Calculate step distance (card width 420px + gap 32px)
+                    const cardWidth = 420;
                     const cardGap = 32; // 2rem
                     const cardStep = cardWidth + cardGap;
                     
