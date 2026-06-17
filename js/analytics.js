@@ -40,8 +40,8 @@
             loadGitHubData();
         }
 
-        // Animate LeetCode Stats
-        animateLeetCode();
+        // Fetch and Animate LeetCode Stats
+        fetchLeetCodeData();
 
         // Custom Cursor Setup
         initCursor();
@@ -378,28 +378,85 @@
     }
 
     // ============================================================
-    // LEETCODE ANIMATION ENGINE
+    // LEETCODE API SYNC ENGINE
     // ============================================================
-    function animateLeetCode() {
-        const targetSolved = 154;
-        const targetEasy = 82;
-        const targetMedium = 61;
-        const targetHard = 11;
+    const LEETCODE_USERNAME = 'KrishnaSahoo11156';
 
-        const totalQuestionsMilestone = 500;
-        const circlePercent = Math.min(100, Math.round((targetSolved / totalQuestionsMilestone) * 100));
+    function fetchLeetCodeData() {
+        Promise.all([
+            fetch(`https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}`).then(r => {
+                if (!r.ok) throw new Error('Profile fetch failed');
+                return r.json();
+            }),
+            fetch(`https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}/solved`).then(r => {
+                if (!r.ok) throw new Error('Solved fetch failed');
+                return r.json();
+            })
+        ])
+        .then(([profile, solved]) => {
+            const stats = {
+                solvedProblem: solved.solvedProblem || 84,
+                easySolved: solved.easySolved || 55,
+                mediumSolved: solved.mediumSolved || 27,
+                hardSolved: solved.hardSolved || 2,
+                ranking: profile.ranking || 1778199,
+                reputation: profile.reputation || 3,
+                totalSubmissions: (solved.totalSubmissionNum && solved.totalSubmissionNum[0]) ? solved.totalSubmissionNum[0].submissions : 178
+            };
+            runLeetCodeAnimations(stats);
+        })
+        .catch(err => {
+            console.warn('LeetCode API failed, running fallback stats:', err);
+            const fallbackStats = {
+                solvedProblem: 84,
+                easySolved: 55,
+                mediumSolved: 27,
+                hardSolved: 2,
+                ranking: 1778199,
+                reputation: 3,
+                totalSubmissions: 178
+            };
+            runLeetCodeAnimations(fallbackStats);
+        });
+    }
+
+    function runLeetCodeAnimations(stats) {
+        const totalQuestionsMilestone = 200;
+        const circlePercent = Math.min(100, Math.round((stats.solvedProblem / totalQuestionsMilestone) * 100));
 
         // Animate count totals
-        animateNumber('lc-total-solved', targetSolved, 1500);
-        animateNumber('lc-easy-solved-txt', targetEasy, 1200);
-        animateNumber('lc-medium-solved-txt', targetMedium, 1200);
-        animateNumber('lc-hard-solved-txt', targetHard, 1200);
+        animateNumber('lc-total-solved', stats.solvedProblem, 1500);
+        animateNumber('lc-easy-solved-txt', stats.easySolved, 1200);
+        animateNumber('lc-medium-solved-txt', stats.mediumSolved, 1200);
+        animateNumber('lc-hard-solved-txt', stats.hardSolved, 1200);
+
+        // Update static cards
+        const rankEl = document.getElementById('lc-global-rank');
+        const repEl = document.getElementById('lc-reputation');
+        const subEl = document.getElementById('lc-submissions');
+
+        if (rankEl) rankEl.textContent = stats.ranking.toLocaleString();
+        if (repEl) repEl.textContent = stats.reputation.toLocaleString();
+        if (subEl) subEl.textContent = stats.totalSubmissions.toLocaleString();
+
+        // Calculate bar percentages based on milestones
+        const easyPct = Math.min(100, Math.round((stats.easySolved / 100) * 100)) + '%';
+        const mediumPct = Math.min(100, Math.round((stats.mediumSolved / 50) * 100)) + '%';
+        const hardPct = Math.min(100, Math.round((stats.hardSolved / 10) * 100)) + '%';
+
+        const easyBar = document.querySelector('.lc-bar-fill.easy');
+        const mediumBar = document.querySelector('.lc-bar-fill.medium');
+        const hardBar = document.querySelector('.lc-bar-fill.hard');
+
+        if (easyBar) easyBar.setAttribute('data-width', easyPct);
+        if (mediumBar) mediumBar.setAttribute('data-width', mediumPct);
+        if (hardBar) hardBar.setAttribute('data-width', hardPct);
 
         // Animate circle progress
         const circle = document.querySelector('.lc-circle-fill');
         if (circle) {
             const r = parseFloat(circle.getAttribute('r'));
-            const circumference = 2 * Math.PI * r; // 251.3
+            const circumference = 2 * Math.PI * r; // ~251.3
             const offset = circumference - (circlePercent / 100) * circumference;
             setTimeout(() => {
                 circle.style.strokeDashoffset = offset;
