@@ -200,10 +200,22 @@
 /* Extra LC Cards */
 .lc-extra-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 0.75rem;
     border-top: 1px solid var(--border-color);
     padding-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .lc-extra-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .lc-extra-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .lc-extra-card {
@@ -349,3 +361,136 @@
         padding: 2rem 1.25rem;
     }
 }
+
+/* ============================================================
+   RECENT SUBMISSIONS LIST
+   ============================================================ */
+.lc-recent-wrapper {
+    margin-top: 2rem;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 1.5rem;
+}
+
+.lc-recent-title {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.lc-recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.lc-recent-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.lc-recent-item:hover {
+    border-color: var(--accent-color);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px var(--card-shadow-main);
+}
+
+.lc-item-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.lc-problem-link {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.lc-problem-link:hover {
+    color: var(--accent-color);
+}
+
+.lc-item-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.lc-lang-badge {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.lc-recent-item:hover .lc-lang-badge {
+    background: rgba(232, 71, 63, 0.08);
+    border-color: rgba(232, 71, 63, 0.3);
+    color: var(--accent-color);
+}
+
+.lc-status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    color: #00b8a3;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.lc-status-dot {
+    width: 6px;
+    height: 6px;
+    background: #00b8a3;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00b8a3;
+    display: inline-block;
+    animation: status-pulse 1.8s infinite ease-in-out;
+}
+
+@keyframes status-pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+        box-shadow: 0 0 0 0 rgba(0, 184, 163, 0.7);
+    }
+    70% {
+        transform: scale(1.1);
+        opacity: 1;
+        box-shadow: 0 0 0 6px rgba(0, 184, 163, 0);
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+        box-shadow: 0 0 0 0 rgba(0, 184, 163, 0);
+    }
+}
+
+.lc-time {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+

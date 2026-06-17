@@ -385,6 +385,74 @@
     // ============================================================
     const LEETCODE_USERNAME = 'KrishnaSahoo11156';
 
+    function getRelativeTime(timestamp) {
+        const ms = parseInt(timestamp) * 1000;
+        const now = Date.now();
+        const diffMs = now - ms;
+        
+        if (isNaN(diffMs) || diffMs < 0) {
+            return 'Just now';
+        }
+        
+        const seconds = Math.floor(diffMs / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        const months = Math.floor(days / 30);
+        const years = Math.floor(days / 365);
+        
+        if (seconds < 60) return 'Just now';
+        if (minutes < 60) return `${minutes}m ago`;
+        if (hours < 24) return `${hours}h ago`;
+        if (days === 1) return 'Yesterday';
+        if (days < 30) return `${days}d ago`;
+        if (months < 12) return `${months}mo ago`;
+        return `${years}y ago`;
+    }
+
+    function renderRecentSubmissions(submissions) {
+        const listEl = document.getElementById('lc-recent-submissions-list');
+        if (!listEl) return;
+        
+        if (!submissions || submissions.length === 0) {
+            listEl.innerHTML = `<div style="font-family: var(--font-body); font-size: 11px; color: var(--text-secondary); text-align: center; padding: 10px 0;">No recent accepted submissions found.</div>`;
+            return;
+        }
+        
+        // Deduplicate submissions by titleSlug to show top 5 unique solved questions
+        const uniqueSubmissions = [];
+        const seen = new Set();
+        for (const sub of submissions) {
+            if (!seen.has(sub.titleSlug)) {
+                seen.add(sub.titleSlug);
+                uniqueSubmissions.push(sub);
+            }
+            if (uniqueSubmissions.length >= 5) break;
+        }
+        
+        let html = '';
+        uniqueSubmissions.forEach(sub => {
+            const problemUrl = `https://leetcode.com/problems/${sub.titleSlug}/`;
+            const timeText = getRelativeTime(sub.timestamp);
+            html += `
+                <div class="lc-recent-item">
+                    <div class="lc-item-left">
+                        <span class="lc-status-badge" title="Accepted">
+                            <span class="lc-status-dot"></span>
+                        </span>
+                        <a href="${problemUrl}" target="_blank" rel="noopener" class="lc-problem-link">${sub.title}</a>
+                    </div>
+                    <div class="lc-item-right">
+                        <span class="lc-lang-badge">${sub.lang}</span>
+                        <span class="lc-time">${timeText}</span>
+                    </div>
+                </div>
+            `;
+        });
+        
+        listEl.innerHTML = html;
+    }
+
     function fetchLeetCodeData() {
         Promise.all([
             fetch(`https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}`).then(r => {
@@ -394,9 +462,17 @@
             fetch(`https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}/solved`).then(r => {
                 if (!r.ok) throw new Error('Solved fetch failed');
                 return r.json();
+            }),
+            fetch(`https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}/acSubmission`).then(r => {
+                if (!r.ok) throw new Error('Submissions fetch failed');
+                return r.json();
+            }),
+            fetch(`https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}/calendar`).then(r => {
+                if (!r.ok) throw new Error('Calendar fetch failed');
+                return r.json();
             })
         ])
-        .then(([profile, solved]) => {
+        .then(([profile, solved, submissions, calendar]) => {
             const stats = {
                 solvedProblem: solved.solvedProblem || 84,
                 easySolved: solved.easySolved || 55,
@@ -404,7 +480,10 @@
                 hardSolved: solved.hardSolved || 2,
                 ranking: profile.ranking || 1778199,
                 reputation: profile.reputation || 3,
-                totalSubmissions: (solved.totalSubmissionNum && solved.totalSubmissionNum[0]) ? solved.totalSubmissionNum[0].submissions : 178
+                totalSubmissions: (solved.totalSubmissionNum && solved.totalSubmissionNum[0]) ? solved.totalSubmissionNum[0].submissions : 178,
+                streak: calendar.streak || 15,
+                totalActiveDays: calendar.totalActiveDays || 65,
+                submissionsList: submissions.submission || []
             };
             runLeetCodeAnimations(stats);
         })
@@ -417,7 +496,16 @@
                 hardSolved: 2,
                 ranking: 1778199,
                 reputation: 3,
-                totalSubmissions: 178
+                totalSubmissions: 178,
+                streak: 15,
+                totalActiveDays: 65,
+                submissionsList: [
+                    { title: "Maximum Product Subarray", titleSlug: "maximum-product-subarray", timestamp: (Date.now() / 1000 - 3600).toString(), lang: "java" },
+                    { title: "Maximum Product of Three Numbers", titleSlug: "maximum-product-of-three-numbers", timestamp: (Date.now() / 1000 - 3600 * 6).toString(), lang: "java" },
+                    { title: "Assign Cookies", titleSlug: "assign-cookies", timestamp: (Date.now() / 1000 - 3600 * 24).toString(), lang: "java" },
+                    { title: "Intersection of Two Arrays", titleSlug: "intersection-of-two-arrays", timestamp: (Date.now() / 1000 - 3600 * 24 * 1.5).toString(), lang: "java" },
+                    { title: "First Missing Positive", titleSlug: "first-missing-positive", timestamp: (Date.now() / 1000 - 3600 * 24 * 2).toString(), lang: "java" }
+                ]
             };
             runLeetCodeAnimations(fallbackStats);
         });
@@ -432,6 +520,8 @@
         animateNumber('lc-easy-solved-txt', stats.easySolved, 1200);
         animateNumber('lc-medium-solved-txt', stats.mediumSolved, 1200);
         animateNumber('lc-hard-solved-txt', stats.hardSolved, 1200);
+        animateNumber('lc-active-days', stats.totalActiveDays, 1200);
+        animateNumber('lc-streak', stats.streak, 1200);
 
         // Update static cards
         const rankEl = document.getElementById('lc-global-rank');
@@ -473,6 +563,9 @@
                 bar.style.width = targetW;
             });
         }, 400);
+
+        // Render Recent Submissions
+        renderRecentSubmissions(stats.submissionsList);
     }
 
     function animateNumber(id, end, duration, suffix = '') {
