@@ -1434,6 +1434,94 @@
               "Module 4: Deploying Streamlit Prototypes to Cloud Run"
             ]
           },
+          // Hack-AI-Thon Certificate (id 12)
+          {
+            id: 12,
+            image: "certificates/hackaithoncertificate.png",
+            title: "Hack-AI-Thon 2026",
+            type: "Hackathon Participation",
+            issuer: "AI Colegion VESIT",
+            issuerLogo: "logos/ai-colegion.png",
+            issuerLogos: ["logos/ai-colegion.png"],
+            issuerColor: "#8b5cf6",
+            date: "January 28, 2026",
+            expiry: "No Expiration",
+            credentialId: "AIC-2026-HACK",
+            credentialUrl: null,
+            about: "Certificate of participation in Hack-AI-Thon 2026, a 24-hour national level AI-themed hackathon organized by AI Colegion at VESIT. Developed innovative solutions by leveraging artificial intelligence and machine learning to address real-world problems.",
+            skills: ["Generative AI", "Artificial Intelligence", "Python", "Machine Learning", "Rapid Prototyping"],
+            timelinePos: 70,
+            timelineLabel: "Jan 28",
+            timelineYear: "2026",
+            shortIssuer: "AI Colegion",
+            tag: "Hackathon",
+            status: "completed",
+            syllabus: [
+              "Phase 1: Idea Submission & Feasibility Review",
+              "Phase 2: 24-Hour Hackathon Build Phase",
+              "Phase 3: Prototype Deployment & Pitch Presentation",
+              "Phase 4: Evaluation by Industry Experts"
+            ]
+          },
+          // CodeCell Syrus Hackathon (id 10)
+          {
+            id: 10,
+            image: "certificates/codecell's-syrus-hackathon.png",
+            title: "Syrus Hackathon 2026 (Top 6 Finalist)",
+            type: "Hackathon Finalist",
+            issuer: "CodeCell VESIT",
+            issuerLogo: "logos/codecell.png",
+            issuerLogos: ["logos/codecell.png"],
+            issuerColor: "#ffbf00",
+            date: "March 18, 2026",
+            expiry: "No Expiration",
+            credentialId: "VESIT_2025_26_UID-0256",
+            credentialUrl: "https://verification.givemycertificate.com/v/563de96d-f546-4d9c-bf14-9faa752f3285",
+            about: "Awarded for participating and securing a spot in the Top 6 Finalists at Syrus Hackathon 2026. Built an Autonomous Developer Onboarding Agent that automates environment setup, dependency verification, and day-one guidance using Gemini AI, Next.js, and TypeScript. Sponsored by Rezinix.ai, Unstop, GitHub, and associate sponsors Interview Buddy, .xyz, Interview Cake, and Archer.",
+            skills: ["Autonomous Agents", "Next.js", "TypeScript", "Gemini AI", "App Development", "DevOps Automation"],
+            timelinePos: 75,
+            timelineLabel: "Mar 18",
+            timelineYear: "2026",
+            shortIssuer: "CodeCell",
+            tag: "Hackathon Achievement",
+            status: "completed",
+            syllabus: [
+              "Project Milestone: Built an Autonomous Developer Onboarding Agent",
+              "Technical Stack: Next.js, TypeScript, Gemini AI, NextAuth, Framer Motion, Chart.js",
+              "Standing: Top 6 Finalists out of all competing teams",
+              "Sponsors & Partners: Rezinix.ai (Title Sponsor), Unstop (Powered By), GitHub (Brand Partner)",
+              "Associate Sponsors: Interview Buddy, .xyz, Interview Cake, The Daily Dough, Archer"
+            ]
+          },
+          // UniMerge 1.0 Hackathon (id 11)
+          {
+            id: 11,
+            image: "certificates/unimergecertificate.png",
+            title: "UniMerge 1.0 Hackathon (Winner)",
+            type: "Hackathon Winner",
+            issuer: "parth.builds Community",
+            issuerLogo: "logos/parth-builds.png.jpeg",
+            issuerLogos: ["logos/parth-builds.png.jpeg"],
+            issuerColor: "#6C5CE7",
+            date: "April 12, 2026",
+            expiry: "No Expiration",
+            credentialId: null,
+            credentialUrl: null,
+            about: "Awarded for securing the 1st Place Winner position in the UniMerge 1.0 Solo Online Hackathon organized by the parth.builds Community. Developed StudySync — an academic productivity platform with smart scheduling, Pomodoro timers, and Web Audio ambient sound generation.",
+            skills: ["React.js", "Vite", "Firebase", "Web Audio API", "Academic Productivity", "Solo Development"],
+            timelinePos: 79,
+            timelineLabel: "Apr 12",
+            timelineYear: "2026",
+            shortIssuer: "parth.builds",
+            tag: "Hackathon Winner",
+            status: "completed",
+            syllabus: [
+              "Hackathon Winner: Secured 1st Place out of all solo competitors",
+              "Project Developed: StudySync (Smart Calendar, Focus Timer, Cloud Library)",
+              "Organizer: Parth Narkar (Creator of parth.builds Community)",
+              "Judges: Kanhayya Gupta (Founder of FME) & Somanath Diksangi (Founder of Vidgenn)"
+            ]
+          },
           // AWS DevOps (id 7)
           {
             id: 7,
@@ -1629,17 +1717,6 @@
             // Sort to render chronologically
             const chronologicalCerts = [...certificatesData].sort((a, b) => a.timelinePos - b.timelinePos);
             
-            // Year markers
-            chronologicalCerts.forEach(cert => {
-                if (cert.timelineYear) {
-                    const yearDiv = document.createElement('div');
-                    yearDiv.className = 'certs-timeline-year-label';
-                    yearDiv.style.left = `${cert.timelinePos}%`;
-                    yearDiv.style.transform = 'translateX(-50%)';
-                    yearDiv.textContent = cert.timelineYear;
-                    timelineAxis.appendChild(yearDiv);
-                }
-            });
 
             timelineNodesContainer.innerHTML = chronologicalCerts.map(cert => `
                 <div class="certs-timeline-node" style="left: ${cert.timelinePos}%;" data-id="${cert.id}">
@@ -1772,6 +1849,63 @@
                 }
             });
         });
+
+        // 7. Dynamic Scroll Highlighting
+        function updateTimelineHighlights() {
+            if (!track || !timelineNodesContainer) return;
+            
+            const style = window.getComputedStyle(track);
+            const matrix = style.transform || style.webkitTransform;
+            
+            let trackX = 0;
+            if (matrix && matrix !== 'none') {
+                const parts = matrix.split(',');
+                if (parts.length >= 6) {
+                    trackX = Math.abs(parseFloat(parts[4]));
+                }
+            }
+            
+            const marquee = document.querySelector('.certs-marquee');
+            if (!marquee) return;
+            const marqueeWidth = marquee.offsetWidth;
+            
+            const firstCard = cards[0];
+            if (!firstCard) return;
+            const cardWidth = firstCard.offsetWidth;
+            
+            const styleGap = window.getComputedStyle(track).gap;
+            const gap = parseFloat(styleGap) || 32;
+            const step = cardWidth + gap;
+            
+            const visibleIds = new Set();
+            
+            cards.forEach((card, index) => {
+                const cardId = parseInt(card.getAttribute('data-id'));
+                
+                const leftInViewport = (index * step) - trackX;
+                const rightInViewport = leftInViewport + cardWidth;
+                
+                // Card is visible if a significant portion of it is inside the viewport
+                const threshold = cardWidth * 0.15;
+                if (rightInViewport >= threshold && leftInViewport <= marqueeWidth - threshold) {
+                    visibleIds.add(cardId);
+                }
+            });
+            
+            const timelineNodes = document.querySelectorAll('.certs-timeline-node');
+            timelineNodes.forEach(node => {
+                const nodeId = parseInt(node.getAttribute('data-id'));
+                if (visibleIds.has(nodeId)) {
+                    node.classList.add('visible-in-marquee');
+                } else {
+                    node.classList.remove('visible-in-marquee');
+                }
+            });
+            
+            requestAnimationFrame(updateTimelineHighlights);
+        }
+        
+        requestAnimationFrame(updateTimelineHighlights);
     }
 
     function openCertificateModal(imageSrc, title) {
