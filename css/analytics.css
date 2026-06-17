@@ -1,0 +1,496 @@
+/* ============================================================
+   analytics.css — custom styles for the Analytics subpage
+   ============================================================ */
+
+/* Analytics Grid Layout */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+@media (max-width: 992px) {
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Base Analytics Card */
+.analytics-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2.25rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+    box-shadow: 0 8px 30px var(--card-shadow-main);
+}
+
+.analytics-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    background:
+        linear-gradient(var(--accent-color), var(--accent-color)) top center / 0% 2px no-repeat,
+        linear-gradient(var(--accent-color), var(--accent-color)) bottom center / 0% 2px no-repeat,
+        linear-gradient(var(--accent-color), var(--accent-color)) center left / 2px 0% no-repeat,
+        linear-gradient(var(--accent-color), var(--accent-color)) center right / 2px 0% no-repeat;
+    pointer-events: none;
+    z-index: 5;
+    transition: background-size 0.5s var(--ease-out);
+    border-radius: 12px;
+}
+
+.analytics-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-color);
+    box-shadow: 0 15px 35px var(--card-shadow-main), 0 0 20px rgba(232, 71, 63, 0.15);
+}
+
+.analytics-card:hover::before {
+    background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
+}
+
+/* ============================================================
+   LEETCODE CARD
+   ============================================================ */
+.lc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.lc-brand {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    letter-spacing: 1.5px;
+    color: var(--text-primary);
+}
+
+.lc-profile-link {
+    font-size: 12px;
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.lc-profile-link:hover {
+    color: var(--accent-color);
+}
+
+.lc-grid {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 480px) {
+    .lc-grid {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+
+/* Circular Progress Ring */
+.lc-circle-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.lc-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.lc-circle-bg {
+    fill: none;
+    stroke: var(--surface-overlay);
+    stroke-width: 8;
+}
+
+.lc-circle-fill {
+    fill: none;
+    stroke: #ffa116; /* LeetCode orange logo color */
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.lc-circle-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.lc-circle-number {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+}
+
+.lc-circle-label {
+    font-size: 10px;
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+/* Progress Bars */
+.lc-stats-bars {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.lc-bar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.lc-bar-header {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.lc-bar-header span:first-child {
+    font-weight: 600;
+}
+
+.lc-bar-track {
+    width: 100%;
+    height: 5px;
+    background: var(--surface-overlay);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.lc-bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 3px;
+    transition: width 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.lc-bar-fill.easy { background: #00b8a3; } /* Leetcode Green */
+.lc-bar-fill.medium { background: #ffc01e; } /* Leetcode Yellow */
+.lc-bar-fill.hard { background: #ef4743; } /* Leetcode Red */
+
+/* Extra LC Cards */
+.lc-extra-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .lc-extra-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .lc-extra-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.lc-extra-card {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    padding: 0.85rem;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.lc-extra-val {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+}
+
+.lc-extra-lbl {
+    font-size: 9px;
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+/* ============================================================
+   SOCIAL MEDIA CARDS
+   ============================================================ */
+.socials-analytics-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.social-card {
+    border-top: 3px solid var(--border-color);
+}
+
+.social-card.linkedin {
+    border-top-color: #0a66c2;
+}
+
+.social-card.x-twitter {
+    border-top-color: var(--text-primary);
+}
+
+.social-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.social-icon-logo {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    letter-spacing: 1.5px;
+}
+
+.linkedin .social-icon-logo { color: #0a66c2; }
+.x-twitter .social-icon-logo { color: var(--text-primary); }
+
+.social-profile-link {
+    font-size: 12px;
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.social-profile-link:hover {
+    color: var(--accent-color);
+}
+
+.social-stats-row {
+    display: grid;
+    gap: 1rem;
+}
+
+.social-stats-row.cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.social-stats-row.cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 576px) {
+    .social-stats-row.cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.social-stat-item {
+    text-align: center;
+}
+
+.social-stat-val {
+    font-family: var(--font-heading);
+    font-size: clamp(22px, 3vw, 30px);
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.social-stat-lbl {
+    font-size: 9px;
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-top: 4px;
+    display: block;
+}
+
+/* ============================================================
+   GITHUB STATS CONTAINER (FLAT)
+   ============================================================ */
+.gh-stats-container {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    padding: 2.5rem 2.25rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px var(--card-shadow-main);
+    margin-bottom: 3rem;
+}
+
+/* Remove scroll and height restrictions on flat pages */
+.gh-stats-container .gh-dynamic-content {
+    max-height: none !important;
+    overflow-y: visible !important;
+}
+
+/* Flat layout improvements */
+.gh-stats-container .gh-section-title:first-of-type {
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .gh-stats-container {
+        padding: 2rem 1.25rem;
+    }
+}
+
+/* ============================================================
+   RECENT SUBMISSIONS LIST
+   ============================================================ */
+.lc-recent-wrapper {
+    margin-top: 2rem;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 1.5rem;
+}
+
+.lc-recent-title {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.lc-recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.lc-recent-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.lc-recent-item:hover {
+    border-color: var(--accent-color);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px var(--card-shadow-main);
+}
+
+.lc-item-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.lc-problem-link {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.lc-problem-link:hover {
+    color: var(--accent-color);
+}
+
+.lc-item-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.lc-lang-badge {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.lc-recent-item:hover .lc-lang-badge {
+    background: rgba(232, 71, 63, 0.08);
+    border-color: rgba(232, 71, 63, 0.3);
+    color: var(--accent-color);
+}
+
+.lc-status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    color: #00b8a3;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.lc-status-dot {
+    width: 6px;
+    height: 6px;
+    background: #00b8a3;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00b8a3;
+    display: inline-block;
+    animation: status-pulse 1.8s infinite ease-in-out;
+}
+
+@keyframes status-pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+        box-shadow: 0 0 0 0 rgba(0, 184, 163, 0.7);
+    }
+    70% {
+        transform: scale(1.1);
+        opacity: 1;
+        box-shadow: 0 0 0 6px rgba(0, 184, 163, 0);
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+        box-shadow: 0 0 0 0 rgba(0, 184, 163, 0);
+    }
+}
+
+.lc-time {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+

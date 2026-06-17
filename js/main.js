@@ -19,10 +19,11 @@ function bootMain() {
        NAVBAR: shrink + active link on scroll
        ============================================= */
     const navbar = document.querySelector('.navbar');
-    const navLinks = document.querySelectorAll('.nav-links a');
+    const navLinks = document.querySelectorAll('.nav-links a, .nav-mobile-overlay a');
     const sections = document.querySelectorAll('section[id]');
 
     const updateNavbar = () => {
+        if (!navbar) return;
         if (window.scrollY > 60) {
             navbar.classList.add('scrolled');
         } else {
@@ -31,6 +32,7 @@ function bootMain() {
     };
 
     const updateActiveLink = () => {
+        if (!navLinks || navLinks.length === 0 || sections.length === 0) return;
         let current = '';
         sections.forEach(section => {
             const sectionTop = section.offsetTop - 120;
@@ -40,7 +42,9 @@ function bootMain() {
         });
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
+            const href = link.getAttribute('href');
+            const onclickStr = link.getAttribute('onclick') || '';
+            if (href === `#${current}` || (current === 'timeline' && onclickStr.includes('timeline.html'))) {
                 link.classList.add('active');
             }
         });

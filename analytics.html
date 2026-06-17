@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        (function() {
+            var theme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics & Metrics — Krishna Sahoo</title>
+    <meta name="description" content="Developer metrics, LeetCode rankings, GitHub statistics, and social presence analytics of Krishna Sahoo.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23e8473f'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='14' fill='white'%3EKS%3C/text%3E%3C/svg%3E">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap&font-display=swap" rel="stylesheet">
+
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="css/variables.css?v=5">
+    <link rel="stylesheet" href="css/base.css?v=5">
+    <link rel="stylesheet" href="css/typography.css?v=5">
+    <link rel="stylesheet" href="css/layout.css?v=5">
+    <link rel="stylesheet" href="css/components.css?v=5">
+    <link rel="stylesheet" href="css/github-stats.css?v=5">
+    <link rel="stylesheet" href="css/analytics.css?v=5">
+    <link rel="stylesheet" href="css/polish.css?v=5">
+    <link rel="stylesheet" href="css/detail.css?v=5">
+</head>
+<body class="detail-page-body">
+
+    <!-- Custom Cursor (desktop) -->
+    <div id="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-ring" aria-hidden="true"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- Chat Widget Toggle Button -->
+    <button id="chat-toggle" aria-label="Toggle Chat" class="cursor-hover">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path class="chat-path" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            <path class="close-path" d="M18 6L6 18M6 6l12 12" style="display: none;" />
+        </svg>
+    </button>
+
+    <!-- Chat Widget Window -->
+    <div id="chat-widget" role="dialog" aria-label="Krishna's Assistant Chat" aria-hidden="true">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">KS</div>
+                <div class="chat-title-group">
+                    <span class="chat-title">Krishna's Assistant</span>
+                    <span class="chat-status">Online</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Messages -->
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be generated dynamically by JS -->
+        </div>
+
+        <!-- Suggested Questions -->
+        <div class="chat-suggestions-container" id="chat-suggestions-container">
+            <div class="chat-suggestions-inner" id="chat-suggestions">
+                <!-- Suggestion chips will be populated here -->
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input-bar">
+            <!-- Plus Button -->
+            <button class="chat-plus-btn" id="chat-plus-btn" aria-label="Toggle detailed response">
+                +
+                <span class="chat-tooltip">Switch to Detailed Response</span>
+            </button>
+            
+            <!-- Input Form wrapper -->
+            <div class="chat-input-form">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Ask a question..." aria-label="Type your message">
+                <!-- Voice Mic Button -->
+                <button class="chat-mic-btn" id="chat-mic-btn" aria-label="Voice input">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        <line x1="12" y1="19" x2="12" y2="23"/>
+                        <line x1="8" y1="23" x2="16" y2="23"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Send Button -->
+            <button class="chat-send-btn" id="chat-send-btn" aria-label="Send message">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="detail-nav" role="navigation" aria-label="Main navigation">
+        <a href="index.html" class="back-link" onclick="event.preventDefault(); navigateTo('index.html');">← Back to Home</a>
+        <span class="nav-logo">KS</span>
+        <div class="nav-right">
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light/dark theme" style="margin-right: 1rem; border-radius: 0;">
+                <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <a href="index.html#skills">Skills</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#certificates">Certificates</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="detail-hero">
+        <div class="hero-inner">
+            <h1 class="hero-title">ANALYTICS</h1>
+            <div class="hero-accent-line"></div>
+            <p class="hero-subtitle">Real-time statistics, platform rankings, and development metrics.</p>
+        </div>
+    </header>
+
+    <!-- MAIN ANALYTICS VIEW -->
+    <main class="section" style="padding-top: 1rem;">
+
+        <!-- 1. GITHUB SECTION (FLAT LAYOUT) -->
+        <span class="section-label">GitHub Core</span>
+        <h2 class="section-title">CODEBASE METRICS</h2>
+
+        <div class="gh-stats-container">
+            <!-- Shimmer skeleton loading state -->
+            <div class="gh-skeleton-container">
+                <div class="gh-skeleton-header">
+                    <div class="gh-skeleton-avatar animate-shimmer"></div>
+                    <div class="gh-skeleton-header-info">
+                        <div class="gh-skeleton-line title animate-shimmer"></div>
+                        <div class="gh-skeleton-line subtitle animate-shimmer"></div>
+                    </div>
+                </div>
+                <div class="gh-skeleton-progress animate-shimmer"></div>
+                <div class="gh-skeleton-grid">
+                    <div class="gh-skeleton-card animate-shimmer"></div>
+                    <div class="gh-skeleton-card animate-shimmer"></div>
+                    <div class="gh-skeleton-card animate-shimmer"></div>
+                    <div class="gh-skeleton-card animate-shimmer"></div>
+                </div>
+                <div class="gh-skeleton-chart animate-shimmer"></div>
+                <div class="gh-skeleton-calendar animate-shimmer"></div>
+                <div class="gh-skeleton-repos">
+                    <div class="gh-skeleton-repo-card animate-shimmer"></div>
+                    <div class="gh-skeleton-repo-card animate-shimmer"></div>
+                </div>
+            </div>
+            <!-- Live fetched dynamic container -->
+            <div class="gh-dynamic-content" style="display: none;"></div>
+        </div>
+
+        <!-- 2. LEETCODE & SOCIAL MEDIA GRID -->
+        <div class="analytics-grid">
+            
+            <!-- LEETCODE SECTION -->
+            <div>
+                <span class="section-label">Algorithm Challenges</span>
+                <h2 class="section-title">LEETCODE STANDING</h2>
+                
+                <div class="analytics-card leetcode-card">
+                    <div class="lc-header">
+                        <span class="lc-brand">LeetCode Metrics</span>
+                        <a href="https://leetcode.com/u/KrishnaSahoo11156" target="_blank" rel="noopener" class="lc-profile-link">@KrishnaSahoo11156 ↗</a>
+                    </div>
+                    <div class="lc-grid">
+                        <div class="lc-circle-wrapper">
+                            <svg class="lc-svg" viewBox="0 0 100 100">
+                                <circle class="lc-circle-bg" cx="50" cy="50" r="40"></circle>
+                                <circle class="lc-circle-fill" cx="50" cy="50" r="40" style="stroke-dasharray: 251.3; stroke-dashoffset: 251.3;"></circle>
+                            </svg>
+                            <div class="lc-circle-text">
+                                <span class="lc-circle-number" id="lc-total-solved">0</span>
+                                <span class="lc-circle-label">Solved</span>
+                            </div>
+                        </div>
+                        <div class="lc-stats-bars">
+                            <div class="lc-bar-item">
+                                <div class="lc-bar-header">
+                                    <span>Easy</span>
+                                    <span id="lc-easy-solved-txt" data-limit="100">0/100</span>
+                                </div>
+                                <div class="lc-bar-track">
+                                    <div class="lc-bar-fill easy" data-width="0%"></div>
+                                </div>
+                            </div>
+                            <div class="lc-bar-item">
+                                <div class="lc-bar-header">
+                                    <span>Medium</span>
+                                    <span id="lc-medium-solved-txt" data-limit="50">0/50</span>
+                                </div>
+                                <div class="lc-bar-track">
+                                    <div class="lc-bar-fill medium" data-width="0%"></div>
+                                </div>
+                            </div>
+                            <div class="lc-bar-item">
+                                <div class="lc-bar-header">
+                                    <span>Hard</span>
+                                    <span id="lc-hard-solved-txt" data-limit="10">0/10</span>
+                                </div>
+                                <div class="lc-bar-track">
+                                    <div class="lc-bar-fill hard" data-width="0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lc-extra-row">
+                        <div class="lc-extra-card">
+                            <div class="lc-extra-val" id="lc-global-rank">1,778,199</div>
+                            <div class="lc-extra-lbl">Global Rank</div>
+                        </div>
+                        <div class="lc-extra-card">
+                            <div class="lc-extra-val" id="lc-reputation">3</div>
+                            <div class="lc-extra-lbl">Reputation</div>
+                        </div>
+                        <div class="lc-extra-card">
+                            <div class="lc-extra-val" id="lc-submissions">178</div>
+                            <div class="lc-extra-lbl">Submissions</div>
+                        </div>
+                        <div class="lc-extra-card">
+                            <div class="lc-extra-val" id="lc-active-days">0</div>
+                            <div class="lc-extra-lbl">Active Days</div>
+                        </div>
+                        <div class="lc-extra-card">
+                            <div class="lc-extra-val" id="lc-streak">0</div>
+                            <div class="lc-extra-lbl">Streak</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Solved Questions -->
+                    <div class="lc-recent-wrapper">
+                        <div class="lc-recent-title">RECENT ACCEPTED SUBMISSIONS</div>
+                        <div class="lc-recent-list" id="lc-recent-submissions-list">
+                            <!-- Skeleton Loader -->
+                            <div style="font-family: var(--font-body); font-size: 11px; color: var(--text-secondary); padding: 10px 0; text-align: center;">
+                                Loading submissions...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOCIAL MEDIA SECTION -->
+            <div>
+                <span class="section-label">Social Outreach</span>
+                <h2 class="section-title">PLATFORM STATS</h2>
+                
+                <div class="socials-analytics-grid">
+                    <!-- LinkedIn Analytics -->
+                    <div class="analytics-card social-card linkedin">
+                        <div class="social-header">
+                            <span class="social-icon-logo">LinkedIn</span>
+                            <a href="https://linkedin.com/in/krishna-sahoo-b3440537a" target="_blank" rel="noopener" class="social-profile-link">@krishna-sahoo ↗</a>
+                        </div>
+                        <div class="social-stats-row cols-4">
+                            <div class="social-stat-item">
+                                <span class="social-stat-val" id="li-connections">0</span>
+                                <span class="social-stat-lbl">Connections</span>
+                            </div>
+                            <div class="social-stat-item">
+                                <span class="social-stat-val" id="li-followers">0</span>
+                                <span class="social-stat-lbl">Followers</span>
+                            </div>
+                            <div class="social-stat-item">
+                                <span class="social-stat-val" id="li-views">0</span>
+                                <span class="social-stat-lbl">Views</span>
+                            </div>
+                            <div class="social-stat-item">
+                                <span class="social-stat-val" id="li-impressions">0</span>
+                                <span class="social-stat-lbl">Impressions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- X Analytics -->
+                    <div class="analytics-card social-card x-twitter">
+                        <div class="social-header">
+                            <span class="social-icon-logo">X (Twitter)</span>
+                            <a href="https://x.com/Krishna11156" target="_blank" rel="noopener" class="social-profile-link">@Krishna11156 ↗</a>
+                        </div>
+                        <div class="social-stats-row cols-3">
+                            <div class="social-stat-item">
+                                <span class="social-stat-val" id="x-followers">0</span>
+                                <span class="social-stat-lbl">Followers</span>
+                            </div>
+                            <div class="social-stat-item">
+                                <span class="social-stat-val" id="x-posts">0</span>
+                                <span class="social-stat-lbl">Posts</span>
+                            </div>
+                            <div class="social-stat-item">
+                                <span class="social-stat-val" id="x-likes">0</span>
+                                <span class="social-stat-lbl">Likes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="detail-footer">
+        <p>© 2026 Krishna Sahoo · <a href="index.html" onclick="event.preventDefault(); navigateTo('index.html');" style="color:var(--accent);">Back to Home</a></p>
+    </footer>
+
+    <!-- Script Imports -->
+    <script src="js/main.js?v=5" defer></script>
+    <script src="js/analytics.js?v=5" defer></script>
+    <script src="js/polish.js?v=5" defer></script>
+
+    <!-- Page transit overlays -->
+    <script>
+        window.addEventListener('load', function() {
+            var o = document.createElement('div');
+            o.style.cssText = 'position:fixed;inset:0;background:var(--bg-color);opacity:1;z-index:9999;transition:opacity 0.4s ease;pointer-events:none';
+            document.body.appendChild(o);
+            requestAnimationFrame(function() { requestAnimationFrame(function() { o.style.opacity = '0'; }); });
+            setTimeout(function() { o.remove(); }, 500);
+        });
+
+        function navigateTo(url) {
+            var overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed;inset:0;background:var(--bg-color);opacity:0;z-index:9999;transition:opacity 0.3s ease;pointer-events:none';
+            document.body.appendChild(overlay);
+            requestAnimationFrame(function () { overlay.style.opacity = '1'; });
+            setTimeout(function () { window.location.href = url; }, 320);
+        }
+    </script>
+</body>
+</html>
