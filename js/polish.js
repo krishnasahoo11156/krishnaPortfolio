@@ -1717,9 +1717,10 @@
             // Sort to render chronologically
             const chronologicalCerts = [...certificatesData].sort((a, b) => a.timelinePos - b.timelinePos);
             
-
-            timelineNodesContainer.innerHTML = chronologicalCerts.map(cert => `
-                <div class="certs-timeline-node" style="left: ${cert.timelinePos}%;" data-id="${cert.id}">
+            timelineNodesContainer.innerHTML = chronologicalCerts.map((cert, index) => {
+                const pos = 5 + (index * 90) / (chronologicalCerts.length - 1);
+                return `
+                <div class="certs-timeline-node" style="left: ${pos}%;" data-id="${cert.id}">
                     <img class="certs-timeline-logo" src="${cert.issuerLogo}" alt="${cert.issuer}" onerror="this.style.display='none'" />
                     <div class="certs-timeline-dot"></div>
                     <div class="certs-timeline-label">
@@ -1727,7 +1728,8 @@
                         <span style="font-size: 8px; color: ${cert.issuerColor || '#e8473f'}; font-weight: 700;">${cert.shortIssuer}</span>
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // 4. Pauses scroll on hover

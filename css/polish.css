@@ -1478,6 +1478,8 @@ section.container {
     align-items: center;
     cursor: pointer;
     transition: transform 0.2s ease;
+    width: 8px;
+    height: 8px;
 }
 
 /* Invisible hover helper to expand the target area */
@@ -1505,6 +1507,7 @@ section.container {
     transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
     position: relative;
     z-index: 2;
+    flex-shrink: 0;
 }
 
 .certs-timeline-node:hover .certs-timeline-dot,
