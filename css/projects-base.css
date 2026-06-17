@@ -220,7 +220,7 @@
 .proj-dot {
     width: 6px;
     height: 6px;
-    background: #222;
+    background: var(--border-color);
     border: 1px solid var(--border-color);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.25, 1, 0.45, 1);
@@ -229,7 +229,7 @@
 }
 
 .proj-dot:hover {
-    background: #444;
+    background: var(--text-secondary);
     border-color: var(--accent-color);
 }
 
@@ -291,7 +291,7 @@
     height: 200px;
     position: relative;
     overflow: hidden;
-    background: #12121a;
+    background: var(--bg-color);
 }
 .proj-thumb img {
     position: absolute;
