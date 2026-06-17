@@ -43,6 +43,9 @@
         // Fetch and Animate LeetCode Stats
         fetchLeetCodeData();
 
+        // Animate Social Media Stats
+        animateSocials();
+
         // Custom Cursor Setup
         initCursor();
     }
@@ -472,7 +475,7 @@
         }, 400);
     }
 
-    function animateNumber(id, end, duration) {
+    function animateNumber(id, end, duration, suffix = '') {
         const el = document.getElementById(id);
         if (!el) return;
 
@@ -481,7 +484,7 @@
                 const limit = el.getAttribute('data-limit');
                 el.textContent = '0/' + limit;
             } else {
-                el.textContent = '0';
+                el.textContent = '0' + suffix;
             }
             return;
         }
@@ -490,23 +493,55 @@
         const range = end - start;
         let current = start;
         const increment = end > start ? 1 : -1;
-        const stepTime = Math.abs(Math.floor(duration / range));
         
-        // Safety cap on stepTime
+        let stepTime = Math.abs(Math.floor(duration / range));
+        if (range > 100) {
+            // Smoothly animate large ranges (e.g. 3776 followers) in the duration at ~60fps
+            const fps = 60;
+            const totalTicks = Math.floor((duration / 1000) * fps);
+            const stepSize = Math.max(1, Math.ceil(range / totalTicks));
+            stepTime = Math.floor(1000 / fps);
+            
+            const timer = setInterval(() => {
+                current += stepSize;
+                if (current >= end) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                el.textContent = current.toLocaleString() + suffix;
+            }, stepTime);
+            return;
+        }
+
         const timer = setInterval(() => {
             current += increment;
             if (el.tagName.toLowerCase() === 'span' && el.id.includes('-txt')) {
-                // Formatting for categories (e.g. 82/800)
                 const limit = el.getAttribute('data-limit');
                 el.textContent = current + '/' + limit;
             } else {
-                el.textContent = current;
+                el.textContent = current.toLocaleString() + suffix;
             }
             
             if (current === end) {
                 clearInterval(timer);
             }
         }, Math.max(stepTime, 8));
+    }
+
+    // ============================================================
+    // SOCIAL OUTREACH METRICS
+    // ============================================================
+    function animateSocials() {
+        // LinkedIn
+        animateNumber('li-connections', 500, 1500, '+');
+        animateNumber('li-followers', 3776, 1500);
+        animateNumber('li-views', 731, 1500);
+        animateNumber('li-impressions', 205, 1500);
+
+        // X (Twitter)
+        animateNumber('x-followers', 3, 1000);
+        animateNumber('x-posts', 21, 1200);
+        animateNumber('x-likes', 14, 1200);
     }
 
     // ============================================================

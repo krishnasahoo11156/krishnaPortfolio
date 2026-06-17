@@ -283,8 +283,21 @@
 
 .social-stats-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+}
+
+.social-stats-row.cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.social-stats-row.cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 576px) {
+    .social-stats-row.cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .social-stat-item {
