@@ -7,24 +7,24 @@
 
 :root {
   --accent: #e8473f;
-  --bg: #0d0d10;
-  --surface: #16161a;
-  --surface-elevated: #1e1e24;
+  --bg: #121216;
+  --surface: #1b1b22;
+  --surface-elevated: #24242e;
   --text: #f0f0f5;
   --dim: #8a8a9a;
-  --border: #2a2a35;
-  --navbar-bg: rgba(13, 13, 16, 0.92);
+  --border: #2e2e3a;
+  --navbar-bg: rgba(18, 18, 22, 0.92);
 }
 
 :root[data-theme="light"] {
   --accent: #d33a32;
-  --bg: #f7f7f9;
-  --surface: #ffffff;
-  --surface-elevated: #f0f0f4;
+  --bg: #f0f2f5;
+  --surface: #f7f9fc;
+  --surface-elevated: #ebeff4;
   --text: #121217;
   --dim: #52526a;
-  --border: #e2e2e9;
-  --navbar-bg: rgba(247, 247, 249, 0.92);
+  --border: #d8dde6;
+  --navbar-bg: rgba(240, 242, 245, 0.92);
 }
 
 body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; line-height: 1.6; }

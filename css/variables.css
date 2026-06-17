@@ -1,19 +1,19 @@
 :root {
-  --bg-color: #0d0d10;
-  --surface-color: #16161a;
-  --surface-elevated: #1e1e24;
-  --surface-overlay: #22222a;
+  --bg-color: #121216;
+  --surface-color: #1b1b22;
+  --surface-elevated: #24242e;
+  --surface-overlay: #2b2b36;
   --accent-color: #e8473f;
   --accent-hover: #ff5a52;
   --text-primary: #f0f0f5;
   --text-secondary: #8a8a9a;
   --text-tertiary: #52526a;
-  --border-color: #2a2a35;
+  --border-color: #2e2e3a;
   --border-subtle: rgba(255, 255, 255, 0.06);
-  --footer-bg: #0a0a0e;
-  --mobile-overlay-bg: rgba(13, 13, 16, 0.96);
-  --navbar-bg: rgba(13, 13, 16, 0.82);
-  --navbar-bg-scrolled: rgba(13, 13, 16, 0.95);
+  --footer-bg: #0d0d12;
+  --mobile-overlay-bg: rgba(18, 18, 22, 0.96);
+  --navbar-bg: rgba(18, 18, 22, 0.82);
+  --navbar-bg-scrolled: rgba(18, 18, 22, 0.95);
   --navbar-border: rgba(255, 255, 255, 0.07);
   --navbar-shadow: rgba(0, 0, 0, 0.45);
   --navbar-shadow-border: rgba(255, 255, 255, 0.06);
@@ -42,21 +42,21 @@
 }
 
 :root[data-theme="light"] {
-  --bg-color: #f7f7f9;
-  --surface-color: #ffffff;
-  --surface-elevated: #f0f0f4;
-  --surface-overlay: #e5e5eb;
+  --bg-color: #f0f2f5;
+  --surface-color: #f7f9fc;
+  --surface-elevated: #ebeff4;
+  --surface-overlay: #e1e6ee;
   --accent-color: #d33a32;
   --accent-hover: #b82a22;
   --text-primary: #121217;
   --text-secondary: #52526a;
   --text-tertiary: #8a8a9a;
-  --border-color: #e2e2e9;
+  --border-color: #d8dde6;
   --border-subtle: rgba(0, 0, 0, 0.06);
-  --footer-bg: #eaeaea;
-  --mobile-overlay-bg: rgba(247, 247, 249, 0.96);
-  --navbar-bg: rgba(247, 247, 249, 0.82);
-  --navbar-bg-scrolled: rgba(247, 247, 249, 0.95);
+  --footer-bg: #e2e5ea;
+  --mobile-overlay-bg: rgba(240, 242, 245, 0.96);
+  --navbar-bg: rgba(240, 242, 245, 0.82);
+  --navbar-bg-scrolled: rgba(240, 242, 245, 0.95);
   --navbar-border: rgba(0, 0, 0, 0.07);
   --navbar-shadow: rgba(0, 0, 0, 0.05);
   --navbar-shadow-border: rgba(0, 0, 0, 0.06);
