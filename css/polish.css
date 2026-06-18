@@ -1518,25 +1518,26 @@ section.container {
 }
 
 .certs-timeline-logo {
-    width: 22px;
-    height: 22px;
+    width: 28px;
+    height: 28px;
     object-fit: contain;
     border-radius: 50%;
     margin-bottom: 8px;
     position: absolute;
-    top: -30px;
+    top: -36px;
     transition: transform 0.2s;
     background: #ffffff;
-    border: 1px solid var(--border-color);
-    padding: 2px;
+    border: 1.5px solid transparent; /* Transparent border so it's invisible by default */
+    padding: 0; /* Remove padding to let the logo image fill the circle completely */
     z-index: 2;
     max-width: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.certs-timeline-node:hover .certs-timeline-logo {
-    transform: scale(1.2);
-    border-color: var(--accent-color);
+.certs-timeline-node:hover .certs-timeline-logo,
+.certs-timeline-node.active .certs-timeline-logo {
+    transform: scale(1.15);
+    border-color: var(--accent-color); /* Add accent color border highlight on hover and when active */
 }
 
 .certs-timeline-label {
