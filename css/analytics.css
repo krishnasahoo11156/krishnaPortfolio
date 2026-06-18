@@ -247,13 +247,38 @@
    SOCIAL MEDIA CARDS
    ============================================================ */
 .socials-analytics-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
 }
 
 .social-card {
     border-top: 3px solid var(--border-color);
+}
+
+.social-card.instagram {
+    grid-column: span 2;
+}
+
+@media (max-width: 576px) {
+    .socials-analytics-grid {
+        grid-template-columns: 1fr;
+    }
+    .social-card.instagram {
+        grid-column: span 1;
+    }
+}
+
+@media (min-width: 993px) {
+    .social-card.linkedin .social-stats-row.cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .social-card.linkedin .social-stats-row.cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .social-card.linkedin {
@@ -337,11 +362,10 @@
    GITHUB STATS CONTAINER (FLAT)
    ============================================================ */
 .gh-stats-container {
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    padding: 2.5rem 2.25rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px var(--card-shadow-main);
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
     margin-bottom: 3rem;
 }
 
@@ -647,6 +671,7 @@
     grid-template-columns: 1.15fr 0.85fr;
     gap: 2.5rem;
     margin-top: 2rem;
+    align-items: start;
 }
 
 @media (max-width: 992px) {
@@ -656,28 +681,116 @@
     }
 }
 
-.gh-col-left {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
+.gh-col-left,
 .gh-col-right {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    min-width: 0;
 }
 
 /* Charts cards */
 .gh-chart-card {
-    background: var(--surface-elevated);
-    border: 1px solid var(--border-color);
-    padding: 1.75rem;
-    border-radius: 8px;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Repository card border-radius override */
+.gh-repo-card {
+    border-radius: 8px;
+}
+
+/* Skeleton overrides for Analytics page */
+.gh-skeleton-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .gh-skeleton-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.gh-skeleton-col-left,
+.gh-skeleton-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.gh-skeleton-card-container {
+    margin-bottom: 0;
+}
+
+.gh-skeleton-header {
+    margin-bottom: 1.5rem;
+}
+
+.gh-skeleton-progress {
+    height: 6px;
+    width: 100%;
+    border-radius: 3px;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.gh-skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.gh-skeleton-card {
+    height: 80px;
+    border-radius: 8px;
+}
+
+.gh-skeleton-achievements {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 1.5rem;
+}
+
+@media (max-width: 576px) {
+    .gh-skeleton-achievements {
+        grid-template-columns: 1fr;
+    }
+}
+
+.gh-skeleton-ach {
+    height: 60px;
+    border-radius: 8px;
+}
+
+.gh-skeleton-chart {
+    height: 220px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.gh-skeleton-calendar {
+    height: 140px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.gh-skeleton-repos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.gh-skeleton-repo-card {
+    height: 120px;
+    border-radius: 8px;
 }
 
 .gh-chart-header {

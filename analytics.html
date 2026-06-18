@@ -141,25 +141,64 @@
         <div class="gh-stats-container">
             <!-- Shimmer skeleton loading state -->
             <div class="gh-skeleton-container">
-                <div class="gh-skeleton-header">
-                    <div class="gh-skeleton-avatar animate-shimmer"></div>
-                    <div class="gh-skeleton-header-info">
-                        <div class="gh-skeleton-line title animate-shimmer"></div>
-                        <div class="gh-skeleton-line subtitle animate-shimmer"></div>
+                <div class="gh-skeleton-layout">
+                    <!-- Left Column Skeleton -->
+                    <div class="gh-skeleton-col-left">
+                        <!-- Profile Card Skeleton -->
+                        <div class="analytics-card gh-skeleton-card-container">
+                            <div class="gh-skeleton-header">
+                                <div class="gh-skeleton-avatar animate-shimmer"></div>
+                                <div class="gh-skeleton-header-info">
+                                    <div class="gh-skeleton-line title animate-shimmer"></div>
+                                    <div class="gh-skeleton-line subtitle animate-shimmer"></div>
+                                </div>
+                            </div>
+                            <div class="gh-skeleton-progress animate-shimmer"></div>
+                        </div>
+
+                        <!-- Stats & Achievements Skeleton Card -->
+                        <div class="analytics-card gh-skeleton-card-container">
+                            <div class="gh-skeleton-grid" style="margin-bottom: 1.5rem;">
+                                <div class="gh-skeleton-card animate-shimmer"></div>
+                                <div class="gh-skeleton-card animate-shimmer"></div>
+                                <div class="gh-skeleton-card animate-shimmer"></div>
+                                <div class="gh-skeleton-card animate-shimmer"></div>
+                            </div>
+                            <div class="gh-skeleton-achievements">
+                                <div class="gh-skeleton-ach animate-shimmer"></div>
+                                <div class="gh-skeleton-ach animate-shimmer"></div>
+                            </div>
+                        </div>
+
+                        <!-- Repositories Skeleton Card -->
+                        <div class="analytics-card gh-skeleton-card-container">
+                            <div class="gh-skeleton-repos">
+                                <div class="gh-skeleton-repo-card animate-shimmer"></div>
+                                <div class="gh-skeleton-repo-card animate-shimmer"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column Skeleton -->
+                    <div class="gh-skeleton-col-right">
+                        <!-- Chart Card 1 Skeleton -->
+                        <div class="analytics-card gh-skeleton-card-container">
+                            <div class="gh-skeleton-line title animate-shimmer" style="width: 50%; margin-bottom: 1.5rem;"></div>
+                            <div class="gh-skeleton-chart animate-shimmer"></div>
+                        </div>
+
+                        <!-- Chart Card 2 Skeleton -->
+                        <div class="analytics-card gh-skeleton-card-container">
+                            <div class="gh-skeleton-line title animate-shimmer" style="width: 50%; margin-bottom: 1.5rem;"></div>
+                            <div class="gh-skeleton-chart animate-shimmer"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="gh-skeleton-progress animate-shimmer"></div>
-                <div class="gh-skeleton-grid">
-                    <div class="gh-skeleton-card animate-shimmer"></div>
-                    <div class="gh-skeleton-card animate-shimmer"></div>
-                    <div class="gh-skeleton-card animate-shimmer"></div>
-                    <div class="gh-skeleton-card animate-shimmer"></div>
-                </div>
-                <div class="gh-skeleton-chart animate-shimmer"></div>
-                <div class="gh-skeleton-calendar animate-shimmer"></div>
-                <div class="gh-skeleton-repos">
-                    <div class="gh-skeleton-repo-card animate-shimmer"></div>
-                    <div class="gh-skeleton-repo-card animate-shimmer"></div>
+
+                <!-- Calendar Card Skeleton -->
+                <div class="analytics-card gh-skeleton-card-container gh-skeleton-calendar-card" style="margin-top: 2.5rem;">
+                    <div class="gh-skeleton-line title animate-shimmer" style="width: 30%; margin-bottom: 1.5rem;"></div>
+                    <div class="gh-skeleton-calendar animate-shimmer"></div>
                 </div>
             </div>
             <!-- Live fetched dynamic container -->

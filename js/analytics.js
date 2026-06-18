@@ -193,123 +193,111 @@
         // Left Column (Profile, level, stats, calendar, achievements, top repos)
         html += `<div class="gh-col-left">`;
 
-        // 1. Profile Header
+        // 1. Profile & Level Card
         html += `
-            <div class="gh-profile-header">
-                <div class="gh-avatar-container">
-                    <img src="${profile.avatar_url}" alt="${profile.name || GITHUB_USERNAME}" class="gh-avatar">
-                </div>
-                <div class="gh-header-info">
-                    <div class="gh-name-row">
-                        <span class="gh-display-name">${profile.name || GITHUB_USERNAME}</span>
-                        <span class="gh-pro-badge">PRO</span>
+            <div class="analytics-card gh-profile-card">
+                <div class="gh-profile-header" style="margin-bottom: 1.5rem;">
+                    <div class="gh-avatar-container">
+                        <img src="${profile.avatar_url}" alt="${profile.name || GITHUB_USERNAME}" class="gh-avatar">
                     </div>
-                    <div class="gh-username-line">
-                        <a href="${profile.html_url}" target="_blank" rel="noopener">@${profile.login} ↗</a>
-                    </div>
-                    <div class="gh-achievements-row">
-                        <span class="gh-achievement-badge gh-badge-arctic" title="Arctic Code Vault Contributor">Arctic Code Vault</span>
-                        <span class="gh-achievement-badge gh-badge-shark" title="Merged multiple PRs">Pull Shark</span>
-                        <span class="gh-achievement-badge gh-badge-yolo" title="Pushed directly to main">YOLO</span>
-                        <span class="gh-achievement-badge gh-badge-quickdraw" title="Fast response to issues/PRs">Quickdraw</span>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        // 2. Level and XP bar
-        html += `
-            <div class="gh-level-container">
-                <div class="gh-level-header">
-                    <span class="gh-level-title">LEVEL ${levelDetails.level} — ${levelDetails.tier.toUpperCase()}</span>
-                    <span class="gh-level-xp">${xp} XP</span>
-                </div>
-                <div class="gh-level-progress-track">
-                    <div class="gh-level-progress-fill" style="width: 0%;" data-target-width="${levelDetails.pct}%"></div>
-                </div>
-            </div>
-        `;
-
-        // 3. Stats Cards Grid
-        html += `
-            <div class="gh-stats-grid">
-                <div class="gh-stat-card">
-                    <div class="gh-stat-num">${followers}</div>
-                    <div class="gh-stat-label">Followers</div>
-                </div>
-                <div class="gh-stat-card">
-                    <div class="gh-stat-num">${publicReposCount}</div>
-                    <div class="gh-stat-label">Repositories</div>
-                </div>
-                <div class="gh-stat-card">
-                    <div class="gh-stat-num">${totalStars}</div>
-                    <div class="gh-stat-label">Total Stars</div>
-                </div>
-                <div class="gh-stat-card">
-                    <div class="gh-stat-num">${accountAge}y</div>
-                    <div class="gh-stat-label">Account Age</div>
-                </div>
-            </div>
-        `;
-
-        // 4. Contribution Calendar (using ghchart)
-        html += `
-            <div class="gh-calendar-wrapper">
-                <div class="gh-section-title">CONTRIBUTION CALENDAR</div>
-                <div class="gh-calendar-box">
-                    <img src="https://ghchart.rshah.org/e8473f/${GITHUB_USERNAME}" alt="${GITHUB_USERNAME} contribution calendar" class="gh-calendar-img" loading="lazy">
-                </div>
-            </div>
-        `;
-
-        // 5. Gamified Developer Achievements
-        html += `
-            <div class="gh-achievements-container">
-                <div class="gh-section-title">DEVELOPER TROPHIES & MILESTONES</div>
-                <div class="gh-achievements-grid">
-                    <div class="gh-achievement-card">
-                        <span class="gh-ach-icon">🌐</span>
-                        <div class="gh-ach-info">
-                            <span class="gh-ach-title">Polyglot</span>
-                            <span class="gh-ach-desc">Proficient in ${languages.length} programming languages.</span>
+                    <div class="gh-header-info">
+                        <div class="gh-name-row">
+                            <span class="gh-display-name">${profile.name || GITHUB_USERNAME}</span>
+                            <span class="gh-pro-badge">PRO</span>
+                        </div>
+                        <div class="gh-username-line">
+                            <a href="${profile.html_url}" target="_blank" rel="noopener">@${profile.login} ↗</a>
+                        </div>
+                        <div class="gh-achievements-row">
+                            <span class="gh-achievement-badge gh-badge-arctic" title="Arctic Code Vault Contributor">Arctic Code Vault</span>
+                            <span class="gh-achievement-badge gh-badge-shark" title="Merged multiple PRs">Pull Shark</span>
+                            <span class="gh-achievement-badge gh-badge-yolo" title="Pushed directly to main">YOLO</span>
+                            <span class="gh-achievement-badge gh-badge-quickdraw" title="Fast response to issues/PRs">Quickdraw</span>
                         </div>
                     </div>
-                    <div class="gh-achievement-card">
-                        <span class="gh-ach-icon">💻</span>
-                        <div class="gh-ach-info">
-                            <span class="gh-ach-title">Code Warrior</span>
-                            <span class="gh-ach-desc">Shipped hundreds of commits to active repositories.</span>
-                        </div>
+                </div>
+                <div class="gh-level-container" style="margin-bottom: 0;">
+                    <div class="gh-level-header">
+                        <span class="gh-level-title">LEVEL ${levelDetails.level} — ${levelDetails.tier.toUpperCase()}</span>
+                        <span class="gh-level-xp">${xp} XP</span>
                     </div>
-                    <div class="gh-achievement-card">
-                        <span class="gh-ach-icon">⭐</span>
-                        <div class="gh-ach-info">
-                            <span class="gh-ach-title">Star Catcher</span>
-                            <span class="gh-ach-desc">Secured user stars and recognition on public projects.</span>
-                        </div>
+                    <div class="gh-level-progress-track">
+                        <div class="gh-level-progress-fill" style="width: 0%;" data-target-width="${levelDetails.pct}%"></div>
                     </div>
-                    <div class="gh-achievement-card">
-                        <span class="gh-ach-icon">🏗️</span>
-                        <div class="gh-ach-info">
-                            <span class="gh-ach-title">Architect</span>
-                            <span class="gh-ach-desc">Achieved GitHub Level ${levelDetails.level} (${levelDetails.tier} Tier).</span>
+                </div>
+            </div>
+        `;
+
+        // 2. Stats & Achievements Card
+        html += `
+            <div class="analytics-card gh-stats-ach-card">
+                <div class="gh-stats-grid" style="margin-bottom: 0;">
+                    <div class="gh-stat-card">
+                        <div class="gh-stat-num">${followers}</div>
+                        <div class="gh-stat-label">Followers</div>
+                    </div>
+                    <div class="gh-stat-card">
+                        <div class="gh-stat-num">${publicReposCount}</div>
+                        <div class="gh-stat-label">Repositories</div>
+                    </div>
+                    <div class="gh-stat-card">
+                        <div class="gh-stat-num">${totalStars}</div>
+                        <div class="gh-stat-label">Total Stars</div>
+                    </div>
+                    <div class="gh-stat-card">
+                        <div class="gh-stat-num">${accountAge}y</div>
+                        <div class="gh-stat-label">Account Age</div>
+                    </div>
+                </div>
+                
+                <div class="gh-achievements-container">
+                    <div class="gh-section-title" style="margin-top: 0;">DEVELOPER TROPHIES & MILESTONES</div>
+                    <div class="gh-achievements-grid">
+                        <div class="gh-achievement-card">
+                            <span class="gh-ach-icon">🌐</span>
+                            <div class="gh-ach-info">
+                                <span class="gh-ach-title">Polyglot</span>
+                                <span class="gh-ach-desc">Proficient in ${languages.length} programming languages.</span>
+                            </div>
+                        </div>
+                        <div class="gh-achievement-card">
+                            <span class="gh-ach-icon">💻</span>
+                            <div class="gh-ach-info">
+                                <span class="gh-ach-title">Code Warrior</span>
+                                <span class="gh-ach-desc">Shipped hundreds of commits to active repositories.</span>
+                            </div>
+                        </div>
+                        <div class="gh-achievement-card">
+                            <span class="gh-ach-icon">⭐</span>
+                            <div class="gh-ach-info">
+                                <span class="gh-ach-title">Star Catcher</span>
+                                <span class="gh-ach-desc">Secured user stars and recognition on public projects.</span>
+                            </div>
+                        </div>
+                        <div class="gh-achievement-card">
+                            <span class="gh-ach-icon">🏗️</span>
+                            <div class="gh-ach-info">
+                                <span class="gh-ach-title">Architect</span>
+                                <span class="gh-ach-desc">Achieved GitHub Level ${levelDetails.level} (${levelDetails.tier} Tier).</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         `;
 
-        // 6. Top Repositories Grid
+        // 3. Top Repositories Card
         if (topRepos.length > 0) {
             html += `
-                <div class="gh-repos-wrapper">
-                    <div class="gh-section-title">
-                        <span>TOP REPOSITORIES</span>
-                        <button id="gh-stats-refresh-btn" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:10px; font-family:'Courier New',monospace; letter-spacing:1px; text-transform:uppercase; padding:2px 8px; border:1px solid var(--border-color); display:flex; align-items:center; gap:4px; transition:all 0.2s; border-radius:0;">
-                            <span>↻ REFRESH DATA</span>
-                        </button>
-                    </div>
-                    <div class="gh-repos-grid">
+                <div class="analytics-card gh-repos-card">
+                    <div class="gh-repos-wrapper">
+                        <div class="gh-section-title" style="margin-top: 0;">
+                            <span>TOP REPOSITORIES</span>
+                            <button id="gh-stats-refresh-btn" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:10px; font-family:'Courier New',monospace; letter-spacing:1px; text-transform:uppercase; padding:2px 8px; border:1px solid var(--border-color); display:flex; align-items:center; gap:4px; transition:all 0.2s; border-radius:0;">
+                                <span>↻ REFRESH DATA</span>
+                            </button>
+                        </div>
+                        <div class="gh-repos-grid">
             `;
             topRepos.forEach(repo => {
                 const repoLang = repo.language || 'Plain Text';
@@ -344,6 +332,7 @@
                 `;
             });
             html += `
+                        </div>
                     </div>
                 </div>
             `;
@@ -354,9 +343,9 @@
         // Right Column (Donut chart & line chart)
         html += `<div class="gh-col-right">`;
 
-        // Donut Chart for language diversity
+        // 4. Donut Chart for language diversity
         html += `
-            <div class="gh-chart-card">
+            <div class="analytics-card gh-chart-card">
                 <div class="gh-chart-header">
                     <span class="gh-chart-title">LANGUAGE DIVERSITY</span>
                 </div>
@@ -366,9 +355,9 @@
             </div>
         `;
 
-        // Line Chart for Commit trends
+        // 5. Line Chart for Commit trends
         html += `
-            <div class="gh-chart-card">
+            <div class="analytics-card gh-chart-card">
                 <div class="gh-chart-header">
                     <span class="gh-chart-title">WEEKLY COMMIT ACTIVITY</span>
                 </div>
@@ -381,6 +370,16 @@
         html += `</div>`; // End Right Column
 
         html += `</div>`; // End Advanced Grid Layout
+
+        // 6. Contribution Calendar (Full Width Card below the 2-column grid layout)
+        html += `
+            <div class="analytics-card gh-calendar-card" style="margin-top: 2.5rem;">
+                <div class="gh-section-title" style="margin-top: 0; margin-bottom: 1.5rem;">CONTRIBUTION CALENDAR</div>
+                <div class="gh-calendar-box" style="margin-bottom: 0;">
+                    <img src="https://ghchart.rshah.org/e8473f/${GITHUB_USERNAME}" alt="${GITHUB_USERNAME} contribution calendar" class="gh-calendar-img" loading="lazy">
+                </div>
+            </div>
+        `;
 
         dynamicContent.innerHTML = html;
         skeleton.style.display = 'none';
