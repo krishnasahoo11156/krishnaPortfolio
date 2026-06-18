@@ -1423,14 +1423,14 @@ section.container {
 /* Timeline Container */
 .certs-timeline-container {
     width: 100%;
-    background: #111111;
-    border: 1px solid #222222;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 2.25rem 2rem;
     margin-bottom: 3rem;
     overflow-x: auto;
     scrollbar-width: thin;
-    scrollbar-color: #333 #111;
+    scrollbar-color: var(--border-color) var(--surface-color);
 }
 
 .certs-timeline-container::-webkit-scrollbar {
@@ -1438,11 +1438,11 @@ section.container {
 }
 
 .certs-timeline-container::-webkit-scrollbar-track {
-    background: #111;
+    background: var(--surface-color);
 }
 
 .certs-timeline-container::-webkit-scrollbar-thumb {
-    background: #333;
+    background: var(--border-color);
     border-radius: 2px;
 }
 
@@ -1459,7 +1459,7 @@ section.container {
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(to right, #e8473f, #333);
+    background: linear-gradient(to right, var(--accent-color), var(--border-color));
     z-index: 1;
 }
 
@@ -1478,6 +1478,8 @@ section.container {
     align-items: center;
     cursor: pointer;
     transition: transform 0.2s ease;
+    width: 8px;
+    height: 8px;
 }
 
 /* Invisible hover helper to expand the target area */
@@ -1500,38 +1502,42 @@ section.container {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #e8473f;
-    border: 2px solid #111;
+    background: var(--accent-color);
+    border: 2px solid var(--bg-color);
     transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
     position: relative;
     z-index: 2;
+    flex-shrink: 0;
 }
 
 .certs-timeline-node:hover .certs-timeline-dot,
 .certs-timeline-node.active .certs-timeline-dot {
-    background: #ffffff;
-    box-shadow: 0 0 10px #e8473f, 0 0 20px #e8473f;
+    background: var(--text-primary);
+    box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
     transform: scale(1.3);
 }
 
 .certs-timeline-logo {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
     object-fit: contain;
-    border-radius: 4px;
+    border-radius: 50%;
     margin-bottom: 8px;
     position: absolute;
-    top: -28px;
+    top: -36px;
     transition: transform 0.2s;
-    background: #1a1a1a;
-    border: 1px solid #222;
-    padding: 2px;
+    background: #ffffff;
+    border: 1.5px solid transparent; /* Transparent border so it's invisible by default */
+    padding: 0; /* Remove padding to let the logo image fill the circle completely */
     z-index: 2;
+    max-width: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.certs-timeline-node:hover .certs-timeline-logo {
-    transform: scale(1.2);
-    border-color: #e8473f44;
+.certs-timeline-node:hover .certs-timeline-logo,
+.certs-timeline-node.active .certs-timeline-logo {
+    transform: scale(1.15);
+    border-color: var(--accent-color); /* Add accent color border highlight on hover and when active */
 }
 
 .certs-timeline-label {
@@ -1565,7 +1571,7 @@ section.container {
 
 .certs-timeline-node.visible-in-marquee:hover .certs-timeline-dot,
 .certs-timeline-node.visible-in-marquee.active .certs-timeline-dot {
-    background: #ffffff;
+    background: var(--text-primary);
     box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
     transform: scale(1.3);
 }
@@ -1615,8 +1621,8 @@ section.container {
 .cert-card {
   width: 420px;
   min-height: 400px;
-  background: #111111;
-  border: 1px solid #222222;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -1650,8 +1656,8 @@ section.container {
   width: 100%;
   aspect-ratio: 16/9;
   overflow: hidden;
-  background: #1a1a1a;
-  border-bottom: 1px solid #222;
+  background: var(--surface-elevated);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .cert-card .cert-image-wrapper img {
@@ -1697,7 +1703,7 @@ section.container {
 .cert-card .cert-title {
   font-size: 14px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-primary);
   line-height: 1.4;
 }
 
@@ -1745,9 +1751,9 @@ section.container {
   font-size: 10px;
   padding: 2px 7px;
   border-radius: 99px;
-  background: #1e1e1e;
-  border: 1px solid #2e2e2e;
-  color: #aaa;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
 }
 
 .cert-card .cert-cta {
@@ -1793,34 +1799,6 @@ section.container {
   font-size: 11px;
   cursor: default;
   letter-spacing: 0.03em;
-}
-
-:root[data-theme="light"] .cert-card {
-  background: #fdfdfd;
-  border-color: #e0e0e0;
-}
-:root[data-theme="light"] .cert-card .cert-title {
-  color: #1a1a1a;
-}
-:root[data-theme="light"] .cert-card .cert-skill-tag {
-  background: #f0f0f0;
-  border-color: #e0e0e0;
-  color: #555;
-}
-:root[data-theme="light"] .certs-timeline-container {
-  background: #f9f9f9;
-  border-color: #e0e0e0;
-}
-:root[data-theme="light"] .certs-timeline-node:hover .certs-timeline-dot,
-:root[data-theme="light"] .certs-timeline-node.active .certs-timeline-dot {
-  background: #000;
-}
-:root[data-theme="light"] .certs-timeline-dot {
-  border-color: #f9f9f9;
-}
-:root[data-theme="light"] .certs-timeline-node:hover .certs-timeline-label,
-:root[data-theme="light"] .certs-timeline-node.active .certs-timeline-label {
-  color: #000;
 }
 
 :root[data-theme="light"] .certs-timeline-node.visible-in-marquee:hover .certs-timeline-label,

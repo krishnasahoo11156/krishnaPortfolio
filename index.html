@@ -312,7 +312,6 @@
             min-height: 420px;
             flex: 1;
             position: relative;
-            overflow: hidden;
             border: 1px solid var(--border-color);
             transition: box-shadow var(--transition-base), transform var(--transition-slow);
         }
@@ -322,7 +321,29 @@
             box-shadow: 0 0 40px 6px rgba(232, 71, 63, 0.35);
         }
 
-        .about-image img {
+        /* Decorative offset border */
+        .about-image-border {
+            position: absolute;
+            inset: 0;
+            border: 2px solid var(--accent-color);
+            z-index: 0;
+            pointer-events: none;
+            transition: transform var(--transition-slow);
+        }
+
+        .about-image:hover .about-image-border {
+            transform: translate(-12px, -12px);
+        }
+
+        /* Inner container to clip the image zoom */
+        .about-image-inner {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .about-image-inner img {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -333,22 +354,23 @@
             transition: transform var(--transition-slow);
         }
 
-        .about-image:hover img {
+        .about-image:hover .about-image-inner img {
             transform: scale(1.04);
         }
 
         /* Red overlay on hover */
-        .about-image::after {
+        .about-image-inner::after {
             content: '';
             position: absolute;
             inset: 0;
             background: linear-gradient(135deg, rgba(232, 71, 63, 0.12), transparent 60%);
             transition: opacity var(--transition-base);
             opacity: 0;
-            z-index: 1;
+            z-index: 2;
+            pointer-events: none;
         }
 
-        .about-image:hover::after {
+        .about-image:hover .about-image-inner::after {
             opacity: 1;
         }
 
@@ -362,22 +384,32 @@
             height: 28px;
             border-top: 3px solid #e8473f;
             border-left: 3px solid #e8473f;
-            z-index: 2;
+            z-index: 3;
             pointer-events: none;
+            transition: transform var(--transition-base);
         }
 
-        /* CSS bracket — bottom-right via a pseudo on the wrapper */
-        .about-col-image::after {
+        .about-image:hover::before {
+            transform: translate(-8px, -8px);
+        }
+
+        /* CSS bracket — bottom-right */
+        .about-image::after {
             content: '';
             position: absolute;
-            bottom: 58px;
+            bottom: -2px;
             right: -2px;
-            /* above the badge */
             width: 28px;
             height: 28px;
             border-bottom: 3px solid #e8473f;
             border-right: 3px solid #e8473f;
+            z-index: 3;
             pointer-events: none;
+            transition: transform var(--transition-base);
+        }
+
+        .about-image:hover::after {
+            transform: translate(8px, 8px);
         }
 
         /* Availability badge */
@@ -1275,7 +1307,10 @@
             <!-- LEFT: image + availability badge -->
             <div class="about-col-image reveal-left" data-delay="0">
                 <div class="about-image">
-                    <img src="photo.jpeg" alt="Krishna Sahoo — My Journey" loading="lazy">
+                    <div class="about-image-border"></div>
+                    <div class="about-image-inner">
+                        <img src="photo.jpeg" alt="Krishna Sahoo — My Journey" loading="lazy">
+                    </div>
                 </div>
                 <div class="avail-badge">
                     <span class="avail-dot" aria-hidden="true"></span>
