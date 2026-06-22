@@ -247,13 +247,38 @@
    SOCIAL MEDIA CARDS
    ============================================================ */
 .socials-analytics-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
 }
 
 .social-card {
     border-top: 3px solid var(--border-color);
+}
+
+.social-card.instagram {
+    grid-column: span 2;
+}
+
+@media (max-width: 576px) {
+    .socials-analytics-grid {
+        grid-template-columns: 1fr;
+    }
+    .social-card.instagram {
+        grid-column: span 1;
+    }
+}
+
+@media (min-width: 993px) {
+    .social-card.linkedin .social-stats-row.cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .social-card.linkedin .social-stats-row.cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .social-card.linkedin {
@@ -337,11 +362,10 @@
    GITHUB STATS CONTAINER (FLAT)
    ============================================================ */
 .gh-stats-container {
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    padding: 2.5rem 2.25rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px var(--card-shadow-main);
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
     margin-bottom: 3rem;
 }
 
@@ -492,5 +516,366 @@
     font-size: 11px;
     color: var(--text-secondary);
     white-space: nowrap;
+}
+
+/* ============================================================
+   INSTAGRAM STYLES
+   ============================================================ */
+.social-card.instagram {
+    border-top-color: #e1306c; /* Instagram pink brand color */
+    background: linear-gradient(to bottom, var(--surface-color), rgba(225, 48, 108, 0.015));
+}
+
+.social-profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.insta-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid #e1306c;
+    padding: 2px;
+    object-fit: cover;
+}
+
+.insta-name-group {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.insta-username {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.insta-verified-badge {
+    background: #0095f6;
+    color: #fff;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.insta-subtitle {
+    font-size: 9px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.5px;
+}
+
+.insta-follow-btn {
+    background: #0095f6;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.insta-follow-btn:hover {
+    background: #1877f2;
+    color: #fff;
+}
+
+.insta-feed-title {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.insta-feed-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.insta-feed-item {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--surface-overlay);
+    border: 1px solid var(--border-color);
+}
+
+.insta-feed-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.insta-feed-item:hover img {
+    transform: scale(1.05);
+}
+
+.insta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 2;
+}
+
+.insta-feed-item:hover .insta-overlay {
+    opacity: 1;
+}
+
+.insta-overlay-stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.insta-overlay-stat svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+/* ============================================================
+   ADVANCED GITHUB STATS LAYOUT
+   ============================================================ */
+.gh-main-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .gh-main-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.gh-col-left,
+.gh-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-width: 0;
+}
+
+/* Charts cards */
+.gh-chart-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Repository card border-radius override */
+.gh-repo-card {
+    border-radius: 8px;
+}
+
+/* Skeleton overrides for Analytics page */
+.gh-skeleton-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .gh-skeleton-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.gh-skeleton-col-left,
+.gh-skeleton-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.gh-skeleton-card-container {
+    margin-bottom: 0;
+}
+
+.gh-skeleton-header {
+    margin-bottom: 1.5rem;
+}
+
+.gh-skeleton-progress {
+    height: 6px;
+    width: 100%;
+    border-radius: 3px;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.gh-skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.gh-skeleton-card {
+    height: 80px;
+    border-radius: 8px;
+}
+
+.gh-skeleton-achievements {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 1.5rem;
+}
+
+@media (max-width: 576px) {
+    .gh-skeleton-achievements {
+        grid-template-columns: 1fr;
+    }
+}
+
+.gh-skeleton-ach {
+    height: 60px;
+    border-radius: 8px;
+}
+
+.gh-skeleton-chart {
+    height: 220px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.gh-skeleton-calendar {
+    height: 140px;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.gh-skeleton-repos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.gh-skeleton-repo-card {
+    height: 120px;
+    border-radius: 8px;
+}
+
+.gh-chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.gh-chart-title {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+}
+
+.gh-chart-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 220px;
+}
+
+/* Achievements Grid */
+.gh-achievements-container {
+    margin-top: 1.5rem;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 1.5rem;
+}
+
+.gh-achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 576px) {
+    .gh-achievements-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.gh-achievement-card {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: all 0.2s ease;
+}
+
+.gh-achievement-card:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--card-shadow-main);
+}
+
+.gh-ach-icon {
+    font-size: 24px;
+    line-height: 1;
+    padding: 4px 6px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.gh-ach-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.gh-ach-title {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.gh-ach-desc {
+    font-family: var(--font-body);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    line-height: 1.4;
 }
 
