@@ -109,6 +109,41 @@
       demo: null,
       github: 'https://github.com/CMPN-CODECELL/Syrus2026_AlgoMinds',
     },
+    {
+      id: 'code2git',
+      filter: 'full-stack',
+      title: 'Code2Git',
+      oneliner: 'Chrome extension that automatically syncs solved DSA questions from LeetCode, GFG, HackerRank, and Codeforces to GitHub.',
+      desc: 'Code2Git is a developer utility Chrome extension that automates the process of maintaining a DSA solutions repository. It monitors submissions on LeetCode, GeeksforGeeks, HackerRank, and Codeforces, extracts the problem statement, code, difficulty, and runtime, and automatically commits and pushes them to a specified GitHub repository via the GitHub REST API with full OAuth authentication.',
+      status: 'live',
+      category: 'CHROME EXTENSION · AUTOMATION',
+      tags: ['Chrome Extension', 'JavaScript', 'GitHub API', 'OAuth 2.0', 'DOM Parsing'],
+      timeline: 'June 2026 · Completed',
+      timelinePct: 100,
+      thumb: 'c2g.png',
+      thumbIcon: '🔌',
+      highlights: [
+        'Automated solution extraction & parsing',
+        'Supports LeetCode, GFG, HackerRank & Codeforces',
+        'Direct GitHub API integration with secure OAuth',
+      ],
+      features: [
+        'Secure GitHub OAuth authentication to authorize repository access',
+        'Real-time DOM scraping and parsing of successful code submissions',
+        'Automatic folder structure creation (Platform/Difficulty/ProblemName)',
+        'Detailed commit messages containing time complexity, space complexity, and runtime',
+        'Offline queue to retry commits if network connectivity is lost',
+        'Customizable readme generation for each synced problem',
+      ],
+      tech: [
+        { label: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+        { label: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+        { label: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+        { label: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+      ],
+      demo: null,
+      github: 'https://github.com/krishnasahoo11156/Code2Git',
+    },
   ];
 
   /* ── 3D CAROUSEL STATE & LOGIC ───────────────────────────── */
@@ -136,22 +171,14 @@
       let diff = (idx - currentIndex) % len;
       if (diff < 0) diff += len;
 
-      if (len === 3) {
-        if (diff === 0) {
-          card.classList.add('pos-center');
-        } else if (diff === 1) {
-          card.classList.add('pos-right');
-        } else if (diff === 2) {
-          card.classList.add('pos-left');
-        }
-      } else if (len === 2) {
-        if (diff === 0) {
-          card.classList.add('pos-center');
-        } else if (diff === 1) {
-          card.classList.add('pos-right');
-        }
-      } else if (len === 1) {
+      if (diff === 0) {
         card.classList.add('pos-center');
+      } else if (diff === 1 && len > 1) {
+        card.classList.add('pos-right');
+      } else if (diff === len - 1 && len > 2) {
+        card.classList.add('pos-left');
+      } else {
+        card.classList.add('pos-hidden');
       }
     });
 

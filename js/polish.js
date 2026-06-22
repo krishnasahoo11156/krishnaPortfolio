@@ -188,6 +188,7 @@
             projects: {
                 CrisisSync: "AI crisis response coord platform. Built with Flutter, Firebase, Docker, Google Cloud Run. Uses Gemini AI for incident severity scoring.",
                 StudySync: "Academic productivity app. Built with React, Vite, Tailwind, Firebase. Pomodoro timer + Web Audio ambient sounds.",
+                Code2Git: "Chrome extension syncing solved DSA questions from LeetCode, GFG, HackerRank, and Codeforces to GitHub. Secure commits via GitHub REST API and OAuth 2.0.",
                 OnboardingAgent: "Autonomous Developer Onboarding Next.js app built at Syrus 2026. Automates dev environment checks and generates learning paths."
             },
             achievements: {
@@ -832,6 +833,12 @@
                 reference: "timeline.html#achievements-toggle"
             },
             {
+                id: 'code2git',
+                keywords: ['code2git', 'code-2-git', 'chrome extension', 'leetcode sync', 'gfg sync', 'hackerrank sync', 'codeforces sync', 'github sync', 'dsa sync'],
+                text: "Krishna built **Code2Git** — a Chrome extension that automatically pushes solved DSA questions from LeetCode, GeeksforGeeks, HackerRank, and Codeforces directly to a GitHub repository. It scrapes successful submissions from the page, parses statistics, auto-structures them inside the repository, and pushes them securely via the GitHub REST API using OAuth 2.0.",
+                reference: "index.html#projects"
+            },
+            {
                 id: 'crisissync',
                 keywords: ['crisissync', 'crisis-sync', 'crisis response', 'disaster', 'flutter map'],
                 text: "Krishna built **CrisisSync** — a full-stack real-time crisis response and emergency coordination platform. It utilizes a Flutter frontend, a Firebase backend (Auth/Realtime Database), and is containerized using Docker and deployed on Google Cloud Run. It leverages Gemini AI to automatically score report severity and display active coordination metrics on live maps.",
@@ -876,7 +883,7 @@
             {
                 id: 'projects',
                 keywords: ['project', 'projects', 'build', 'work', 'codebase', 'applications', 'portfolio'],
-                text: "Krishna's highlighted projects include:\n• **CrisisSync**: Live Flutter/Docker crisis coordinator mapped with Gemini AI.\n• **StudySync**: Pomodoro & soundscape study dashboard (React/Vite).\n• **Autonomous Developer Onboarding Agent**: Won Syrus 2026 hackathon recognition.\n• Click below to unfold his portfolio projects.",
+                text: "Krishna's highlighted projects include:\n• **CrisisSync**: Live Flutter/Docker crisis coordinator mapped with Gemini AI.\n• **StudySync**: Pomodoro & soundscape study dashboard (React/Vite).\n• **Code2Git**: Chrome extension syncing DSA solutions from LeetCode/GFG/HackerRank/Codeforces to GitHub.\n• **Autonomous Developer Onboarding Agent**: Won Syrus 2026 hackathon recognition.\n• Click below to unfold his portfolio projects.",
                 reference: "index.html#projects"
             },
             {
@@ -936,7 +943,7 @@
             // Fallback suggestions
             return {
                 text: "I want to give you a clever answer, but I couldn't find a direct match. As Krishna's Assistant, I can tell you about:\n" +
-                      "• Projects like **CrisisSync**, **StudySync**, or the **Onboarding Agent**\n" +
+                      "• Projects like **CrisisSync**, **StudySync**, **Code2Git**, or the **Onboarding Agent**\n" +
                       "• Hackathons like the **UniMerge Hackathon** or **Syrus Hackathon**\n" +
                       "• How to connect on **Instagram**, **LinkedIn**, or **GitHub**\n" +
                       "• His academic background at **VESIT** or download his **Resume**.\n\n" +
@@ -964,7 +971,7 @@
                 "Detailed mode (detailedMode = true): provide a thorough, structured response with bullet lists. AND you MUST append a reference target in the format [REFERENCE: target] at the very end of your response, where target matches one of these: " +
                 "- index.html#about (for general bio, location, age) " +
                 "- index.html#skills (for core skill proficiency details) " +
-                "- index.html#projects (for CrisisSync, StudySync, or Onboarding Agent) " +
+                "- index.html#projects (for CrisisSync, StudySync, Code2Git, or Onboarding Agent) " +
                 "- index.html#certificates (for AWS, Google Cloud, DeepLearning.AI credentials) " +
                 "- certificates.html (for detailed certificates syllabus and credential IDs) " +
                 "- index.html#contact (for email, socials, inquiry form) " +
@@ -975,6 +982,7 @@
                 "- backend-tools.html (for Node.js, Express, Firebase, Git versioning, GitHub) " +
                 "- faq.html#q-resume (for downloading resume/CV PDF) " +
                 "- faq.html#q-vesit (for B.E. AI & Data Science details) " +
+                "- faq.html#q-code2git (for Code2Git Chrome extension details) " +
                 "- faq.html (for general help or Q&A). Choose the single best reference matching the content. " +
                 "CRITICAL: If the user asks for a specific social media account or link (such as Instagram, LinkedIn, GitHub, or direct Email), you MUST set the reference to the direct URL in [REFERENCE: url] format, where url is one of: " +
                 "- https://instagram.com/krishnasahoo11156 (Instagram) " +
